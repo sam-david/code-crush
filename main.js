@@ -42,7 +42,7 @@ var mainState = {
 		// explosions = game.add.group();
   //   explosions.createMultiple(30, 'explosion');
 		// this.comet.animations.add('explosion');
-		
+
 		this.comets = this.game.add.group();
 		this.comets.physicsBodyType = Phaser.Physics.ARCADE;
 		this.comets.enableBody = true;
@@ -53,12 +53,9 @@ var mainState = {
 	update: function() {
 		// this.game.physics.arcade.collide(this.city, this.comet);
 		this.game.physics.arcade.collide(this.city, this.comets, this.hitCity, null, this);
-		
+
 	},
 	dropComet: function() {
-		
-
-
 
 		//enable physics of comets
 		var comet;
@@ -66,20 +63,26 @@ var mainState = {
 		this.comet.enableBody = true;
 		// this.game.physics.enable(this.comet, Phaser.Physics.ARCADE);
 
-		// game.physics.arcade.enable(this.comet); 
+		// game.physics.arcade.enable(this.comet);
 		this.comet.scale.setTo(.5);
 
 		// this.comet.animations.add('explosion');
 
 		//set downward velocity
-		this.comet.body.velocity.y = 200;
-		this.comet.body.velocity.x = this.game.rnd.integerInRange(-50, 50)
+		this.comet.body.velocity.y = 100;
+		// this.comet.body.velocity.x = this.game.rnd.integerInRange(-50, 50)
 		// comet.body.immovable = true;
 		this.comet.body.collideWorldBounds = true;
 	},
 	hitCity: function() {
-		console.log('collide');
-		this.comet.kill();
+		console.log('collide' + this.comets);
+		this.comets.getAt(0).destroy();
+		console.log(this.comets.length);
+
+		// console.log(oldestComet);
+		// oldestComet += 1;
+		// console.log(oldestComet);
+
 		// this.comet.animations.play('explosion', 30, false, true);
 		// var emitter = this.game.add.emitter(this.comets.children[this.oldestIndex - 1].x, this.comets.children[this.oldestIndex - 1].y, 100);
   //   emitter.makeParticles('playerParticle');

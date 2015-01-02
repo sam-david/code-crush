@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var ScoreSchema = new mongoose.Schema({
   game: String,
   score: Number,
-  time: Number,
+  time: Date,
   user: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 })
 

@@ -2,7 +2,6 @@
 <html ng-app="codecrush">
   <head>
     <title><%= title %></title>
-    <link rel="stylesheet" href="stylesheets/normalize.min.css">
     <link rel='stylesheet' href='/stylesheets/style.css' />
 
     <script src="javascripts/vendor/modernizr-2.6.2.min.js"></script>
@@ -11,19 +10,21 @@
     <script src="javascripts/vendor/angular-ui-router.min.js"></script>
     <script src="javascripts/angularApp.js"></script>
   </head>
-  <body>
-
-    <a href="#">Create a new user</a>
-    <form ng-submit="addPost()">
-      <h3>Create a user</h3>
-      <div>
-        <input type="text" placeholder="Title" ng-model="title"></input>
+  <body ng-controller="UserCtrl">
+      {{ user }}
+      <form ng-submit="addUser()">
+        <h3>Create a user</h3>
+          <input type="text" placeholder="Email" ng-model="email"></input>
+          <input type="password" placeholder="Password" ng-model="password"></input>
+        <button type="submit">Post</button>
+      </form>
+    <div>
+      <div ng-repeat="user in users">
+        {{ user.email }}
+        {{ user.password }}
+        {{ user.createdAt | date}}
       </div>
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Link" ng-model="link"></input>
-      </div>
-      <button type="submit" class="btn btn-primary">Post</button>
-    </form>
+    </div>
   </body>
 </html>
 

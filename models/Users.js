@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var UserSchema = new mongoose.Schema({
   email: String,
+  password: String,
   scores: [{type: mongoose.Schema.Types.ObjectId, ref: 'Score'}],
   createdAt: {type: Date, default: Date.now}
 })

@@ -11,20 +11,14 @@
     <script src="javascripts/angularApp.js"></script>
   </head>
   <body ng-controller="UserCtrl">
-      {{ user }}
-      <form ng-submit="addUser()">
-        <h3>Create a user</h3>
-          <input type="text" placeholder="Email" ng-model="email"></input>
-          <input type="password" placeholder="Password" ng-model="password"></input>
-        <button type="submit">Post</button>
-      </form>
-    <div>
-      <div ng-repeat="user in users">
-        {{ user.email }}
-        {{ user.password }}
-        {{ user.createdAt | date}}
-      </div>
-    </div>
+    <form action="/login" method="post">
+      <h3>Login</h3>
+      <input type="text" placeholder="Email" ng-model="email"></input>
+      <input type="password" placeholder="Password" ng-model="password"></input>
+      <button type="submit">Login</button>
+    </form>
+
+    <div ng-include src="'views/signup.html'"></div>
   </body>
 </html>
 

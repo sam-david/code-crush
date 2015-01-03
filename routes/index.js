@@ -27,4 +27,8 @@ router.get('/users', function(req, res, next) {
   });
 });
 
+router.post('/login', function(req, res, next) {
+
+});
+
 module.exports = router;

@@ -49,9 +49,9 @@ var mainState = {
 	},
 	dropComet: function() {
 		// makes an emitter for the comets
-		this.emitter = game.add.emitter(0, -50, 100);
+		this.emitter = game.add.emitter(0, -50, 10);
 		this.emitter.makeParticles('fire1');
-		this.emitter.gravity = 0;
+		this.emitter.gravity = -100;
 
 		//enable physics of comets
 		var comet;
@@ -73,7 +73,7 @@ var mainState = {
 
 		// this.emitter.x = this.comet.x;
 		// this.emitter.y = this.comet.y;
-		this.emitter.start(false, 100000000, 10, 5);
+		this.emitter.start(false, 100000000, 10, 30);
 	},
 	hitCity: function() {
 		console.log('collide' + this.comets);

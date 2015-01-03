@@ -32,11 +32,6 @@ var mainState = {
 
 		// add single comet to test
 
-
-		this.comet = this.game.add.sprite(this.game.world.randomX, 0, 'comet');
-		this.game.physics.enable(this.comet, Phaser.Physics.ARCADE);
-		this.comet.body.velocity.y = 500;
-
 		this.comets = this.game.add.group();
 		this.comets.physicsBodyType = Phaser.Physics.ARCADE;
 		this.comets.enableBody = true;
@@ -71,8 +66,6 @@ var mainState = {
 		// comet.body.immovable = true;
 		this.comet.body.collideWorldBounds = true;
 
-		// this.emitter.x = this.comet.x;
-		// this.emitter.y = this.comet.y;
 		this.emitter.start(false, 100000000, 10, 30);
 	},
 	hitCity: function() {

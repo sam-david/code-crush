@@ -1,1 +1,1 @@
-var app = angular.module('codecrush', ['ui.router']);
+var app = angular.module('codeCrush', ['ui.router']);

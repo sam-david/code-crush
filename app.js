@@ -11,12 +11,14 @@ var session = require('express-session');
 var port = process.env.PORT || 8080;
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://admin:codecrush@ds029831.mongolab.com:29831/codecrush')
+require('./config/passport')(passport);
 require('./models/Users')
 require('./models/Scores')
 //require('./models/stuff')
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+// var routes = require('./routes/index');
+// var users = require('./routes/users');
+
 
 var app = express();
 
@@ -29,7 +31,7 @@ app.set('view engine', 'ejs');
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -39,8 +41,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-app.use('/', routes);
-app.use('/users', users);
+require('./routes/routes.js')(app, passport);
+// app.use('/', routes);
+// app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -4,6 +4,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Score = mongoose.model('Score');
+var passport = require('passport');
 
 
 /* GET home page. */
@@ -27,8 +28,10 @@ router.get('/users', function(req, res, next) {
   });
 });
 
-router.post('/login', function(req, res, next) {
-
-});
+router.post('/signup', passport.authenticate('local-signup', {
+  successRedirect : '/profile',
+  failureRedirect : '/signup',
+  failureFlash : true
+}));
 
 module.exports = router;

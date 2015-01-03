@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="codecrush">
   <head>
-    <title><%= title %></title>
+    <title></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 
     <script src="javascripts/vendor/modernizr-2.6.2.min.js"></script>
@@ -17,8 +17,13 @@
       <input type="password" placeholder="Password" ng-model="password"></input>
       <button type="submit">Login</button>
     </form>
+    <form action="/signup" method="post">
+      <h3>Sign-up</h3>
+      <input type="text" placeholder="Email" ng-model="email"></input>
+      <input type="password" placeholder="Password" ng-model="password"></input>
+      <button type="submit">Login</button>
+    </form>
 
-    <div ng-include src="'views/signup.html'"></div>
   </body>
 </html>
 

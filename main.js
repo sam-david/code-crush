@@ -1,4 +1,4 @@
-var game = new Phaser.Game(768,600, Phaser.AUTO, 'gameDiv');
+var game = new Phaser.Game(768, 600, Phaser.AUTO, 'gameDiv');
 
 var mainState = {
 	preload: function() {
@@ -17,7 +17,7 @@ var mainState = {
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 
 		//add background and city
-		this.background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'space');
+		this.background = game.add.tileSprite(0, 0, this.game.width, this.game.height, 'space');
 
 		gameTitle = game.add.text(300, 10, "Code City", { font: '34px Arial', fill: '#fff' });
 
@@ -32,16 +32,21 @@ var mainState = {
 
 		// add single comet to test
 
+
 		this.comet = this.game.add.sprite(this.game.world.randomX, 0, 'comet');
 		this.game.physics.enable(this.comet, Phaser.Physics.ARCADE);
 		this.comet.body.velocity.y = 500;
 
-		emitter = game.add.emitter(game.world.centerX, game.world.centerY, 400)
-		emitter.makeParticles( [ 'fire1', 'fire2', 'fire3', 'smoke' ] );
-		this.comet.addChild(emitter);
+
+
+
+		// this.comet.addChild(this.emitter);
 		// explosions = game.add.group();
   //   explosions.createMultiple(30, 'explosion');
 		// this.comet.animations.add('explosion');
+
+		// this.emitter.x = this.comet.x;
+		// this.emitter.y = this.comet.y;
 
 		this.comets = this.game.add.group();
 		this.comets.physicsBodyType = Phaser.Physics.ARCADE;
@@ -53,10 +58,18 @@ var mainState = {
 	update: function() {
 		// this.game.physics.arcade.collide(this.city, this.comet);
 		this.game.physics.arcade.collide(this.city, this.comets, this.hitCity, null, this);
-
+		// this.emitter.emitX = this.comet.x;
+  //   this.emitter.emitY = this.comet.y;
 	},
 	dropComet: function() {
+		// makes an emitter for the comets
+		this.emitter = game.add.emitter(0, -50, 100);
+		this.emitter.makeParticles('fire1');
+		this.emitter.gravity = 0;
 
+
+
+		this.comet.addChild(this.emitter);
 		//enable physics of comets
 		var comet;
 		this.comet = this.comets.create(this.game.world.randomX, 0, 'comet');
@@ -73,6 +86,10 @@ var mainState = {
 		// this.comet.body.velocity.x = this.game.rnd.integerInRange(-50, 50)
 		// comet.body.immovable = true;
 		this.comet.body.collideWorldBounds = true;
+
+		// this.emitter.x = this.comet.x;
+		// this.emitter.y = this.comet.y;
+		this.emitter.start(false, 1000, 10, 5);
 	},
 	hitCity: function() {
 		console.log('collide' + this.comets);

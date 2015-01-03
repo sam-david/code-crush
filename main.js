@@ -19,7 +19,13 @@ var mainState = {
 		//add background and city
 		this.background = game.add.tileSprite(0, 0, this.game.width, this.game.height, 'space');
 
-		gameTitle = game.add.text(300, 10, "Code City", { font: '34px Arial', fill: '#fff' });
+		this.game.score = 0;
+		this.game.cityHealth = 5;
+
+		health = game.add.text(300,20, this.game.cityHealth);
+
+
+		// gameTitle = game.add.text(300, 10, "Code City", { font: '34px Arial', fill: '#fff' });
 
 		// city = this.game.add.sprite(0,512, 'city');
 		this.city = this.game.add.sprite(0,512, 'city');
@@ -41,6 +47,9 @@ var mainState = {
 	},
 	update: function() {
 		this.game.physics.arcade.collide(this.city, this.comets, this.hitCity, null, this);
+		if (this.game.cityHealth === 0) {
+			gameOver = game.add.text(300, 200, "Game Over", { font: '34px Arial', fill: '#fff' });
+		}
 	},
 	dropComet: function() {
 		// makes an emitter for the comets
@@ -69,9 +78,9 @@ var mainState = {
 		this.emitter.start(false, 100000000, 10, 30);
 	},
 	hitCity: function() {
-		console.log('collide' + this.comets);
 		this.comets.getAt(0).destroy();
-		console.log(this.comets.length);
+		this.game.cityHealth -= 1;
+		console.log(this.game.cityHealth);
 
 		// console.log(oldestComet);
 		// oldestComet += 1;

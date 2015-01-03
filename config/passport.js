@@ -2,21 +2,11 @@
 var LocalStrategy   = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-// load up the user model
-var User            = require('../app/models/user');
 
-//load auth variables
+var User            = require('../app/models/user');
 var configAuth = require('./auth');
 
-// expose this function to our app using module.exports
 module.exports = function(passport) {
-
-    // =========================================================================
-    // passport session setup ==================================================
-    // =========================================================================
-    // required for persistent login sessions
-    // passport needs ability to serialize and unserialize users out of session
-
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
         done(null, user.id);
@@ -75,6 +65,8 @@ module.exports = function(passport) {
         });
         });
     }));
+    // =========================================================================
+    // LOCAL LOGIN  ============================================================
 
     passport.use('local-login', new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
@@ -104,6 +96,9 @@ module.exports = function(passport) {
         });
 
     }));
+
+    // =========================================================================
+    // FACEBOOK LOGIN ==========================================================
 
     passport.use(new FacebookStrategy({
 
@@ -153,6 +148,9 @@ module.exports = function(passport) {
             });
         });
     }));
+
+    // =========================================================================
+    // GOOGLE SIGNUP ===========================================================
 
     passport.use(new GoogleStrategy({
 

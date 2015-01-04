@@ -16,6 +16,7 @@ var mainState = {
     this.load.image('bullet', 'assets/bullet.png');
 		this.load.image('playerParticle', 'assets/player-particle.png');
 		this.load.spritesheet('explosion', 'assets/explode-animation.png', 128, 128);
+		this.load.audio('explosion', 'assets/audio/explosion.ogg');
 
 	},
 	create: function() {
@@ -107,7 +108,7 @@ var mainState = {
 	update: function() {
 		this.game.physics.arcade.collide(this.city, this.comets, this.hitCity, null, this);
 		if (this.game.cityHealth === 0) {
-			gameOver = game.add.text(300, 200, "Game Over", { font: '34px Arial', fill: '#fff' });
+			gameOver = game.add.text(500, 200, "Game Over", { font: '34px Arial', fill: '#fff' });
 		}
 		if (this.game.perfectCounter === 5) {
 			this.game.multiplier = 2;
@@ -168,6 +169,10 @@ var mainState = {
 		bullet.reset(this.laser.x + 24, this.laser.y - 5);
     bullet.body.velocity.y = comet.y - this.laser.y;
     bullet.body.velocity.x = comet.x - this.laser.x;
+    console.log(this);
+    bullet.rotation = Phaser.Math.angleBetween(this.laser.x , this.laser.y, comet.x, comet.y);
+    console.log(Phaser.Math.angleBetween(this.laser.x , this.laser.y, comet.x, comet.y));
+    console.log(bullet.body.velocity);
     // bullet.body.velocity = 200;
     // bullet.rotation = (-90)*(Math.PI/180);
     // bullet.rotation = Math.atan2(this.laser.y- comet.y, this.laser.x - comet.x) * (180/Math.PI);;

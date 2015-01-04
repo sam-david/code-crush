@@ -70,7 +70,9 @@ var mainState = {
 		this.comets.physicsBodyType = Phaser.Physics.ARCADE;
 		this.comets.enableBody = true;
 
-
+		this.explosions = game.add.group();
+		this.explosions.createMultiple(30, 'explosion');
+		console.log(explosions)
 		// this.explosion = this.game.add.sprite(1000,4000,'explosion')
 		// this.explosion.animations.add('explode');
 
@@ -99,8 +101,8 @@ var mainState = {
 		// this.emitter = game.add.emitter(0, -50, 10);
 		// this.emitter.makeParticles('fire1');
 		// this.emitter.gravity = -100;
-		this.explosion = this.game.add.sprite(1000,4000,'explosion')
-		this.explosion.animations.add('explode');
+		// this.explosion = this.game.add.sprite(1000,4000,'explosion')
+		// this.explosion.animations.add('explode');
 		//enable physics of comets
 		var comet;
 		this.comet = this.comets.create(this.game.world.randomX, 0, 'comet');
@@ -123,18 +125,19 @@ var mainState = {
 	},
 	destroyComet: function() {
 		console.log("destroy!");
-		console.log(this.comets.getAt(0).body.x);
-		this.explosion.position.x = this.comets.getAt(0).body.x - 50;
-		this.explosion.position.y = this.comets.getAt(0).body.y - 50;
-		console.log(this.explosion);
-		this.explosion.animations.play('explode',60,false,true);
+		var explosion = this.explosions.getAt(0);
+		explosion.animations.add('explode');
+		console.log(explosion);
+		explosion.position.x = 400;
+		explosion.position.y = 400;
+		// explosion.position.x = this.comets.getAt(0).body.x - 50;
+		// explosion.position.y = this.comets.getAt(0).body.y - 50;
+		explosion.animations.play('explode',60,false,true);
+
 		this.comets.getAt(0).destroy();
 
 		this.game.score += (100 * this.game.multiplier);
-
-
 		this.game.perfectCounter += 1;
-		console.log(this.game.score);
 	},
 	hitCity: function() {
 		this.comets.getAt(0).destroy();

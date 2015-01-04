@@ -1,5 +1,6 @@
 var game = new Phaser.Game(1000, 600, Phaser.AUTO, 'gameDiv');
 var explosions;
+var bullets;
 
 var mainState = {
 	preload: function() {
@@ -12,6 +13,7 @@ var mainState = {
     this.load.image('fire2', 'assets/fire2.png');
     this.load.image('fire3', 'assets/fire3.png');
     this.load.image('smoke', 'assets/smoke-puff.png');
+    this.load.image('bullet', 'assets/bullet.png');
 		this.load.image('playerParticle', 'assets/player-particle.png');
 		this.load.spritesheet('explosion', 'assets/explode-animation.png', 128, 128);
 
@@ -27,6 +29,7 @@ var mainState = {
 		this.game.perfectCounter = 0;
 		this.game.multiplier = 1;
 		this.game.cityHealth = 5;
+
 
 		codeText = game.add.text(370, 10, "var thing = 'thing'", { font: '34px Arial', fill: '#fff' });
 		cityHealthText = game.add.text(840,480, "Health: 5", {
@@ -71,6 +74,7 @@ var mainState = {
 		this.comets.physicsBodyType = Phaser.Physics.ARCADE;
 		this.comets.enableBody = true;
 
+		// Our explosions group
 		explosions = game.add.group();
 		for (var i = 0; i < 10; i++)
     {
@@ -78,6 +82,16 @@ var mainState = {
         explosionAnimation.anchor.setTo(0.5, 0.5);
         explosionAnimation.animations.add('explosion');
     }
+
+    //  Our bullets group
+    bullets = game.add.group();
+    bullets.enableBody = true;
+    bullets.physicsBodyType = Phaser.Physics.ARCADE;
+    bullets.createMultiple(30, 'bullet', 0, false);
+    bullets.setAll('anchor.x', 0.5);
+    bullets.setAll('anchor.y', 0.5);
+    bullets.setAll('outOfBoundsKill', true);
+    bullets.setAll('checkWorldBounds', true);
 
     //test for later
 		// this.explosions.createMultiple(30, 'explosion');
@@ -137,25 +151,29 @@ var mainState = {
 	},
 	destroyComet: function() {
 		console.log("destroy!");
+		this.fireBullet();
 		var explosionAnimation = explosions.getFirstExists(false);
-        explosionAnimation.reset(this.comets.getAt(0).body.x, this.comets.getAt(0).body.y);
-        explosionAnimation.play('explosion', 30, false, true);
-		// var explosion = this.explosions.getAt(0);
-		// explosion.animations.add('explode');
-		// explosion.position.x = this.game.world.randomX;
-		// explosion.position.y = this.game.world.randomY;
-		// explosion.z = 10;
-		// console.log(explosion)
-		// explosion.position.x = this.comets.getAt(0).body.x - 50;
-		// explosion.position.y = this.comets.getAt(0).body.y - 50;
-		// explosion.animations.play('explode',30,true,false);
+    explosionAnimation.reset(this.comets.getAt(0).body.x + 11, this.comets.getAt(0).body.y + 4);
+    explosionAnimation.play('explosion', 30, false, true);
 
 		this.comets.getAt(0).destroy();
 
 		this.game.score += (100 * this.game.multiplier);
 		this.game.perfectCounter += 1;
 	},
+	fireBullet: function() {
+		console.log('bullet fired');
+		var bullet = bullets.getFirstExists(false);
+		bullet.reset(this.laser.x + 24, this.laser.y - 5);
+    bullet.body.velocity.y = -400;
+    bullet.body.velocity.x = -200;
+    bullet.rotation = (-90)*(Math.PI/180);
+    
+	},
 	hitCity: function() {
+		var explosionAnimation = explosions.getFirstExists(false);
+    explosionAnimation.reset(this.comets.getAt(0).body.x + 11, this.comets.getAt(0).body.y + 4);
+    explosionAnimation.play('explosion', 30, false, true);
 		this.comets.getAt(0).destroy();
 		this.game.cityHealth -= 1;
 		this.game.perfectCounter = 0;

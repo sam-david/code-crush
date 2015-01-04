@@ -11,6 +11,11 @@ app.config(function($stateProvider, $urlRouterProvider){
     url: '/login',
     templateUrl: 'templates/login.html'
   });
+
+  $stateProvider.state('signup', {
+    url: '/signup',
+    templateUrl: 'templates/signup.html'
+  });
 });
 
 app.controller('MainCtrl', function($scope){

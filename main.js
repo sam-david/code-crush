@@ -1,9 +1,15 @@
 var game = new Phaser.Game(1000, 600, Phaser.AUTO, 'gameDiv');
+
+// declaring these out here so they can be easily used across functions. This was how they did it on the official phaser site.
 var explosions;
 var bullets;
 
+// new debug rectangle object
+var rect = new Phaser.Rectangle( 350, 5, 300, 100 ) ;
+
 var mainState = {
 	preload: function() {
+		// load all the sprites and audio
 		this.load.image('space', 'assets/space.png');
 		this.load.image('skyline', 'assets/city-dusk.png');
 		this.load.image('comet', 'assets/rocks.png');
@@ -16,22 +22,41 @@ var mainState = {
     this.load.image('bullet', 'assets/bullet.png');
 		this.load.image('playerParticle', 'assets/player-particle.png');
 		this.load.spritesheet('explosion', 'assets/explode-animation.png', 128, 128);
-		this.load.audio('explosion', 'assets/audio/explosion.ogg');
-
+		this.load.spritesheet('explosion2', 'assets/explosion.png',128,128);
+		this.load.audio('explosion', 'assets/audio/explosion1.wav');
+		this.load.audio('explosion2', 'assets/audio/explosion2.wav');
+		this.load.audio('laserAudio', 'assets/audio/laser3.wav');
+		this.load.audio('multiUp', 'assets/audio/powerup2.wav');
 	},
 	create: function() {
+		// start game physics
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 
-		//add background and city
+		//add background, city, and laser
 		this.background = game.add.tileSprite(0, 0, this.game.width, this.game.height, 'space');
 		// this.background = game.add.tileSprite(0, 0, this.game.width, this.game.height, 'skyline');
+		this.city = this.game.add.sprite(0,512, 'city');
+		this.laser = this.game.add.sprite(500,505, 'laser');
 
+		//enable city physics for collision
+		this.game.physics.enable(this.city, Phaser.Physics.ARCADE);
+		this.city.body.immovable = true;
+
+		// test rectangle (kinda sucks)
+		// game.debug.geom( rect, 'rgba(255,255,255,1)' ) ;
+
+		// set game variables 
 		this.game.score = 0;
 		this.game.perfectCounter = 0;
 		this.game.multiplier = 1;
 		this.game.cityHealth = 5;
 
+		// set game audio
+		this.explosionSound = this.add.audio('explosion2');
+		this.laserSound = this.add.audio('laserAudio');
+		this.multiSound = this.add.audio('multiUp');
 
+		// create game text objects (health, code text, and multiplier)
 		codeText = game.add.text(370, 10, "var thing = 'thing'", { font: '34px Arial', fill: '#fff' });
 		cityHealthText = game.add.text(840,480, "Health: 5", {
 			font: "24px Arial",
@@ -56,35 +81,25 @@ var mainState = {
 		// 	}
 		// }
 
+		// set spacebar to execute function destroyComet
 		this.laserKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		this.laserKey.onDown.add(this.destroyComet, this);
 
-		this.city = this.game.add.sprite(0,512, 'city');
-		this.laser = this.game.add.sprite(500,505, 'laser');
-		// this.laser.scale.setTo(.5);
-
-		//enable city physics for collision
-		// this.game.physics.arcade.enable(this.city);
-		this.game.physics.enable(this.city, Phaser.Physics.ARCADE);
-		this.city.body.immovable = true;
-		// this.city.enableBody = true;
-
-		// add single comet to test
-
+		// add comets group and enable physics		
 		this.comets = this.game.add.group();
 		this.comets.physicsBodyType = Phaser.Physics.ARCADE;
 		this.comets.enableBody = true;
 
-		// Our explosions group
+		// add explosions group and create 10 cached explosion sprites, adding animation to each
 		explosions = game.add.group();
 		for (var i = 0; i < 10; i++)
     {
-        var explosionAnimation = explosions.create(0, 0, 'explosion', [0], false);
-        explosionAnimation.anchor.setTo(0.5, 0.5);
-        explosionAnimation.animations.add('explosion');
+      var explosionAnimation = explosions.create(0, 0, 'explosion', [0], false);
+      explosionAnimation.anchor.setTo(0.5, 0.5);
+      explosionAnimation.animations.add('explosion');
     }
 
-    //  Our bullets group
+    // create bullets group(30), add physics, set properties
     bullets = game.add.group();
     bullets.enableBody = true;
     bullets.physicsBodyType = Phaser.Physics.ARCADE;
@@ -94,22 +109,69 @@ var mainState = {
     bullets.setAll('outOfBoundsKill', true);
     bullets.setAll('checkWorldBounds', true);
 
-    //test for later
-		// this.explosions.createMultiple(30, 'explosion');
-		// this.explosions.getAt(0).animations.add('explode');
-		// this.explosions.getAt
-		// console.log(this.explosions)
-
-		// this.explosion = this.game.add.sprite(1000,4000,'explosion')
-		// this.explosion.animations.add('explode');
-
+    // timer to drop comets
 		this.timer = game.time.events.loop(1800, this.dropComet, this);
 	},
 	update: function() {
+		// if collision between comets and city, execute hitCity function, damaging the city
 		this.game.physics.arcade.collide(this.city, this.comets, this.hitCity, null, this);
+		
+		// if the city health is 0, game over
 		if (this.game.cityHealth === 0) {
 			gameOver = game.add.text(500, 200, "Game Over", { font: '34px Arial', fill: '#fff' });
 		}
+		
+		// update game text to reflect variables, real time
+		gameScoreText.setText("Score: " + this.game.score);
+		cityHealthText.setText("City Health: " + this.game.cityHealth);
+		multiplierText.setText("Multiplier: " + this.game.multiplier + "x");
+	},
+	dropComet: function() {
+
+		// makes an emitter for the comets
+		// this.emitter = game.add.emitter(0, -50, 10);
+		// this.emitter.makeParticles('fire1');
+		// this.emitter.gravity = -100;
+
+		//create a comet
+		var comet;
+		this.comet = this.comets.create(this.game.world.randomX, 0, 'comet');
+		this.comet.enableBody = true;
+
+		// this.comet.addChild(this.emitter);
+
+		// set comet sprite scale
+		this.comet.scale.setTo(1);
+
+		//set downward velocity
+		this.comet.body.velocity.y = 50;
+		// this.comet.body.velocity.x = this.game.rnd.integerInRange(-50, 50)
+
+		// comet will not go outside world bounds
+		this.comet.body.collideWorldBounds = true;
+
+		// this.emitter.start(false, 100000000, 10, 30);
+	},
+	destroyComet: function() {
+		//play explosion effect
+		this.explosionSound.play();
+		
+		// take first explosion animation from group, reset the location, 
+		var explosionAnimation = explosions.getFirstExists(false);
+    explosionAnimation.reset(this.comets.getAt(0).body.x + 11, this.comets.getAt(0).body.y + 4);
+    explosionAnimation.play('explosion', 30, false, true);
+    this.fireBullet(this.comets.getAt(0));
+		this.comets.getAt(0).destroy();
+
+		this.game.score += (100 * this.game.multiplier);
+
+		// Play multiplier sound if our perfect entry counter is divisible by 5 (multiplier ups every 5 perfect entries)
+		this.game.perfectCounter += 1;
+		if (this.game.perfectCounter % 5 === 0) {
+			this.multiSound.play();
+		}
+
+		//increase multiplier every 5 perfect entries
 		if (this.game.perfectCounter === 5) {
 			this.game.multiplier = 2;
 		} else if (this.game.perfectCounter === 10) {
@@ -118,89 +180,38 @@ var mainState = {
 			this.game.multiplier = 4;
 		} else if (this.game.perfectCounter === 20) {
 			this.game.multiplier = 5;
+		} else if (this.game.perfectCounter === 0) {
+			this.game.multiplier = 1
 		}
-		gameScoreText.setText("Score: " + this.game.score);
-		cityHealthText.setText("City Health: " + this.game.cityHealth);
-		multiplierText.setText("Multiplier: " + this.game.multiplier + "x");
-	},
-	dropComet: function() {
-		// makes an emitter for the comets
-		// this.emitter = game.add.emitter(0, -50, 10);
-		// this.emitter.makeParticles('fire1');
-		// this.emitter.gravity = -100;
-		// this.explosion = this.game.add.sprite(1000,4000,'explosion')
-		// this.explosion.animations.add('explode');
-		//enable physics of comets
-		var comet;
-		this.comet = this.comets.create(this.game.world.randomX, 0, 'comet');
-		this.comet.enableBody = true;
-		// this.comet.addChild(this.emitter);
-		// this.game.physics.enable(this.comet, Phaser.Physics.ARCADE);
-
-		// game.physics.arcade.enable(this.comet);
-		this.comet.scale.setTo(1);
-
-		// this.comet.animations.add('explosion');
-
-		//set downward velocity
-		this.comet.body.velocity.y = 50;
-		// this.comet.body.velocity.x = this.game.rnd.integerInRange(-50, 50)
-		// comet.body.immovable = true;
-		this.comet.body.collideWorldBounds = true;
-
-		// this.emitter.start(false, 100000000, 10, 30);
-	},
-	destroyComet: function() {
-		console.log("destroy!");
-		
-		var explosionAnimation = explosions.getFirstExists(false);
-    explosionAnimation.reset(this.comets.getAt(0).body.x + 11, this.comets.getAt(0).body.y + 4);
-    explosionAnimation.play('explosion', 30, false, true);
-    this.fireBullet(this.comets.getAt(0));
-		this.comets.getAt(0).destroy();
-
-		this.game.score += (100 * this.game.multiplier);
-		this.game.perfectCounter += 1;
 	},
 	fireBullet: function(comet) {
-		console.log('bullet fired');
-		console.log(comet);
+		//play laser audio
+		this.laserSound.play();
+
+		// grab first bullet from group array, reset location to laser tip
 		var bullet = bullets.getFirstExists(false);
 		bullet.reset(this.laser.x + 24, this.laser.y - 5);
-    bullet.body.velocity.y = comet.y - this.laser.y;
-    bullet.body.velocity.x = comet.x - this.laser.x;
-    console.log(this);
-    bullet.rotation = Phaser.Math.angleBetween(this.laser.x , this.laser.y, comet.x, comet.y);
-    console.log(Phaser.Math.angleBetween(this.laser.x , this.laser.y, comet.x, comet.y));
-    console.log(bullet.body.velocity);
-    // bullet.body.velocity = 200;
-    // bullet.rotation = (-90)*(Math.PI/180);
-    // bullet.rotation = Math.atan2(this.laser.y- comet.y, this.laser.x - comet.x) * (180/Math.PI);;
+		// bullet velocity x and y are set based of angle between laser and comet, increase speed with multiplier to make bullet faster
+    bullet.body.velocity.y = (comet.y - this.laser.y) * 5.5;
+    bullet.body.velocity.x = (comet.x - this.laser.x) * 5.5;
+
+    // Set bullet rotation based off angle between sprites, add 90 degrees
+    // This took forever to figure out...using a phaser method that allows you to find angle between two sprites, then adding an additional 90 degrees 
+    bullet.rotation = Phaser.Math.angleBetween(this.laser.x , this.laser.y, comet.x, comet.y) + (90)*(Math.PI/180);
     
 	},
 	hitCity: function() {
+		// grab first explosion sprite from group array, reset location to comet body, and play explosion animation
 		var explosionAnimation = explosions.getFirstExists(false);
     explosionAnimation.reset(this.comets.getAt(0).body.x + 11, this.comets.getAt(0).body.y + 4);
     explosionAnimation.play('explosion', 30, false, true);
+    // destroy the oldest comet
 		this.comets.getAt(0).destroy();
+		// decrease city health by 1 because of hit
 		this.game.cityHealth -= 1;
+		// reset perfect entry counter back to 0, thus reseting the multiplier as well
 		this.game.perfectCounter = 0;
-		console.log(this.game.cityHealth);
 
-		// console.log(oldestComet);
-		// oldestComet += 1;
-		// console.log(oldestComet);
-
-		// this.comet.animations.play('explosion', 30, false, true);
-		// var emitter = this.game.add.emitter(this.comets.children[this.oldestIndex - 1].x, this.comets.children[this.oldestIndex - 1].y, 100);
-  //   emitter.makeParticles('playerParticle');
-  //   emitter.minParticleSpeed.setTo(-100, -100);
-  //   emitter.maxParticleSpeed.setTo(100, 100);
-  //   emitter.gravity = 0;
-  //   emitter.start(true, 500, null, 100);
-  //   this.comets.children[this.oldestIndex - 1].play('kaboom', 30, false, true);
-		// this.comets.children[this.oldestIndex - 1].kill();
-		// this.oldestIndex++;
 	},
 };
 

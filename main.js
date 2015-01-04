@@ -1,4 +1,5 @@
 var game = new Phaser.Game(1000, 600, Phaser.AUTO, 'gameDiv');
+var explosions;
 
 var mainState = {
 	preload: function() {
@@ -20,7 +21,7 @@ var mainState = {
 
 		//add background and city
 		this.background = game.add.tileSprite(0, 0, this.game.width, this.game.height, 'space');
-		this.background = game.add.tileSprite(0, 0, this.game.width, this.game.height, 'skyline');
+		// this.background = game.add.tileSprite(0, 0, this.game.width, this.game.height, 'skyline');
 
 		this.game.score = 0;
 		this.game.perfectCounter = 0;
@@ -70,9 +71,20 @@ var mainState = {
 		this.comets.physicsBodyType = Phaser.Physics.ARCADE;
 		this.comets.enableBody = true;
 
-		this.explosions = game.add.group();
-		this.explosions.createMultiple(30, 'explosion');
-		console.log(explosions)
+		explosions = game.add.group();
+		for (var i = 0; i < 10; i++)
+    {
+        var explosionAnimation = explosions.create(0, 0, 'explosion', [0], false);
+        explosionAnimation.anchor.setTo(0.5, 0.5);
+        explosionAnimation.animations.add('explosion');
+    }
+
+    //test for later
+		// this.explosions.createMultiple(30, 'explosion');
+		// this.explosions.getAt(0).animations.add('explode');
+		// this.explosions.getAt
+		// console.log(this.explosions)
+
 		// this.explosion = this.game.add.sprite(1000,4000,'explosion')
 		// this.explosion.animations.add('explode');
 
@@ -125,14 +137,18 @@ var mainState = {
 	},
 	destroyComet: function() {
 		console.log("destroy!");
-		var explosion = this.explosions.getAt(0);
-		explosion.animations.add('explode');
-		console.log(explosion);
-		explosion.position.x = 400;
-		explosion.position.y = 400;
+		var explosionAnimation = explosions.getFirstExists(false);
+        explosionAnimation.reset(this.comets.getAt(0).body.x, this.comets.getAt(0).body.y);
+        explosionAnimation.play('explosion', 30, false, true);
+		// var explosion = this.explosions.getAt(0);
+		// explosion.animations.add('explode');
+		// explosion.position.x = this.game.world.randomX;
+		// explosion.position.y = this.game.world.randomY;
+		// explosion.z = 10;
+		// console.log(explosion)
 		// explosion.position.x = this.comets.getAt(0).body.x - 50;
 		// explosion.position.y = this.comets.getAt(0).body.y - 50;
-		explosion.animations.play('explode',60,false,true);
+		// explosion.animations.play('explode',30,true,false);
 
 		this.comets.getAt(0).destroy();
 

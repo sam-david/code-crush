@@ -151,23 +151,26 @@ var mainState = {
 	},
 	destroyComet: function() {
 		console.log("destroy!");
-		this.fireBullet();
+		
 		var explosionAnimation = explosions.getFirstExists(false);
     explosionAnimation.reset(this.comets.getAt(0).body.x + 11, this.comets.getAt(0).body.y + 4);
     explosionAnimation.play('explosion', 30, false, true);
-
+    this.fireBullet(this.comets.getAt(0));
 		this.comets.getAt(0).destroy();
 
 		this.game.score += (100 * this.game.multiplier);
 		this.game.perfectCounter += 1;
 	},
-	fireBullet: function() {
+	fireBullet: function(comet) {
 		console.log('bullet fired');
+		console.log(comet);
 		var bullet = bullets.getFirstExists(false);
 		bullet.reset(this.laser.x + 24, this.laser.y - 5);
-    bullet.body.velocity.y = -400;
-    bullet.body.velocity.x = -200;
-    bullet.rotation = (-90)*(Math.PI/180);
+    bullet.body.velocity.y = comet.y - this.laser.y;
+    bullet.body.velocity.x = comet.x - this.laser.x;
+    // bullet.body.velocity = 200;
+    // bullet.rotation = (-90)*(Math.PI/180);
+    // bullet.rotation = Math.atan2(this.laser.y- comet.y, this.laser.x - comet.x) * (180/Math.PI);;
     
 	},
 	hitCity: function() {

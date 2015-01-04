@@ -1,9 +1,11 @@
-var game = new Phaser.Game(768, 600, Phaser.AUTO, 'gameDiv');
+var game = new Phaser.Game(1000, 600, Phaser.AUTO, 'gameDiv');
 
 var mainState = {
 	preload: function() {
 		this.load.image('space', 'assets/space.png');
-		this.load.image('comet', 'assets/rock.png');
+		this.load.image('skyline', 'assets/city-dusk.png');
+		this.load.image('comet', 'assets/rocks.png');
+		this.load.image('laser','assets/lazgun.png');
 		this.load.image('city', 'assets/code-city.png');
 		this.load.image('fire1', 'assets/fire1.png');
     this.load.image('fire2', 'assets/fire2.png');
@@ -18,14 +20,15 @@ var mainState = {
 
 		//add background and city
 		this.background = game.add.tileSprite(0, 0, this.game.width, this.game.height, 'space');
+		this.background = game.add.tileSprite(0, 0, this.game.width, this.game.height, 'skyline');
 
 		this.game.score = 0;
 		this.game.perfectCounter = 0;
 		this.game.multiplier = 1;
 		this.game.cityHealth = 5;
 
-		codeText = game.add.text(250, 10, "var thing = 'thing'", { font: '34px Arial', fill: '#fff' });
-		cityHealthText = game.add.text(620,480, "Health: 5", {
+		codeText = game.add.text(370, 10, "var thing = 'thing'", { font: '34px Arial', fill: '#fff' });
+		cityHealthText = game.add.text(840,480, "Health: 5", {
 			font: "24px Arial",
 			fill: '#ff0044',
 			align: 'center'
@@ -35,7 +38,7 @@ var mainState = {
 			fill: '#ff0044',
 			align: 'center'
 		});
-		multiplierText = game.add.text(620,10, "Multiplier: 1x", {
+		multiplierText = game.add.text(830,10, "Multiplier: 1x", {
 			font: "24px Arial",
 			fill: '#ff0044',
 			align: 'center'
@@ -51,10 +54,9 @@ var mainState = {
 		this.laserKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		this.laserKey.onDown.add(this.destroyComet, this);
 
-
-
-		// city = this.game.add.sprite(0,512, 'city');
 		this.city = this.game.add.sprite(0,512, 'city');
+		this.laser = this.game.add.sprite(500,505, 'laser');
+		// this.laser.scale.setTo(.5);
 
 		//enable city physics for collision
 		// this.game.physics.arcade.enable(this.city);
@@ -68,8 +70,11 @@ var mainState = {
 		this.comets.physicsBodyType = Phaser.Physics.ARCADE;
 		this.comets.enableBody = true;
 
-		this.oldestIndex = 1;
-		this.timer = game.time.events.loop(2800, this.dropComet, this);
+
+		// this.explosion = this.game.add.sprite(1000,4000,'explosion')
+		// this.explosion.animations.add('explode');
+
+		this.timer = game.time.events.loop(1800, this.dropComet, this);
 	},
 	update: function() {
 		this.game.physics.arcade.collide(this.city, this.comets, this.hitCity, null, this);
@@ -94,7 +99,8 @@ var mainState = {
 		// this.emitter = game.add.emitter(0, -50, 10);
 		// this.emitter.makeParticles('fire1');
 		// this.emitter.gravity = -100;
-
+		this.explosion = this.game.add.sprite(1000,4000,'explosion')
+		this.explosion.animations.add('explode');
 		//enable physics of comets
 		var comet;
 		this.comet = this.comets.create(this.game.world.randomX, 0, 'comet');
@@ -103,12 +109,12 @@ var mainState = {
 		// this.game.physics.enable(this.comet, Phaser.Physics.ARCADE);
 
 		// game.physics.arcade.enable(this.comet);
-		this.comet.scale.setTo(.5);
+		this.comet.scale.setTo(1);
 
 		// this.comet.animations.add('explosion');
 
 		//set downward velocity
-		this.comet.body.velocity.y = 100;
+		this.comet.body.velocity.y = 50;
 		// this.comet.body.velocity.x = this.game.rnd.integerInRange(-50, 50)
 		// comet.body.immovable = true;
 		this.comet.body.collideWorldBounds = true;
@@ -117,8 +123,16 @@ var mainState = {
 	},
 	destroyComet: function() {
 		console.log("destroy!");
+		console.log(this.comets.getAt(0).body.x);
+		this.explosion.position.x = this.comets.getAt(0).body.x - 50;
+		this.explosion.position.y = this.comets.getAt(0).body.y - 50;
+		console.log(this.explosion);
+		this.explosion.animations.play('explode',60,false,true);
 		this.comets.getAt(0).destroy();
+
 		this.game.score += (100 * this.game.multiplier);
+
+
 		this.game.perfectCounter += 1;
 		console.log(this.game.score);
 	},

@@ -61,22 +61,34 @@ module.exports = function(app, passport) {
     });
 
     app.get('/users/:user_id', function(req, res, next){
-        var userId = req.params.user_id;
-        var user = User.findOne({"_id": userId});
-        res.json(user);
+        var user_id = req.params.user_id;
+        var query = User.findById(user_id)
+        query.exec(function(err, user){
+            if(err){return next(err);}
+            res.json(user);
+        })
     });
 
     app.post('/users/:user_id/scores', function(req, res, next) {
+        var score = new Score({game: 'Codefall', score: 500});
         var user_id = req.params.user_id;
-        User.findOne({ '_id' : user_id }, function(err, user) {
+        var query = User.findById(user_id);
+        query.exec(function(err, user){
             if(err){return next(err);}
+            score.user = user;
+            user.scores.push(score);
+            user.save(function(err, user){
+                if(err){return next(err);}
+                res.json(score);
+            });
+            score.save();
         });
-        var score = new Score({game: 'Codefall', score: 500, user: ""});
-        score.save(function(err, score){
-            if(err){return next(err);}
-            res.json(score);
-        });
+
     });
+
+    // app.get('/currentuser', isLoggedIn, function(req, res) {
+    //     res.json(req.user)
+    // });
 };
 
 // route middleware to make sure a user is logged in

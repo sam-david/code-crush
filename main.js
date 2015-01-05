@@ -102,18 +102,8 @@ var mainState = {
       explosionAnimation.animations.add('explosion');
     }
 
-    // add emitter group to 
-    for (var e = 0; e < 10; e++) {
-    	//emitter setup
-		  emitter = game.add.emitter(0, 0, 400);
-		  emitter.makeParticles( [ 'fire1', 'fire2', 'fire3', 'smoke' ] );
-		  emitter.gravity = 8;
-		  // emitter.emitX = 30;
-    	emitter.setAlpha(1, 0, 3000);
-    	emitter.setScale(0.3, 0.5, 0.3, 0.5, 3000);
-		  // push to pool of fire trails
-		  fireTrailPool.push(emitter);
-		}
+    // create 10 emitters and add into Fire Trail pool array
+    this.pushToFireTrailPool(10);
 
     // create bullets group(30), add physics, set properties
     bullets = game.add.group();
@@ -177,7 +167,7 @@ var mainState = {
 		// fireTrail.emitY = this.comet.y;
 		fireTrail.start(false, 3000, 5);
 		this.comet.addChild(fireTrail);
-
+		this.pushToFireTrailPool(1);
 		console.log(this.currentFireTrail);
 		this.currentFireTrail = Phaser.Math.wrap(this.currentFireTrail + 1, 0, fireTrailPool.length)
 		console.log(this.currentFireTrail);
@@ -242,7 +232,21 @@ var mainState = {
 		this.game.cityHealth -= 1;
 		// reset perfect entry counter back to 0, thus reseting the multiplier as well
 		this.game.perfectCounter = 0;
-
+	},
+	pushToFireTrailPool: function(quantity) {
+		// add emitter group to 
+		console.log(quantity +" emitters created");
+    for (var e = 0; e < quantity; e++) {
+    	//emitter setup
+		  emitter = game.add.emitter(0, 0, 400);
+		  emitter.makeParticles( [ 'fire1', 'fire2', 'fire3', 'smoke' ] );
+		  emitter.gravity = 8;
+		  // emitter.emitX = 30;
+    	emitter.setAlpha(1, 0, 3000);
+    	emitter.setScale(0.3, 0.5, 0.3, 0.5, 3000);
+		  // push to pool of fire trails
+		  fireTrailPool.push(emitter);
+		}
 	},
 };
 

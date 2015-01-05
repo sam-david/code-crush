@@ -1,8 +1,10 @@
-var game = new Phaser.Game(1000, 600, Phaser.AUTO, 'gameDiv');
+var game = new Phaser.Game(960, 640, Phaser.AUTO, 'gameDiv');
 
 // declaring these out here so they can be easily used across functions. This was how they did it on the official phaser site.
 var explosions;
 var bullets;
+var emitter;
+var fireTrailPool = [];
 
 // new debug rectangle object
 var rect = new Phaser.Rectangle( 350, 5, 300, 100 ) ;
@@ -35,8 +37,8 @@ var mainState = {
 		//add background, city, and laser
 		this.background = game.add.tileSprite(0, 0, this.game.width, this.game.height, 'space');
 		// this.background = game.add.tileSprite(0, 0, this.game.width, this.game.height, 'skyline');
-		this.city = this.game.add.sprite(0,512, 'city');
-		this.laser = this.game.add.sprite(500,505, 'laser');
+		this.city = this.game.add.sprite(0,552, 'city');
+		this.laser = this.game.add.sprite(480,545, 'laser'); 
 
 		//enable city physics for collision
 		this.game.physics.enable(this.city, Phaser.Physics.ARCADE);
@@ -50,6 +52,7 @@ var mainState = {
 		this.game.perfectCounter = 0;
 		this.game.multiplier = 1;
 		this.game.cityHealth = 5;
+		this.currentFireTrail = 0;
 
 		// set game audio
 		this.explosionSound = this.add.audio('explosion2');
@@ -58,7 +61,7 @@ var mainState = {
 
 		// create game text objects (health, code text, and multiplier)
 		codeText = game.add.text(370, 10, "var thing = 'thing'", { font: '34px Arial', fill: '#fff' });
-		cityHealthText = game.add.text(840,480, "Health: 5", {
+		cityHealthText = game.add.text(810,520, "Health: 5", {
 			font: "24px Arial",
 			fill: '#ff0044',
 			align: 'center'
@@ -68,7 +71,7 @@ var mainState = {
 			fill: '#ff0044',
 			align: 'center'
 		});
-		multiplierText = game.add.text(830,10, "Multiplier: 1x", {
+		multiplierText = game.add.text(810,10, "Multiplier: 1x", {
 			font: "24px Arial",
 			fill: '#ff0044',
 			align: 'center'
@@ -98,6 +101,19 @@ var mainState = {
       explosionAnimation.anchor.setTo(0.5, 0.5);
       explosionAnimation.animations.add('explosion');
     }
+
+    // add emitter group to 
+    for (var e = 0; e < 10; e++) {
+    	//emitter setup
+		  emitter = game.add.emitter(0, 0, 400);
+		  emitter.makeParticles( [ 'fire1', 'fire2', 'fire3', 'smoke' ] );
+		  emitter.gravity = 8;
+		  // emitter.emitX = 30;
+    	emitter.setAlpha(1, 0, 3000);
+    	emitter.setScale(0.3, 0.5, 0.3, 0.5, 3000);
+		  // push to pool of fire trails
+		  fireTrailPool.push(emitter);
+		}
 
     // create bullets group(30), add physics, set properties
     bullets = game.add.group();
@@ -150,6 +166,21 @@ var mainState = {
 		// comet will not go outside world bounds
 		this.comet.body.collideWorldBounds = true;
 
+		var px = (this.comet.body.velocity.x * -1);
+		var py = (this.comet.body.velocity.y * -1);
+
+		var fireTrail = fireTrailPool[this.currentFireTrail];
+		fireTrail.minParticleSpeed.set(px,py);
+		fireTrail.maxParticleSpeed.set(px,py);
+		fireTrail.emitX += 13
+		fireTrail.emitY -= 5
+		// fireTrail.emitY = this.comet.y;
+		fireTrail.start(false, 3000, 5);
+		this.comet.addChild(fireTrail);
+
+		console.log(this.currentFireTrail);
+		this.currentFireTrail = Phaser.Math.wrap(this.currentFireTrail + 1, 0, fireTrailPool.length)
+		console.log(this.currentFireTrail);
 		// this.emitter.start(false, 100000000, 10, 30);
 	},
 	destroyComet: function() {

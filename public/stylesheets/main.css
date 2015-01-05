@@ -1,11 +1,12 @@
 @import url(http://fonts.googleapis.com/css?family=Audiowide|Orbitron:400,700|Ruda:400,700);
 
 body {
-  background-image: url('../images/background.jpg');
+  background-image: url('../images/megamoth-big.png');
+  background-size: 30%;
+  background-color: grey;
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-  background-size: cover;
+  background-position: fixed top left;
+  /*background-size: cover;*/
   color: white;
   font-family: 'Orbitron';
 }
@@ -19,9 +20,27 @@ canvas {
   padding: 3%;
   border-radius: 5px;
 }
+
+.clear-card {
+  padding: 3%;
+  border-radius: 5px;
+}
+
+.blue-diag-stripes {
+  background: repeating-linear-gradient(
+  45deg,
+  #606dbc,
+  #606dbc 10px,
+  #465298 10px,
+  #465298 20px
+);
+}
+
 .navbar-default {
   background-color: black;
-  border-color: white;
+}
+
+.navbar-default .navbar-brand {
   color: white;
 }
 
@@ -34,4 +53,7 @@ canvas {
   width: 49%;
   margin-left: 1%;
   float: right;
+  display: inline-block;
 }
+
+.

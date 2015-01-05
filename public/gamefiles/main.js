@@ -6,6 +6,93 @@ var bullets;
 var emitter;
 var fireTrailPool = [];
 
+var keyIndex = {
+	'0': 48,
+  '1': 49,
+  '2': 50,
+  '3': 51,
+  '4': 52,
+  '5': 53,
+  '6': 54,
+  '7': 55,
+  '8': 56,
+  '9': 57,
+  'a': 65,
+  'b': 66,
+  'c': 67,
+  'd': 68,
+  'e': 69,
+  'f': 70,
+  'g': 71,
+  'h': 72,
+  'i': 73,
+  'j': 74,
+  'k': 75,
+  'l': 76,
+  'm': 77,
+  'n': 78,
+  'o': 79,
+  'p': 80,
+  'q': 81,
+  'r': 82,
+  's': 83,
+  't': 84,
+  'u': 85,
+  'v': 86,
+  'w': 87,
+  'x': 88,
+  'y': 89,
+  'z': 90,
+  ' ': 32,
+  ';': 186,
+  ':': 186,
+  '=': 187,
+  ',': 188,
+  '.': 190,
+  '/': 191,
+  '[': 219,
+  ']': 221,
+  '{': 219,
+  '}': 221,
+  "'": 222,
+  "|": 220,
+  "+": 187,
+  "-": 189,
+  '%': 53,
+  '*': 56,
+  '$': 52,
+  '_': 189,
+  '?': 191,
+  'Backslash': 220
+};
+
+var levelOneLines = [
+"def sqr(x)",
+"return x*x",
+"end",
+"(rand(4) + 2).times {",
+"a = rand(300)",
+"print a,'^2 = ', sqr(a)}",
+"def boom",
+"print 'Boom!'",
+"end",
+"boom",
+"boom",
+"print",
+'def line(cnt, ender = "+", fill = "-")',
+"print ender, fill * cnt, ender",
+"end",
+"line(8)",
+"line(5,'*')",
+"line(11,'+','=')",
+"def incr(n)",
+"n = n + 1",
+"end",
+"a = 5",
+"incr(a)",
+"print a"
+]
+
 // new debug rectangle object
 var rect = new Phaser.Rectangle( 350, 5, 300, 100 ) ;
 
@@ -53,6 +140,8 @@ var mainState = {
 		this.game.multiplier = 1;
 		this.game.cityHealth = 5;
 		this.currentFireTrail = 0;
+		stringIndex = 0;
+		codeSnippet = "var thing = 'thing'"
 
 		// set game audio
 		this.explosionSound = this.add.audio('explosion2');
@@ -60,7 +149,8 @@ var mainState = {
 		this.multiSound = this.add.audio('multiUp');
 
 		// create game text objects (health, code text, and multiplier)
-		codeText = game.add.text(370, 10, "var thing = 'thing'", { font: '34px Arial', fill: '#fff' });
+		codeText = game.add.text(370, 10, codeSnippet, { font: '34px Arial', fill: '#fff' });
+
 		cityHealthText = game.add.text(810,520, "Health: 5", {
 			font: "24px Arial",
 			fill: '#ff0044',
@@ -78,15 +168,34 @@ var mainState = {
 		});
 
 		//Keyboard input for code...save for later
-		// this.game.input.keyboard.onDownCallback = function(e) {
-		// 	if (e.keyCode === 32) {
-		// 		// this.destroyComet;
-		// 	}
-		// }
+		var that = this;
+		this.game.input.keyboard.onDownCallback = function(input) {
+			console.log(input.keyCode);
+			if (stringIndex > codeSnippet.length) {
+				//move to next string
+			}
+			var currentLetter = codeSnippet.charAt(stringIndex);
+			if (keyIndex[currentLetter] === input.keyCode) {
+				// codeSnippet.charAt(stringIndex).fill()
+				console.log('Correct!')
+				console.log(codeText);
+				codeText.addColor('#00ff00',stringIndex)
+				console.log(stringIndex);
+				stringIndex++
+				codeText.addColor('#fff',stringIndex)
+
+			} else if (input.keyCode === 13 && stringIndex === codeSnippet.length) {
+				console.log('line done');
+				that.destroyComet();
+			} else {
+				console.log('wrong dumbass!!')
+				this.game.perfectCounter = 0;
+			}
+		}
 
 		// set spacebar to execute function destroyComet
 		this.laserKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-		this.laserKey.onDown.add(this.destroyComet, this);
+		// this.laserKey.onDown.add(this.destroyComet, this);
 
 		// add comets group and enable physics
 		this.comets = this.game.add.group();

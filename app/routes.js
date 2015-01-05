@@ -1,5 +1,9 @@
 // app/routes.js
+var Score = require('../app/models/score');
+var User = require('../app/models/user');
 module.exports = function(app, passport) {
+
+    // var Score = mongoose.model('Score');
     app.get('/', function(req, res) {
         res.render('index.ejs'); // load the index.ejs file
     });
@@ -59,7 +63,19 @@ module.exports = function(app, passport) {
     app.get('/users/:user_id', function(req, res, next){
         var userId = req.params.user_id;
         var user = User.findOne({"_id": userId});
-        res.json(user)
+        res.json(user);
+    });
+
+    app.post('/users/:user_id/scores', function(req, res, next) {
+        var user_id = req.params.user_id;
+        User.findOne({ '_id' : user_id }, function(err, user) {
+            if(err){return next(err);}
+        });
+        var score = new Score({game: 'Codefall', score: 500, user: ""});
+        score.save(function(err, score){
+            if(err){return next(err);}
+            res.json(score);
+        });
     });
 };
 

@@ -32,7 +32,7 @@ module.exports = function(app, passport) {
     }));
 
     app.get('/profile', isLoggedIn, function(req, res) {
-        res.render('profile.ejs', {
+        res.render('profile.html', {
             user : req.user // get the user out of session and pass to template
         });
     });
@@ -54,6 +54,12 @@ module.exports = function(app, passport) {
     app.get('/logout', function(req, res) {
         req.logout();
         res.redirect('/');
+    });
+
+    app.get('/users/:user_id', function(req, res, next){
+        var userId = req.params.user_id;
+        var user = User.findOne({"_id": userId});
+        res.json(user)
     });
 };
 

@@ -17,6 +17,11 @@ app.config(function($stateProvider, $urlRouterProvider){
     templateUrl: 'templates/signup.html'
   });
 
+  $stateProvider.state('profile', {
+    url: '/profile',
+    templateUrl: 'templates/profile.html'
+  });
+
   $stateProvider.state('codefall', {
     url: '/games/codefall',
     templateUrl: 'templates/codefall.html'

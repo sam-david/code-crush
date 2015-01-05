@@ -70,23 +70,25 @@ module.exports = function(app, passport) {
     });
 
     app.post('/users/:user_id/scores', function(req, res, next) {
-        var user;
+        var score = new Score({game: 'Codefall', score: 500});
         var user_id = req.params.user_id;
         var query = User.findById(user_id);
-        query.exec(function(err, new_user){
+        query.exec(function(err, user){
             if(err){return next(err);}
-            user = new_user;
+            score.user = user;
+            user.scores.push(score);
+            user.save(function(err, user){
+                if(err){return next(err);}
+                res.json(score);
+            });
+            score.save();
         });
 
-        var score = new Score({game: 'Codefall', score: 500});
-        score.user = user;
-        user.scores.push(score);
-        score.save(function(err, score){
-            if(err){return next(err);}
-
-            res.json(score);
-        });
     });
+
+    // app.get('/currentuser', isLoggedIn, function(req, res) {
+    //     res.json(req.user)
+    // });
 };
 
 // route middleware to make sure a user is logged in

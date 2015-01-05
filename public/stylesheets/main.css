@@ -1,16 +1,37 @@
+@import url(http://fonts.googleapis.com/css?family=Audiowide|Orbitron:400,700|Ruda:400,700);
+
 body {
   background-image: url('../images/background.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
+  color: white;
+  font-family: 'Orbitron';
 }
 
 canvas {
   margin: auto;
 }
 
+.card {
+  border: 2px solid white;
+  padding: 3%;
+  border-radius: 5px;
+}
 .navbar-default {
   background-color: black;
   border-color: white;
+  color: white;
+}
+
+.profile-pic {
+  width: 50%;
+  background: white;
+}
+
+.profile-info {
+  width: 49%;
+  margin-left: 1%;
+  float: right;
 }

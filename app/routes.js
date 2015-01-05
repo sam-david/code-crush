@@ -1,5 +1,9 @@
 // app/routes.js
+var Score = require('../app/models/score');
+var User = require('../app/models/user');
 module.exports = function(app, passport) {
+
+    // var Score = mongoose.model('Score');
     app.get('/', function(req, res) {
         res.render('index.ejs'); // load the index.ejs file
     });
@@ -32,7 +36,7 @@ module.exports = function(app, passport) {
     }));
 
     app.get('/profile', isLoggedIn, function(req, res) {
-        res.render('profile.ejs', {
+        res.render('profile.html', {
             user : req.user // get the user out of session and pass to template
         });
     });
@@ -55,6 +59,36 @@ module.exports = function(app, passport) {
         req.logout();
         res.redirect('/');
     });
+
+    app.get('/users/:user_id', function(req, res, next){
+        var user_id = req.params.user_id;
+        var query = User.findById(user_id)
+        query.exec(function(err, user){
+            if(err){return next(err);}
+            res.json(user);
+        })
+    });
+
+    app.post('/users/:user_id/scores', function(req, res, next) {
+        var score = new Score({game: 'Codefall', score: 500});
+        var user_id = req.params.user_id;
+        var query = User.findById(user_id);
+        query.exec(function(err, user){
+            if(err){return next(err);}
+            score.user = user;
+            user.scores.push(score);
+            user.save(function(err, user){
+                if(err){return next(err);}
+                res.json(score);
+            });
+            score.save();
+        });
+
+    });
+
+    // app.get('/currentuser', isLoggedIn, function(req, res) {
+    //     res.json(req.user)
+    // });
 };
 
 // route middleware to make sure a user is logged in

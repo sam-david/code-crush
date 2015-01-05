@@ -63,6 +63,8 @@ var keyIndex = {
   '$': 52,
   '_': 189,
   '?': 191,
+  "(": 57,
+ 	")": 48,
   'Backslash': 220
 };
 
@@ -72,16 +74,12 @@ var levelOneLines = [
 "end",
 "(rand(4) + 2).times {",
 "a = rand(300)",
-"print a,'^2 = ', sqr(a)}",
 "def boom",
 "print 'Boom!'",
 "end",
 "boom",
 "boom",
 "print",
-'def line(cnt, ender = "+", fill = "-")',
-"print ender, fill * cnt, ender",
-"end",
 "line(8)",
 "line(5,'*')",
 "line(11,'+','=')",
@@ -141,6 +139,7 @@ var mainState = {
 		this.game.cityHealth = 5;
 		this.currentFireTrail = 0;
 		stringIndex = 0;
+		codeLineIndex = 0;
 		codeSnippet = "var thing = 'thing'"
 
 		// set game audio
@@ -149,7 +148,7 @@ var mainState = {
 		this.multiSound = this.add.audio('multiUp');
 
 		// create game text objects (health, code text, and multiplier)
-		codeText = game.add.text(370, 10, codeSnippet, { font: '34px Arial', fill: '#fff' });
+		codeText = game.add.text(370, 10, levelOneLines[codeLineIndex], { font: '34px Arial', fill: '#fff' });
 
 		cityHealthText = game.add.text(810,520, "Health: 5", {
 			font: "24px Arial",
@@ -170,32 +169,40 @@ var mainState = {
 		//Keyboard input for code...save for later
 		var that = this;
 		this.game.input.keyboard.onDownCallback = function(input) {
-			console.log(input.keyCode);
-			if (stringIndex > codeSnippet.length) {
+
+			if (stringIndex > codeText.text.length) {
 				//move to next string
 			}
-			var currentLetter = codeSnippet.charAt(stringIndex);
-			if (keyIndex[currentLetter] === input.keyCode) {
-				// codeSnippet.charAt(stringIndex).fill()
+			var currentLetter = codeText.text.charAt(stringIndex);
+			if (keyIndex[currentLetter] === input.keyCode && input.keyCode != 13) {
+				// codeText.text.charAt(stringIndex).fill()
 				console.log('Correct!')
-				console.log(codeText);
 				codeText.addColor('#00ff00',stringIndex)
 				console.log(stringIndex);
 				stringIndex++
 				codeText.addColor('#fff',stringIndex)
 
-			} else if (input.keyCode === 13 && stringIndex === codeSnippet.length) {
+			} else if (input.keyCode === 13 && stringIndex === codeText.text.length) {
 				console.log('line done');
+				codeLineIndex++;
 				that.destroyComet();
+				// codeText.setText(levelOneLines[codeLineIndex]);
+				// codeText.fill = '#fff';
+				that.world.remove(codeText);
+				codeText = game.add.text(370, 10, levelOneLines[codeLineIndex], { font: '34px Arial', fill: '#fff' });
+				stringIndex = 0;
+				// codeText.addColor('#fff',stringIndex)
+
 			} else {
 				console.log('wrong dumbass!!')
-				this.game.perfectCounter = 0;
+				that.game.perfectCounter = 0;
 			}
 		}
 
 		// set spacebar to execute function destroyComet
 		this.laserKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-		// this.laserKey.onDown.add(this.destroyComet, this);
+		this.laserKey = this.input.keyboard.addKey(Phaser.Keyboard.BACKSPACE);
+		this.laserKey.onDown.add(this.changeBack, this);
 
 		// add comets group and enable physics
 		this.comets = this.game.add.group();
@@ -225,7 +232,8 @@ var mainState = {
     bullets.setAll('checkWorldBounds', true);
 
     // timer to drop comets
-		this.timer = game.time.events.loop(1800, this.dropComet, this);
+		this.timer = game.time.events.loop(3800, this.dropComet, this);
+		this.changeBack();
 	},
 	update: function() {
 		// if collision between comets and city, execute hitCity function, damaging the city
@@ -315,6 +323,15 @@ var mainState = {
 			}
 		}
 
+	},
+	postScore: function() {
+		console.log('posting score');
+		$.ajax({
+			type: "POST",
+			url: "url",
+			data: this.game.score
+		});
+		$('a').css('color','blue');
 	},
 	fireBullet: function(comet) {
 		//play laser audio

@@ -156,54 +156,56 @@ var mainState = {
 		// comet will not go outside world bounds
 		this.comet.body.collideWorldBounds = true;
 
+		// grab fireTrail emitter from pool based on counter
+		var fireTrail = fireTrailPool[this.currentFireTrail];
+
+		//set velocity for emitter
 		var px = (this.comet.body.velocity.x * -1);
 		var py = (this.comet.body.velocity.y * -1);
-
-		var fireTrail = fireTrailPool[this.currentFireTrail];
 		fireTrail.minParticleSpeed.set(px,py);
 		fireTrail.maxParticleSpeed.set(px,py);
 		fireTrail.emitX += 13
 		fireTrail.emitY -= 5
-		// fireTrail.emitY = this.comet.y;
+		//start emitter
 		fireTrail.start(false, 3000, 5);
+		//append emitter to comet
 		this.comet.addChild(fireTrail);
+		//create one new emitter for the pool
 		this.pushToFireTrailPool(1);
-		console.log(this.currentFireTrail);
 		this.currentFireTrail = Phaser.Math.wrap(this.currentFireTrail + 1, 0, fireTrailPool.length)
-		console.log(this.currentFireTrail);
-		// this.emitter.start(false, 100000000, 10, 30);
 	},
 	destroyComet: function() {
-		//play explosion effect
-		this.explosionSound.play();
+		// check if a comet exists, if so, execute comet destruction
+		if (this.comets.getAt(0) != -1) {
+			this.explosionSound.play();
+			// take first explosion animation from group, reset the location, 
+			var explosionAnimation = explosions.getFirstExists(false);
+	    explosionAnimation.reset(this.comets.getAt(0).body.x + 14, this.comets.getAt(0).body.y + 8);
+	    explosionAnimation.play('explosion', 30, false, true);
+	    this.fireBullet(this.comets.getAt(0));
+			this.comets.getAt(0).destroy();
+			this.game.score += (100 * this.game.multiplier);
+
+			// Play multiplier sound if our perfect entry counter is divisible by 5 (multiplier ups every 5 perfect entries)
+			this.game.perfectCounter += 1;
+			if (this.game.perfectCounter % 5 === 0) {
+				this.multiSound.play();
+			}
+
+			//increase multiplier every 5 perfect entries
+			if (this.game.perfectCounter === 5) {
+				this.game.multiplier = 2;
+			} else if (this.game.perfectCounter === 10) {
+				this.game.multiplier = 3;
+			} else if (this.game.perfectCounter === 15) {
+				this.game.multiplier = 4;
+			} else if (this.game.perfectCounter === 20) {
+				this.game.multiplier = 5;
+			} else if (this.game.perfectCounter === 0) {
+				this.game.multiplier = 1
+			}
+		}
 		
-		// take first explosion animation from group, reset the location, 
-		var explosionAnimation = explosions.getFirstExists(false);
-    explosionAnimation.reset(this.comets.getAt(0).body.x + 11, this.comets.getAt(0).body.y + 4);
-    explosionAnimation.play('explosion', 30, false, true);
-    this.fireBullet(this.comets.getAt(0));
-		this.comets.getAt(0).destroy();
-
-		this.game.score += (100 * this.game.multiplier);
-
-		// Play multiplier sound if our perfect entry counter is divisible by 5 (multiplier ups every 5 perfect entries)
-		this.game.perfectCounter += 1;
-		if (this.game.perfectCounter % 5 === 0) {
-			this.multiSound.play();
-		}
-
-		//increase multiplier every 5 perfect entries
-		if (this.game.perfectCounter === 5) {
-			this.game.multiplier = 2;
-		} else if (this.game.perfectCounter === 10) {
-			this.game.multiplier = 3;
-		} else if (this.game.perfectCounter === 15) {
-			this.game.multiplier = 4;
-		} else if (this.game.perfectCounter === 20) {
-			this.game.multiplier = 5;
-		} else if (this.game.perfectCounter === 0) {
-			this.game.multiplier = 1
-		}
 	},
 	fireBullet: function(comet) {
 		//play laser audio
@@ -211,7 +213,7 @@ var mainState = {
 
 		// grab first bullet from group array, reset location to laser tip
 		var bullet = bullets.getFirstExists(false);
-		bullet.reset(this.laser.x + 24, this.laser.y - 5);
+		bullet.reset(this.laser.x + 26, this.laser.y + 20);
 		// bullet velocity x and y are set based of angle between laser and comet, increase speed with multiplier to make bullet faster
     bullet.body.velocity.y = (comet.y - this.laser.y) * 5.5;
     bullet.body.velocity.x = (comet.x - this.laser.x) * 5.5;
@@ -241,9 +243,8 @@ var mainState = {
 		  emitter = game.add.emitter(0, 0, 400);
 		  emitter.makeParticles( [ 'fire1', 'fire2', 'fire3', 'smoke' ] );
 		  emitter.gravity = 8;
-		  // emitter.emitX = 30;
     	emitter.setAlpha(1, 0, 3000);
-    	emitter.setScale(0.3, 0.5, 0.3, 0.5, 3000);
+    	emitter.setScale(0.28, 0.45, 0.28, 0.45, 3000);
 		  // push to pool of fire trails
 		  fireTrailPool.push(emitter);
 		}

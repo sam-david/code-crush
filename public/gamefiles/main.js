@@ -198,7 +198,7 @@ var mainState = {
 				// codeText.addColor('#fff',stringIndex)
 
 			} else {
-				// console.log('wrong dumbass!!')
+				console.log('wrong dumbass!!')
 				that.game.perfectCounter = 0;
 			}
 		}
@@ -237,7 +237,7 @@ var mainState = {
 
     // timer to drop comets
 		this.timer = game.time.events.loop(3800, this.dropComet, this);
-		this.postScore();
+		// this.postScore();
 	},
 	update: function() {
 		// if collision between comets and city, execute hitCity function, damaging the city
@@ -277,7 +277,7 @@ var mainState = {
 		// comet will not go outside world bounds
 		this.comet.body.collideWorldBounds = true;
 
-		// console.log(this.comet);
+		console.log(this.comet);
 
 		// grab fireTrail emitter from pool based on counter
 		var fireTrail = fireTrailPool[this.currentFireTrail];

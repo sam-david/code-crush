@@ -17,8 +17,8 @@ module.exports = function(app, passport) {
 
     // process the login form
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect : '/profile', // redirect to the secure profile section
-        failureRedirect : '/login', // redirect back to the signup page if there is an error
+        successRedirect : '/#/profile', // redirect to the secure profile section
+        failureRedirect : '/#/login', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
 
@@ -30,8 +30,8 @@ module.exports = function(app, passport) {
 
     // process the signup form
     app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect : '/profile', // redirect to the secure profile section
-        failureRedirect : '/signup', // redirect back to the signup page if there is an error
+        successRedirect : '/#/profile', // redirect to the secure profile section
+        failureRedirect : '/#/signup', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
 
@@ -44,14 +44,14 @@ module.exports = function(app, passport) {
     app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
 
     app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-        successRedirect: '/profile',
+        successRedirect: '/#/profile',
         failureRedirect: '/'
     }));
 
     app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email']}));
 
     app.get('/auth/google/callback', passport.authenticate('google', {
-        successRedirect: '/profile',
+        successRedirect: '/#/profile',
         failureRedirect: '/'
     }));
 
@@ -86,9 +86,9 @@ module.exports = function(app, passport) {
 
     });
 
-    // app.get('/currentuser', isLoggedIn, function(req, res) {
-    //     res.json(req.user)
-    // });
+    app.get('/currentuser', function(req, res) {
+        res.json(req.user)
+    });
 };
 
 // route middleware to make sure a user is logged in

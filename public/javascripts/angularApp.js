@@ -28,6 +28,11 @@ app.config(function($stateProvider, $urlRouterProvider){
   });
 });
 
-app.controller('MainCtrl', function($scope){
-
-});
+app.controller('UserCtrl', ['$scope', '$http', function($scope, $http){
+  $scope.getUser = function(){
+    return $http.get('/currentuser').success(function(data){
+      $scope.user = data;
+    });
+  };
+  $scope.getUser();
+}]);

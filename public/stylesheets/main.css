@@ -73,6 +73,11 @@ canvas {
   color: white;
 }
 
+.nav-logo {
+  width: 25%;
+  height: 25%;
+}
+
 .profile-pic {
   width: 50%;
   background: white;
@@ -83,7 +88,7 @@ canvas {
   margin-left: 1%;
   float: right;
   background: white;
-  font-family: 'Helvetica';
+  font-family: 'Ruda';
 
 }
 

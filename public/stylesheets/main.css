@@ -3,11 +3,10 @@
 body {
   background-image: url('../images/megamoth-big.png');
   background-size: 30%;
-  background-color: grey;
+  background-color: #044568;
   background-repeat: no-repeat;
   background-position: fixed top left;
   /*background-size: cover;*/
-  color: white;
   font-family: 'Orbitron';
 }
 
@@ -15,10 +14,18 @@ canvas {
   margin: auto;
 }
 
-.card {
+.white-card {
   border: 2px solid white;
   padding: 3%;
   border-radius: 5px;
+  background: white;
+}
+
+.grey-card {
+  border: 2px solid grey;
+  padding: 3%;
+  border-radius: 5px;
+  background: grey;
 }
 
 .clear-card {
@@ -26,22 +33,49 @@ canvas {
   border-radius: 5px;
 }
 
+
 .blue-diag-stripes {
   background: repeating-linear-gradient(
   45deg,
-  #606dbc,
-  #606dbc 10px,
-  #465298 10px,
-  #465298 20px
+  #3482AC,
+  #3482AC 10px,
+  #044568 10px,
+  #044568 20px
+);
+}
+
+.yellow-diag-stripes {
+  background: repeating-linear-gradient(
+  -55deg,
+  #FFBF13,
+  #FFBF13 10px,
+  #CF9700 10px,
+  #CF9700 20px
+);
+}
+
+.caution-diag-stripes {
+  background: repeating-linear-gradient(
+  -55deg,
+  #FFBF13,
+  #FFBF13 10px,
+  #515151 10px,
+  #515151 20px
 );
 }
 
 .navbar-default {
   background-color: black;
+  border: none;
 }
 
 .navbar-default .navbar-brand {
   color: white;
+}
+
+.nav-logo {
+  width: 25%;
+  height: 25%;
 }
 
 .profile-pic {
@@ -53,7 +87,14 @@ canvas {
   width: 49%;
   margin-left: 1%;
   float: right;
-  display: inline-block;
+  background: white;
+  font-family: 'Ruda';
+
 }
 
-.
+.profile-info h1 {
+  font-family: 'Orbitron';
+  font-size: 2em;
+}
+
+

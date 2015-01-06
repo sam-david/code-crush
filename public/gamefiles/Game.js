@@ -5,119 +5,6 @@ var bullets;
 var emitter;
 var fireTrailPool = [];
 
-var keyIndex = {
-  '0': 48,
-  '1': 49,
-  '2': 50,
-  '3': 51,
-  '4': 52,
-  '5': 53,
-  '6': 54,
-  '7': 55,
-  '8': 56,
-  '9': 57,
-  'a': 65,
-  'b': 66,
-  'c': 67,
-  'd': 68,
-  'e': 69,
-  'f': 70,
-  'g': 71,
-  'h': 72,
-  'i': 73,
-  'j': 74,
-  'k': 75,
-  'l': 76,
-  'm': 77,
-  'n': 78,
-  'o': 79,
-  'p': 80,
-  'q': 81,
-  'r': 82,
-  's': 83,
-  't': 84,
-  'u': 85,
-  'v': 86,
-  'w': 87,
-  'x': 88,
-  'y': 89,
-  'z': 90,
-  'A': 65,
-  'B': 66,
-  'C': 67,
-  'D': 68,
-  'E': 69,
-  'F': 70,
-  'G': 71,
-  'H': 72,
-  'I': 73,
-  'J': 74,
-  'K': 75,
-  'L': 76,
-  'M': 77,
-  'N': 78,
-  'O': 79,
-  'P': 80,
-  'Q': 81,
-  'R': 82,
-  'S': 83,
-  'T': 84,
-  'U': 85,
-  'V': 86,
-  'W': 87,
-  'X': 88,
-  'Y': 89,
-  'Z': 90,
-  ' ': 32,
-  ';': 186,
-  ':': 186,
-  '=': 187,
-  ',': 188,
-  '.': 190,
-  '/': 191,
-  '[': 219,
-  ']': 221,
-  '{': 219,
-  '}': 221,
-  "'": 222,
-  "|": 220,
-  "+": 187,
-  "-": 189,
-  '%': 53,
-  '*': 56,
-  '$': 52,
-  '_': 189,
-  '?': 191,
-  "(": 57,
-  ")": 48,
-  "^": 54,
-  "!": 49,
-  'Backslash': 220
-};
-
-var levelOneLines = [
-"def sqr(x)",
-"return x*x",
-"end",
-"(rand(4) + 2).times {",
-"a = rand(300)",
-"def boom",
-"print 'Boom!'",
-"end",
-"boom",
-"boom",
-"print",
-"line(8)",
-"line(5,'*')",
-"line(11,'+','=')",
-"def incr(n)",
-"n = n + 1",
-"end",
-"a = 5",
-"incr(a)",
-"print a"
-]
-
 CodeFall.Game.prototype = {
   create: function() {
     // start game physics
@@ -131,7 +18,6 @@ CodeFall.Game.prototype = {
     this.terminal = this.game.add.sprite(175,10, 'terminal');
     this.terminal.scale.setTo(.8);
 
-    console.log(this.terminal);
     //enable city physics for collision
     this.game.physics.enable(this.city, Phaser.Physics.ARCADE);
     this.city.body.immovable = true;
@@ -154,7 +40,7 @@ CodeFall.Game.prototype = {
     this.multiSound = this.add.audio('multiUp');
 
     // create game text objects (health, code text, and multiplier)
-    codeText = this.game.add.text(250, 35, levelOneLines[codeLineIndex], { font: '34px Arial', fill: '#fff' });
+    codeText = this.game.add.text(250, 43, levelOneLines[codeLineIndex], { font: '30px Monospace', fill: '#fff' });
     codeText.parent.bringToTop(codeText);
     cityHealthText = this.game.add.text(810,520, "Health: 5", {
       font: "24px Arial",
@@ -171,11 +57,23 @@ CodeFall.Game.prototype = {
       fill: '#ff0044',
       align: 'center'
     });
+    streakText = this.game.add.text(810,50, "Streak: ", {
+      font: "24px Arial",
+      fill: '#ff0044',
+      align: 'center'
+    });
+    //Level 1 text
+    levelText = this.game.add.text(400,300, "Level 1", {
+      font: "24px Arial",
+      fill: '#ff0044',
+      align: 'center'
+    });
 
-    //Keyboard input for code...save for later
+    //Keyboard input for code
     var that = this;
     this.game.input.keyboard.onDownCallback = function(input) {
-
+      console.log("Perfect Counter" + that.game.perfectCounter);
+      console.log("Key code:" + input.keyCode);
       if (stringIndex > codeText.text.length) {
         //move to next string
       }
@@ -195,13 +93,13 @@ CodeFall.Game.prototype = {
         // codeText.setText(levelOneLines[codeLineIndex]);
         // codeText.fill = '#fff';
         that.world.remove(codeText);
-        codeText = this.game.add.text(250, 35, levelOneLines[codeLineIndex], { font: '34px Arial', fill: '#fff' });
+        codeText = this.game.add.text(250, 35, levelOneLines[codeLineIndex], { font: '30px Monospace', fill: '#fff' });
         codeText.parent.bringToTop(codeText);
         stringIndex = 0;
         // codeText.addColor('#fff',stringIndex)
 
-      } else {
-        console.log('wrong dumbass!!')
+      } else if (input.keyCode != 16) {
+        console.log('wrong!');
         that.game.perfectCounter = 0;
       }
     }
@@ -238,6 +136,8 @@ CodeFall.Game.prototype = {
     bullets.setAll('outOfBoundsKill', true);
     bullets.setAll('checkWorldBounds', true);
 
+    // drop one comet to start
+    this.dropComet();
     // timer to drop comets
     this.timer = this.game.time.events.loop(3800, this.dropComet, this);
     // this.postScore();
@@ -248,13 +148,27 @@ CodeFall.Game.prototype = {
 
     // if the city health is 0, game over
     if (this.game.cityHealth === 0) {
-      gameOver = game.add.text(500, 200, "Game Over", { font: '34px Arial', fill: '#fff' });
+      gameOver = this.game.add.text(500, 200, "Game Over", { font: '34px Arial', fill: '#fff' });
     }
+
+    //increase multiplier every 5 perfect entries
+      if (this.game.perfectCounter === 5) {
+        this.game.multiplier = 2;
+      } else if (this.game.perfectCounter === 10) {
+        this.game.multiplier = 3;
+      } else if (this.game.perfectCounter === 15) {
+        this.game.multiplier = 4;
+      } else if (this.game.perfectCounter === 20) {
+        this.game.multiplier = 5;
+      } else if (this.game.perfectCounter === 0) {
+        this.game.multiplier = 1
+      }
 
     // update game text to reflect variables, real time
     gameScoreText.setText("Score: " + this.game.score);
     cityHealthText.setText("City Health: " + this.game.cityHealth);
     multiplierText.setText("Multiplier: " + this.game.multiplier + "x");
+    streakText.setText("Sreak: " + this.game.perfectCounter);
   },
   dropComet: function() {
 
@@ -280,7 +194,6 @@ CodeFall.Game.prototype = {
     // comet will not go outside world bounds
     this.comet.body.collideWorldBounds = true;
 
-    console.log(this.comet);
     // grab fireTrail emitter from pool based on counter
     var fireTrail = fireTrailPool[this.currentFireTrail];
 
@@ -318,34 +231,41 @@ CodeFall.Game.prototype = {
       if (this.game.perfectCounter % 5 === 0) {
         this.multiSound.play();
       }
-
-      //increase multiplier every 5 perfect entries
-      if (this.game.perfectCounter === 5) {
-        this.game.multiplier = 2;
-      } else if (this.game.perfectCounter === 10) {
-        this.game.multiplier = 3;
-      } else if (this.game.perfectCounter === 15) {
-        this.game.multiplier = 4;
-      } else if (this.game.perfectCounter === 20) {
-        this.game.multiplier = 5;
-      } else if (this.game.perfectCounter === 0) {
-        this.game.multiplier = 1
-      }
     }
+  },
+  cityFire: function() {
+    console.log("fire in the city!");
+    // grab fireTrail emitter from pool based on counter
+    var fireTrail = fireTrailPool[this.currentFireTrail];
+
+    //set velocity for emitter
+    var px = (this.comet.body.velocity.x * -1);
+    var py = (this.comet.body.velocity.y * -1);
+    fireTrail.minParticleSpeed.set(px,py);
+    fireTrail.maxParticleSpeed.set(px,py);
+    fireTrail.x = 400
+    fireTrail.y = 400
+    fireTrail.setScale(0.20, 0.45, 0.20, 0.45, 3000);
+    //start emitter
+    fireTrail.start(false, 3000, 5);
+    //append emitter to comet
+    this.comet.addChild(fireTrail);
+    //create one new emitter for the pool
+    this.pushToFireTrailPool(1);
+    this.currentFireTrail = Phaser.Math.wrap(this.currentFireTrail + 1, 0, fireTrailPool.length)
 
   },
   postScore: function() {
     console.log('posting score');
     $.ajax({
       type: "POST",
-      url: "users/54ab137f18236521163187d5/scores",
-      data: this.game.score
+      url: "users/" + user_id + "/scores",
+      data: {score: this.game.score}
     }).success( function(data) {
       console.log('worked' + data);
     }).fail(function() {
       console.log('failed');
     });
-    // $('a').css('color','blue');
   },
   fireBullet: function(comet) {
     //play laser audio
@@ -355,8 +275,8 @@ CodeFall.Game.prototype = {
     var bullet = bullets.getFirstExists(false);
     bullet.reset(this.laser.x + 26, this.laser.y + 20);
     // bullet velocity x and y are set based of angle between laser and comet, increase speed with multiplier to make bullet faster
-    bullet.body.velocity.y = (comet.y - this.laser.y) * 5.5;
-    bullet.body.velocity.x = (comet.x - this.laser.x) * 5.5;
+    bullet.body.velocity.y = (comet.y - this.laser.y) * 6;
+    bullet.body.velocity.x = (comet.x - this.laser.x) * 6;
 
     // Set bullet rotation based off angle between sprites, add 90 degrees
     // This took forever to figure out...using a phaser method that allows you to find angle between two sprites, then adding an additional 90 degrees
@@ -374,6 +294,8 @@ CodeFall.Game.prototype = {
     this.game.cityHealth -= 1;
     // reset perfect entry counter back to 0, thus reseting the multiplier as well
     this.game.perfectCounter = 0;
+    //city fire for later
+    // this.cityFire();
   },
   pushToFireTrailPool: function(quantity) {
     // add emitter group to

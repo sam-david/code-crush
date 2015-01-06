@@ -15,7 +15,7 @@ CodeFall.Boot.prototype = {
     this.load.image('fire2', 'gamefiles/assets/fire2.png');
     this.load.image('fire3', 'gamefiles/assets/fire3.png');
     this.load.image('smoke', 'gamefiles/assets/smoke-puff.png');
-    this.load.image('bullet', 'gamefiles/assets/bullet.png');
+    this.load.image('bullet', 'gamefiles/assets/lazer.png');
     this.load.image('terminal', 'gamefiles/assets/codecrush-terminal-png.png');
     this.load.image('playerParticle', 'gamefiles/assets/player-particle.png');
     this.load.spritesheet('explosion', 'gamefiles/assets/explode-animation.png', 128, 128);

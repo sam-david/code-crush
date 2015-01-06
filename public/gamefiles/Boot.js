@@ -1,10 +1,26 @@
 CodeFall = new Phaser.Game(960, 640, Phaser.AUTO, 'gameDiv');
 
+WebFontConfig = {
+
+    //  'active' means all requested fonts have finished loading
+    //  We set a 1 second delay before calling 'createText'.
+    //  For some reason if we don't the browser cannot render the text the first time it's created.
+    // active: function() { CodeFall.time.events.add(Phaser.Timer.SECOND, createText, this); },
+
+    //  The Google Fonts we want to load (specify as many as you like in the array)
+    google: {
+      families: ['Cousine']
+    }
+
+};
+
 CodeFall.Boot = function(){};
 
 //setting game configuration and loading the assets for the loading screen
 CodeFall.Boot.prototype = {
   preload: function() {
+    // google font script
+    this.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
     //assets we'll use in the loading screen
     this.load.image('space', 'gamefiles/assets/space.png');
     this.load.image('skyline', 'gamefiles/assets/city-dusk.png');
@@ -16,10 +32,15 @@ CodeFall.Boot.prototype = {
     this.load.image('fire3', 'gamefiles/assets/fire3.png');
     this.load.image('smoke', 'gamefiles/assets/smoke-puff.png');
     this.load.image('bullet', 'gamefiles/assets/lazer.png');
+    this.load.image('logo', 'gamefiles/assets/codecrush-logo.png');
+    this.load.image('clouds', 'gamefiles/assets/bg-tile-grey.png');
     this.load.image('terminal', 'gamefiles/assets/codecrush-terminal-png.png');
     this.load.image('playerParticle', 'gamefiles/assets/player-particle.png');
-    this.load.spritesheet('explosion', 'gamefiles/assets/explode-animation.png', 128, 128);
-    this.load.spritesheet('explosion2', 'gamefiles/assets/explosion.png',128,128);
+    this.load.image('healthBar', 'gamefiles/assets/codecrush-healthbar-png.png');
+    this.load.image('healthUnit', 'gamefiles/assets/codecrush-health-unit.png');
+
+    this.load.spritesheet('explosion', 'gamefiles/assets/explosion-png.png', 128, 128);
+    // this.load.spritesheet('explosion2', 'gamefiles/assets/explosion.png',128,128);
     this.load.audio('explosion', 'gamefiles/assets/audio/explosion1.wav');
     this.load.audio('explosion2', 'gamefiles/assets/audio/explosion2.wav');
     this.load.audio('laserAudio', 'gamefiles/assets/audio/laser3.wav');

@@ -14,6 +14,12 @@ CodeFall.MainMenu.prototype = {
     t.anchor.set(0.5);
 
     //highest score
+    this.logo = this.game.add.sprite(450,200, 'logo');
+    this.gameTitle = this.game.add.text(380,320, "Code Fall", {
+      font: "40px Cousine",
+      fill: 'white',
+      align: 'center'
+    });
 
     // button = new Button(this,10,10);
   },

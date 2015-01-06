@@ -1,4 +1,5 @@
 var app = angular.module('codeCrush', ['ui.router']);
+var user_id;
 
 app.config(function($stateProvider, $urlRouterProvider){
   $urlRouterProvider.otherwise('/home');
@@ -17,12 +18,23 @@ app.config(function($stateProvider, $urlRouterProvider){
     templateUrl: 'templates/signup.html'
   });
 
+  $stateProvider.state('profile', {
+    url: '/profile',
+    templateUrl: 'templates/profile.html'
+  });
+
   $stateProvider.state('codefall', {
     url: '/games/codefall',
     templateUrl: 'templates/codefall.html'
   });
 });
 
-app.controller('MainCtrl', function($scope){
-
-});
+app.controller('UserCtrl', ['$scope', '$http', '$window', function($scope, $http, $window){
+  $scope.getUser = function(){
+    return $http.get('/currentuser').success(function(data){
+      $scope.user = data;
+      $window.user_id = data._id;
+    });
+  };
+  $scope.getUser();
+}]);

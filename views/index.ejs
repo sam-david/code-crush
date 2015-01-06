@@ -4,7 +4,7 @@
 <head>
   <title>Code Crush</title>
   <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
-  <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">  load fontawesome -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
   <link rel="stylesheet" href="stylesheets/main.css">
 
   <script src="javascripts/vendor/modernizr-2.6.2.min.js"></script>
@@ -38,7 +38,9 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <li> <a href="/logout" class="btn btn-default btn-sm">Logout</a></li>
+        <li> <a href="/logout" ng-show="user">Logout</a></li>
+        <li> <a ui-sref="profile" ng-show="user">Profile</a></li>
+        <li><a ui-sref="home" ng-show="!user">Login</a></li>
 
       </ul>
 

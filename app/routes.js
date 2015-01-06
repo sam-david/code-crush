@@ -65,12 +65,15 @@ module.exports = function(app, passport) {
         var query = User.findById(user_id)
         query.exec(function(err, user){
             if(err){return next(err);}
-            res.json(user);
+            user.populate('scores', function(err, user){
+                if(err){return next(err);}
+                res.json(user.scores);
+            })
         })
     });
 
     app.post('/users/:user_id/scores', function(req, res, next) {
-        var score = new Score({game: 'Codefall', score: 500});
+        var score = new Score({game: req.body.name, score: req.body.score});
         var user_id = req.params.user_id;
         var query = User.findById(user_id);
         query.exec(function(err, user){
@@ -87,7 +90,19 @@ module.exports = function(app, passport) {
     });
 
     app.get('/currentuser', function(req, res) {
-        res.json(req.user)
+        if (!req.user) {
+            res.json(req.user)
+        } else {
+            var user_id = req.user._id;
+            var query = User.findById(user_id)
+            query.exec(function(err, user){
+                if(err){return next(err);}
+                user.populate('scores', function(err, user){
+                    if(err){return next(err);}
+                    res.json(user);
+                })
+            })
+        };
     });
 };
 

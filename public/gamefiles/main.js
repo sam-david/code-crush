@@ -6,8 +6,93 @@ var bullets;
 var emitter;
 var fireTrailPool = [];
 
+var keyIndex = {
+	'0': 48,
+  '1': 49,
+  '2': 50,
+  '3': 51,
+  '4': 52,
+  '5': 53,
+  '6': 54,
+  '7': 55,
+  '8': 56,
+  '9': 57,
+  'a': 65,
+  'b': 66,
+  'c': 67,
+  'd': 68,
+  'e': 69,
+  'f': 70,
+  'g': 71,
+  'h': 72,
+  'i': 73,
+  'j': 74,
+  'k': 75,
+  'l': 76,
+  'm': 77,
+  'n': 78,
+  'o': 79,
+  'p': 80,
+  'q': 81,
+  'r': 82,
+  's': 83,
+  't': 84,
+  'u': 85,
+  'v': 86,
+  'w': 87,
+  'x': 88,
+  'y': 89,
+  'z': 90,
+  ' ': 32,
+  ';': 186,
+  ':': 186,
+  '=': 187,
+  ',': 188,
+  '.': 190,
+  '/': 191,
+  '[': 219,
+  ']': 221,
+  '{': 219,
+  '}': 221,
+  "'": 222,
+  "|": 220,
+  "+": 187,
+  "-": 189,
+  '%': 53,
+  '*': 56,
+  '$': 52,
+  '_': 189,
+  '?': 191,
+  "(": 57,
+ 	")": 48,
+  'Backslash': 220
+};
+
+var levelOneLines = [
+"def sqr(x)",
+"return x*x",
+"end",
+"(rand(4) + 2).times {",
+"a = rand(300)",
+"def boom",
+"print 'Boom!'",
+"end",
+"boom",
+"boom",
+"print",
+"line(8)",
+"line(5,'*')",
+"line(11,'+','=')",
+"def incr(n)",
+"n = n + 1",
+"end",
+"a = 5",
+"incr(a)",
+"print a"
+]
+
 // new debug rectangle object
-var rect = new Phaser.Rectangle( 350, 5, 300, 100 ) ;
+var rect = new Phaser.Rectangle( 350, 5, 300, 100 );
 
 var mainState = {
 	preload: function() {
@@ -22,6 +107,7 @@ var mainState = {
     this.load.image('fire3', 'gamefiles/assets/fire3.png');
     this.load.image('smoke', 'gamefiles/assets/smoke-puff.png');
     this.load.image('bullet', 'gamefiles/assets/bullet.png');
+    this.load.image('terminal', 'gamefiles/assets/codecrush-terminal-png.png');
 		this.load.image('playerParticle', 'gamefiles/assets/player-particle.png');
 		this.load.spritesheet('explosion', 'gamefiles/assets/explode-animation.png', 128, 128);
 		this.load.spritesheet('explosion2', 'gamefiles/assets/explosion.png',128,128);
@@ -39,6 +125,10 @@ var mainState = {
 		// this.background = game.add.tileSprite(0, 0, this.game.width, this.game.height, 'skyline');
 		this.city = this.game.add.sprite(0,552, 'city');
 		this.laser = this.game.add.sprite(480,545, 'laser');
+		this.terminal = this.game.add.sprite(175,10, 'terminal');
+		this.terminal.scale.setTo(.8);
+		this.terminal.bringToTop();
+		console.log(this.terminal);
 
 		//enable city physics for collision
 		this.game.physics.enable(this.city, Phaser.Physics.ARCADE);
@@ -53,6 +143,8 @@ var mainState = {
 		this.game.multiplier = 1;
 		this.game.cityHealth = 5;
 		this.currentFireTrail = 0;
+		stringIndex = 0;
+		codeLineIndex = 0;
 
 		// set game audio
 		this.explosionSound = this.add.audio('explosion2');
@@ -60,7 +152,8 @@ var mainState = {
 		this.multiSound = this.add.audio('multiUp');
 
 		// create game text objects (health, code text, and multiplier)
-		codeText = game.add.text(370, 10, "var thing = 'thing'", { font: '34px Arial', fill: '#fff' });
+		codeText = game.add.text(250, 35, levelOneLines[codeLineIndex], { font: '34px Arial', fill: '#fff' });
+
 		cityHealthText = game.add.text(810,520, "Health: 5", {
 			font: "24px Arial",
 			fill: '#ff0044',
@@ -78,15 +171,42 @@ var mainState = {
 		});
 
 		//Keyboard input for code...save for later
-		// this.game.input.keyboard.onDownCallback = function(e) {
-		// 	if (e.keyCode === 32) {
-		// 		// this.destroyComet;
-		// 	}
-		// }
+		var that = this;
+		this.game.input.keyboard.onDownCallback = function(input) {
+
+			if (stringIndex > codeText.text.length) {
+				//move to next string
+			}
+			var currentLetter = codeText.text.charAt(stringIndex);
+			if (keyIndex[currentLetter] === input.keyCode && input.keyCode != 13) {
+				// codeText.text.charAt(stringIndex).fill()
+				console.log('Correct!')
+				codeText.addColor('#00ff00',stringIndex)
+				console.log(stringIndex);
+				stringIndex++
+				codeText.addColor('#fff',stringIndex)
+
+			} else if (input.keyCode === 13 && stringIndex === codeText.text.length) {
+				console.log('line done');
+				codeLineIndex++;
+				that.destroyComet();
+				// codeText.setText(levelOneLines[codeLineIndex]);
+				// codeText.fill = '#fff';
+				that.world.remove(codeText);
+				codeText = game.add.text(250, 35, levelOneLines[codeLineIndex], { font: '34px Arial', fill: '#fff' });
+				stringIndex = 0;
+				// codeText.addColor('#fff',stringIndex)
+
+			} else {
+				console.log('wrong dumbass!!')
+				that.game.perfectCounter = 0;
+			}
+		}
 
 		// set spacebar to execute function destroyComet
 		this.laserKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-		this.laserKey.onDown.add(this.destroyComet, this);
+		this.laserKey = this.input.keyboard.addKey(Phaser.Keyboard.BACKSPACE);
+		// this.laserKey.onDown.add(this.changeBack, this);
 
 		// add comets group and enable physics
 		this.comets = this.game.add.group();
@@ -116,7 +236,8 @@ var mainState = {
     bullets.setAll('checkWorldBounds', true);
 
     // timer to drop comets
-		this.timer = game.time.events.loop(1800, this.dropComet, this);
+		this.timer = game.time.events.loop(3800, this.dropComet, this);
+		// this.postScore();
 	},
 	update: function() {
 		// if collision between comets and city, execute hitCity function, damaging the city
@@ -155,6 +276,8 @@ var mainState = {
 
 		// comet will not go outside world bounds
 		this.comet.body.collideWorldBounds = true;
+
+		console.log(this.comet);
 
 		// grab fireTrail emitter from pool based on counter
 		var fireTrail = fireTrailPool[this.currentFireTrail];
@@ -206,6 +329,19 @@ var mainState = {
 			}
 		}
 
+	},
+	postScore: function() {
+		console.log('posting score');
+		$.ajax({
+			type: "POST",
+			url: "users/54ab137f18236521163187d5/scores",
+			data: this.game.score
+		}).success( function(data) {
+			console.log('worked' + data);
+		}).fail(function() {
+			console.log('failed');
+		});
+		// $('a').css('color','blue');
 	},
 	fireBullet: function(comet) {
 		//play laser audio

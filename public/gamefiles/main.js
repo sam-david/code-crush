@@ -92,7 +92,7 @@ var levelOneLines = [
 ]
 
 // new debug rectangle object
-var rect = new Phaser.Rectangle( 350, 5, 300, 100 ) ;
+var rect = new Phaser.Rectangle( 350, 5, 300, 100 );
 
 var mainState = {
 	preload: function() {
@@ -107,6 +107,7 @@ var mainState = {
     this.load.image('fire3', 'gamefiles/assets/fire3.png');
     this.load.image('smoke', 'gamefiles/assets/smoke-puff.png');
     this.load.image('bullet', 'gamefiles/assets/bullet.png');
+    this.load.image('terminal', 'gamefiles/assets/codecrush-terminal-png.png');
 		this.load.image('playerParticle', 'gamefiles/assets/player-particle.png');
 		this.load.spritesheet('explosion', 'gamefiles/assets/explode-animation.png', 128, 128);
 		this.load.spritesheet('explosion2', 'gamefiles/assets/explosion.png',128,128);
@@ -124,6 +125,9 @@ var mainState = {
 		// this.background = game.add.tileSprite(0, 0, this.game.width, this.game.height, 'skyline');
 		this.city = this.game.add.sprite(0,552, 'city');
 		this.laser = this.game.add.sprite(480,545, 'laser');
+		this.terminal = this.game.add.sprite(175,10, 'terminal');
+		this.terminal.scale.setTo(.8);
+		this.terminal.bringToTop();
 
 		//enable city physics for collision
 		this.game.physics.enable(this.city, Phaser.Physics.ARCADE);
@@ -140,7 +144,6 @@ var mainState = {
 		this.currentFireTrail = 0;
 		stringIndex = 0;
 		codeLineIndex = 0;
-		codeSnippet = "var thing = 'thing'"
 
 		// set game audio
 		this.explosionSound = this.add.audio('explosion2');
@@ -148,7 +151,7 @@ var mainState = {
 		this.multiSound = this.add.audio('multiUp');
 
 		// create game text objects (health, code text, and multiplier)
-		codeText = game.add.text(370, 10, levelOneLines[codeLineIndex], { font: '34px Arial', fill: '#fff' });
+		codeText = game.add.text(250, 35, levelOneLines[codeLineIndex], { font: '34px Arial', fill: '#fff' });
 
 		cityHealthText = game.add.text(810,520, "Health: 5", {
 			font: "24px Arial",
@@ -189,7 +192,7 @@ var mainState = {
 				// codeText.setText(levelOneLines[codeLineIndex]);
 				// codeText.fill = '#fff';
 				that.world.remove(codeText);
-				codeText = game.add.text(370, 10, levelOneLines[codeLineIndex], { font: '34px Arial', fill: '#fff' });
+				codeText = game.add.text(250, 35, levelOneLines[codeLineIndex], { font: '34px Arial', fill: '#fff' });
 				stringIndex = 0;
 				// codeText.addColor('#fff',stringIndex)
 
@@ -202,7 +205,7 @@ var mainState = {
 		// set spacebar to execute function destroyComet
 		this.laserKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		this.laserKey = this.input.keyboard.addKey(Phaser.Keyboard.BACKSPACE);
-		this.laserKey.onDown.add(this.changeBack, this);
+		// this.laserKey.onDown.add(this.changeBack, this);
 
 		// add comets group and enable physics
 		this.comets = this.game.add.group();
@@ -233,7 +236,7 @@ var mainState = {
 
     // timer to drop comets
 		this.timer = game.time.events.loop(3800, this.dropComet, this);
-		this.changeBack();
+		// this.postScore();
 	},
 	update: function() {
 		// if collision between comets and city, execute hitCity function, damaging the city
@@ -328,10 +331,14 @@ var mainState = {
 		console.log('posting score');
 		$.ajax({
 			type: "POST",
-			url: "url",
+			url: "users/54ab137f18236521163187d5/scores",
 			data: this.game.score
+		}).success( function(data) {
+			console.log('worked' + data);
+		}).fail(function() {
+			console.log('failed');
 		});
-		$('a').css('color','blue');
+		// $('a').css('color','blue');
 	},
 	fireBullet: function(comet) {
 		//play laser audio

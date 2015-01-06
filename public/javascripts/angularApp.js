@@ -27,6 +27,8 @@ app.config(function($stateProvider, $urlRouterProvider){
     url: '/games/codefall',
     templateUrl: 'templates/codefall.html'
   });
+
+
 });
 
 app.controller('UserCtrl', ['$scope', '$http', '$window', function($scope, $http, $window){

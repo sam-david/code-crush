@@ -28,6 +28,12 @@ app.config(function($stateProvider, $urlRouterProvider){
   });
 });
 
-app.controller('ProfileCtrl', ['$scope', '$http', function($scope, $http){
-  $scope.user = $http.get('/users/54ab137f18236521163187d5');
+app.controller('UserCtrl', ['$scope', '$http', function($scope, $http){
+  $scope.getUser = function(){
+    return $http.get('/currentuser').success(function(data){
+      $scope.user = data;
+    });
+  };
+  $scope.getUser();
+
 }]);

@@ -53,6 +53,7 @@ module.exports = function(passport) {
 
                 // set the user's local credentials
                 newUser.local.email    = email;
+                newUser.email = email;
                 newUser.local.password = newUser.generateHash(password);
 
                 // save the user
@@ -135,6 +136,8 @@ module.exports = function(passport) {
                     newUser.facebook.token = token; // we will save the token that facebook provides to the user
                     newUser.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName; // look at the passport user profile to see how names are returned
                     newUser.facebook.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
+                    newUser.email = profile.emails[0].value;
+                    newUser.name = profile.name.givenName + ' ' + profile.name.familyName;
 
                     // save our user to the database
                     newUser.save(function(err) {
@@ -183,6 +186,8 @@ module.exports = function(passport) {
                     newUser.google.token = token;
                     newUser.google.name  = profile.displayName;
                     newUser.google.email = profile.emails[0].value; // pull the first email
+                    newUser.email = profile.emails[0].value;
+                    newUser.name = profile.displayName;
 
                     // save the user
                     newUser.save(function(err) {

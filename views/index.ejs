@@ -17,6 +17,7 @@
 
 </head>
 <body ng-controller="UserCtrl">
+
   <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -38,12 +39,14 @@
 
       <ul class="nav navbar-nav navbar-right">
         <li> <a href="/logout" class="btn btn-default btn-sm">Logout</a></li>
+
       </ul>
 
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
   <div class="container">
+      {{ user }}
     <div ui-view></div>
   </div>
 </body>

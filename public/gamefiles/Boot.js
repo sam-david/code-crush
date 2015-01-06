@@ -36,9 +36,9 @@ CodeFall.Boot.prototype = {
     this.load.image('clouds', 'gamefiles/assets/bg-tile-grey.png');
     this.load.image('terminal', 'gamefiles/assets/codecrush-terminal-png.png');
     this.load.image('playerParticle', 'gamefiles/assets/player-particle.png');
-    this.load.image('healthBar', 'gamefiles/assets/codecrush-healthbar-png.png');
+    this.load.image('healthBar', 'gamefiles/assets/codecrush-healthbar.png');
     this.load.image('healthUnit', 'gamefiles/assets/codecrush-health-unit.png');
-
+    this.load.image('healthUnitWire', 'gamefiles/assets/codecrush-health-unit-wireframe.png')
     this.load.spritesheet('explosion', 'gamefiles/assets/explosion-png.png', 128, 128);
     // this.load.spritesheet('explosion2', 'gamefiles/assets/explosion.png',128,128);
     this.load.audio('explosion', 'gamefiles/assets/audio/explosion1.wav');

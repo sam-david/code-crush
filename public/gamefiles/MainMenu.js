@@ -1,5 +1,7 @@
 CodeFall.MainMenu = function(){};
 
+var level = 1;
+
 CodeFall.MainMenu.prototype = {
   create: function() {
     console.log('main menu made');

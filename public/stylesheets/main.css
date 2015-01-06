@@ -12,6 +12,9 @@ body {
 
 canvas {
   margin: auto;
+  border: solid
+rgb(248, 121, 28) 3px;
+  border-radius: 10px;
 }
 
 .white-card {

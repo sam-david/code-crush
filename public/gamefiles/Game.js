@@ -17,7 +17,41 @@ CodeFall.Game.prototype = {
     this.city = this.game.add.sprite(0,552, 'city');
     this.laser = this.game.add.sprite(480,545, 'laser');
     this.terminal = this.game.add.sprite(175,10, 'terminal');
+
+
+
+    this.healthUnits = this.game.add.group();
+
+
+    this.healthBar = this.game.add.sprite(725,500, 'healthBar');
+    this.healthEmptyUnit1 = this.healthUnits.create(738,505, 'healthUnitWire');
+    this.healthEmptyUnit2 = this.healthUnits.create(778,505, 'healthUnitWire');
+    this.healthEmptyUnit3 = this.healthUnits.create(818,505, 'healthUnitWire');
+    this.healthEmptyUnit4 = this.healthUnits.create(858,505, 'healthUnitWire');
+    this.healthEmptyUnit5 = this.healthUnits.create(898,505, 'healthUnitWire');
+    this.healthUnit1 = this.healthUnits.create(738,505, 'healthUnit');
+    this.healthUnit2 = this.healthUnits.create(778,505, 'healthUnit');
+    this.healthUnit3 = this.healthUnits.create(818,505, 'healthUnit');
+    this.healthUnit4 = this.healthUnits.create(858,505, 'healthUnit');
+    this.healthUnit5 = this.healthUnits.create(898,505, 'healthUnit');
+
+    // this.healthUnit2 = this.game.add.sprite(738,505, 'healthUnit');
+    // this.healthUnit3 = this.game.add.sprite(738,505, 'healthUnit');
+    // this.healthUnit4 = this.game.add.sprite(738,505, 'healthUnit');
+    // this.healthUnit5 = this.game.add.sprite(738,505, 'healthUnit');
     // this.healthBar = this.game.add.sprite(600, 500, 'healthBar');
+    this.healthUnit1.scale.setTo(.4);
+    this.healthUnit2.scale.setTo(.4);
+    this.healthUnit3.scale.setTo(.4);
+    this.healthUnit4.scale.setTo(.4);
+    this.healthUnit5.scale.setTo(.4);
+    this.healthEmptyUnit1.scale.setTo(.4);
+    this.healthEmptyUnit2.scale.setTo(.4);
+    this.healthEmptyUnit3.scale.setTo(.4);
+    this.healthEmptyUnit4.scale.setTo(.4);
+    this.healthEmptyUnit5.scale.setTo(.4);
+
+    this.healthBar.scale.setTo(.4);
     this.terminal.scale.setTo(.8);
 
     //enable city physics for collision
@@ -44,18 +78,18 @@ CodeFall.Game.prototype = {
     // create game text objects (health, code text, and multiplier)
     codeText = this.game.add.text(250, 43, levelOneLines[codeLineIndex], { font: '30px Monospace', fill: '#fff' });
     codeText.parent.bringToTop(codeText);
-    cityHealthText = this.game.add.text(810,520, "Health: 5", {
-      font: "24px Cousine",
-      fill: '#ff0044',
-      align: 'center'
-    });
-    gameScoreText = this.game.add.text(10,10, "0", {
+    // cityHealthText = this.game.add.text(810,520, "Health: 5", {
+    //   font: "24px Cousine",
+    //   fill: '#ff0044',
+    //   align: 'center'
+    // });
+    gameScoreText = this.game.add.text(10,20, "0", {
       font: "24px Cousine",
       fill: '#ff0044',
       align: 'center',
       fontWeight: 'bold'
     });
-    multiplierText = this.game.add.text(810,10, "1x", {
+    multiplierText = this.game.add.text(810,20, "1x", {
       font: "24px Cousine",
       fill: '#ff0044',
       align: 'center',
@@ -150,7 +184,7 @@ CodeFall.Game.prototype = {
     this.dropComet();
     // timer to drop comets
     // this.game.time.events.add(3800, this.dropComet, this);
-    this.cometTimer = this.game.time.events.loop(800, this.dropComet, this);
+    this.cometTimer = this.game.time.events.loop(3800, this.dropComet, this);
     // this.postScore();
   },
   update: function() {
@@ -172,7 +206,7 @@ CodeFall.Game.prototype = {
 
     // update game text to reflect variables, real time
     gameScoreText.setText(this.game.score);
-    cityHealthText.setText("Health: " + this.game.cityHealth);
+    // cityHealthText.setText("Health: " + this.game.cityHealth);
     multiplierText.setText(this.game.multiplier + "x");
     streakText.setText("Streak: " + this.game.perfectCounter);
   },
@@ -198,7 +232,7 @@ CodeFall.Game.prototype = {
     this.comet.scale.setTo(1);
 
     //set downward velocity
-    this.comet.body.velocity.y = 550;
+    this.comet.body.velocity.y = 50;
     // this.comet.body.velocity.x = this.game.rnd.integerInRange(-50, 50)
 
     // comet will not go outside world bounds
@@ -307,10 +341,19 @@ CodeFall.Game.prototype = {
     //city fire for later
     // this.cityFire();
     // if the city health is 0, game over
-    if (this.game.cityHealth === 0) {
-      this.cometTimer.destroy();
-      gameOver = this.game.add.text(500, 200, "Game Over", { font: '34px Arial', fill: '#fff' });
-    }
+    // if (this.game.cityHealth === 0) {
+    //   this.cometTimer.destroy();
+    //   gameOver = this.game.add.text(500, 200, "Game Over", { font: '34px Arial', fill: '#fff' });
+    // }
+    if (this.game.cityHealth === 4) {
+        this.healthUnit5.kill();
+      } else if (this.game.cityHealth === 3) {
+        this.healthUnit4.kill();
+      } else if (this.game.cityHealth === 2) {
+        this.healthUnit3.kill();
+      } else if (this.game.cityHealth === 1) {
+        this.healthUnit2.kill();
+      }
   },
   pushToFireTrailPool: function(quantity) {
     // add emitter group to

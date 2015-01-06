@@ -101,3 +101,13 @@ canvas {
   font-family: 'Orbitron';
   font-size: 1em;
 }
+
+.codefall-button {
+  width: 40%;
+  margin: 2%;
+}
+
+.game-selector {
+  color: white;
+  font-size: .5em;
+}

@@ -148,6 +148,7 @@ CodeFall.Game.prototype = {
 
     // if the city health is 0, game over
     if (this.game.cityHealth === 0) {
+      // this.postScore();
       gameOver = this.game.add.text(500, 200, "Game Over", { font: '34px Arial', fill: '#fff' });
     }
 
@@ -260,7 +261,7 @@ CodeFall.Game.prototype = {
     $.ajax({
       type: "POST",
       url: "users/" + user_id + "/scores",
-      data: {score: this.game.score}
+      data: {score: this.game.score, name: 'Codefall'}
     }).success( function(data) {
       console.log('worked' + data);
     }).fail(function() {

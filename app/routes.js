@@ -70,7 +70,7 @@ module.exports = function(app, passport) {
     });
 
     app.post('/users/:user_id/scores', function(req, res, next) {
-        var score = new Score({game: 'Codefall', score: 500});
+        var score = new Score({game: req.body.name, score: req.body.score});
         var user_id = req.params.user_id;
         var query = User.findById(user_id);
         query.exec(function(err, user){

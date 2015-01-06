@@ -216,6 +216,7 @@ CodeFall.Game.prototype = {
     codeText.parent.bringToTop(codeText);
   },
   destroyComet: function() {
+    this.postScore();
     // check if a comet exists, if so, execute comet destruction
     if (this.comets.getAt(0) != -1) {
       this.explosionSound.play();

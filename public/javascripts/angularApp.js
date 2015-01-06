@@ -38,3 +38,13 @@ app.controller('UserCtrl', ['$scope', '$http', '$window', function($scope, $http
   };
   $scope.getUser();
 }]);
+
+app.controller('ScoreCtrl', ['$scope', '$http', '$window', function($scope, $http, $window){
+  (function(){
+    return $http.get('/currentuser').success(function(data){
+      $scope.user = data;
+      $window.user_id = data._id;
+    });
+  })();
+
+}]);

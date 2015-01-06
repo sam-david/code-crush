@@ -6,9 +6,9 @@
       <p>Play Time: 5hrs 30m</p>
       <p>Favorite Game: Code Fall</p>
       <h1 class ='clear-card yellow-diag-stripes'>Scores</h1>
-      <div class='grey-card'>
+      <div class='grey-card' ng-controller="ScoreCtrl">
         <ol>
-          <li ng-repeat="score in user.scores | orderBy : 'score' : 'reverse'">
+          <li ng-repeat="score in user.scores | limitTo:10 | orderBy : 'score' : 'reverse'">
             {{ score.score }}
             {{ score.createdAt | date:'MMMM d yyyy'}}
           </li>

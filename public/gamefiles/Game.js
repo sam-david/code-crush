@@ -130,8 +130,8 @@ CodeFall.Game.prototype = {
     this.laser = this.game.add.sprite(480,545, 'laser');
     this.terminal = this.game.add.sprite(175,10, 'terminal');
     this.terminal.scale.setTo(.8);
-    this.terminal.bringToTop();
 
+    console.log(this.terminal);
     //enable city physics for collision
     this.game.physics.enable(this.city, Phaser.Physics.ARCADE);
     this.city.body.immovable = true;
@@ -155,7 +155,7 @@ CodeFall.Game.prototype = {
 
     // create game text objects (health, code text, and multiplier)
     codeText = this.game.add.text(250, 35, levelOneLines[codeLineIndex], { font: '34px Arial', fill: '#fff' });
-
+    codeText.parent.bringToTop(codeText);
     cityHealthText = this.game.add.text(810,520, "Health: 5", {
       font: "24px Arial",
       fill: '#ff0044',
@@ -196,6 +196,7 @@ CodeFall.Game.prototype = {
         // codeText.fill = '#fff';
         that.world.remove(codeText);
         codeText = this.game.add.text(250, 35, levelOneLines[codeLineIndex], { font: '34px Arial', fill: '#fff' });
+        codeText.parent.bringToTop(codeText);
         stringIndex = 0;
         // codeText.addColor('#fff',stringIndex)
 
@@ -279,6 +280,7 @@ CodeFall.Game.prototype = {
     // comet will not go outside world bounds
     this.comet.body.collideWorldBounds = true;
 
+    console.log(this.comet);
     // grab fireTrail emitter from pool based on counter
     var fireTrail = fireTrailPool[this.currentFireTrail];
 
@@ -296,6 +298,8 @@ CodeFall.Game.prototype = {
     //create one new emitter for the pool
     this.pushToFireTrailPool(1);
     this.currentFireTrail = Phaser.Math.wrap(this.currentFireTrail + 1, 0, fireTrailPool.length)
+    this.terminal.bringToTop();
+    codeText.parent.bringToTop(codeText);
   },
   destroyComet: function() {
     // check if a comet exists, if so, execute comet destruction

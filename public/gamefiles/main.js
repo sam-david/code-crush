@@ -128,6 +128,7 @@ var mainState = {
 		this.terminal = this.game.add.sprite(175,10, 'terminal');
 		this.terminal.scale.setTo(.8);
 		this.terminal.bringToTop();
+		console.log(this.terminal);
 
 		//enable city physics for collision
 		this.game.physics.enable(this.city, Phaser.Physics.ARCADE);
@@ -275,6 +276,8 @@ var mainState = {
 
 		// comet will not go outside world bounds
 		this.comet.body.collideWorldBounds = true;
+
+		console.log(this.comet);
 
 		// grab fireTrail emitter from pool based on counter
 		var fireTrail = fireTrailPool[this.currentFireTrail];

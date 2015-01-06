@@ -20,7 +20,12 @@ app.config(function($stateProvider, $urlRouterProvider){
 
   $stateProvider.state('profile', {
     url: '/profile',
-    templateUrl: 'templates/profile.html'
+    templateUrl: 'templates/profile.html',
+    resolve: {
+      scores: function(scoreService){
+        return scoreService.getScores();
+      }
+    }
   });
 
   $stateProvider.state('codefall', {
@@ -37,4 +42,12 @@ app.controller('UserCtrl', ['$scope', '$http', '$window', function($scope, $http
     });
   };
   $scope.getUser();
+}]);
+
+app.factory('scoreService', ['$http', function($http){
+  return {
+    getScores: function(){
+      $http.get
+    }
+  }
 }]);

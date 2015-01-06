@@ -8,8 +8,9 @@
       <h1 class ='clear-card yellow-diag-stripes'>Scores</h1>
       <div class='grey-card'>
         <ol>
-          <li ng-repeat="score in user.scores">
-            {{ score }}
+          <li ng-repeat="score in user.scores | orderBy : 'score' : 'reverse'">
+            {{ score.score }}
+            {{ score.createdAt | date:'MMMM d yyyy'}}
           </li>
         </ol>
 

@@ -65,7 +65,10 @@ module.exports = function(app, passport) {
         var query = User.findById(user_id)
         query.exec(function(err, user){
             if(err){return next(err);}
-            res.json(user);
+            user.populate('scores', function(err, user){
+                if(err){return next(err);}
+                res.json(user.scores);
+            })
         })
     });
 
@@ -87,7 +90,15 @@ module.exports = function(app, passport) {
     });
 
     app.get('/currentuser', function(req, res) {
-        res.json(req.user)
+        var user_id = req.user._id;
+        var query = User.findById(user_id)
+        query.exec(function(err, user){
+            if(err){return next(err);}
+            user.populate('scores', function(err, user){
+                if(err){return next(err);}
+                res.json(user);
+            })
+        })
     });
 };
 

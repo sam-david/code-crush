@@ -28,9 +28,9 @@ app.config(function($stateProvider, $urlRouterProvider){
     templateUrl: 'templates/codefall.html'
   });
 
-  $stateProvider.state('codefallScores', {
+  $stateProvider.state('codeFallScores', {
     url: '/games/Codefall/scores',
-    templateUrl: 'templates/.html'
+    templateUrl: 'templates/hiscores.html'
   });
 
 
@@ -51,6 +51,14 @@ app.controller('ScoreCtrl', ['$scope', '$http', '$window', function($scope, $htt
     return $http.get('/currentuser').success(function(data){
       $scope.user = data;
       $window.user_id = data._id;
+    });
+  })();
+}]);
+
+app.controller('HiScoreCtrl', ['$scope', '$http', function($scope, $http){
+  (function(){
+    return $http.get('/games/Codefall/scores').success(function(data){
+      $scope.scores = data;
     });
   })();
 }]);

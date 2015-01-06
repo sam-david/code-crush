@@ -1,0 +1,15 @@
+<div class="col-sm-8 col-sm-offset-2" ng-controller="HiScoreCtrl">
+    <h1 class='clear-card yellow-diag-stripes'>Hi Scores!</h1>
+    <div class='white-card'>
+
+        <ol>
+          <li ng-repeat="score in scores | limitTo:10 | orderBy : 'score' : 'reverse'">
+            {{ score.score }}
+            {{ score.user.name}}
+            {{ score.createdAt | date:'MMMM d yyyy'}}
+          </li>
+        </ol>
+
+      </div>
+    </div>
+</div>

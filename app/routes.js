@@ -104,6 +104,18 @@ module.exports = function(app, passport) {
             })
         };
     });
+
+    app.get('/games/:game_name/scores', function(req, res){
+        var game_name = req.params.game_name;
+        Score
+        .find({game: game_name})
+        .populate('user')
+        .exec(function(err, scores){
+            if (err) {return next(err);}
+            res.json(scores);
+        })
+
+    });
 };
 
 // route middleware to make sure a user is logged in

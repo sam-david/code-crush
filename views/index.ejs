@@ -38,8 +38,9 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <li> <a href="/logout">Logout</a></li>
-        <li> <a href="/#/profile">Profile</a></li>
+        <li> <a href="/logout" ng-show="user">Logout</a></li>
+        <li> <a ui-sref="profile" ng-show="user">Profile</a></li>
+        <li><a ui-sref="home" ng-show="!user">Login</a></li>
 
       </ul>
 

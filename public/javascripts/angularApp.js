@@ -28,6 +28,11 @@ app.config(function($stateProvider, $urlRouterProvider){
     templateUrl: 'templates/codefall.html'
   });
 
+  $stateProvider.state('codefallScores', {
+    url: '/games/Codefall/scores',
+    templateUrl: 'templates/.html'
+  });
+
 
 });
 
@@ -48,5 +53,4 @@ app.controller('ScoreCtrl', ['$scope', '$http', '$window', function($scope, $htt
       $window.user_id = data._id;
     });
   })();
-
 }]);

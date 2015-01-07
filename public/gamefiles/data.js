@@ -87,48 +87,25 @@ var keyIndex = {
   "^": 54,
   "!": 49,
   "#": 51,
-  '\\': 220
+ '\\': 220
 };
 
 
-var levelOneLines = [
-"def mission",
-'print "save the world"',
-"end",
-"puts 'through your code'",
-"def boom",
-'print "explode"',
-"end",
-"'1234567'.length",
-"p 7+3",
-"m = 8*2",
-"def sqr(x)",
-"return x*x",
-"end",
-"r = 3%5",
-"rand(2).times {",
-"a = rand(300)}",
-"name = gets.chomp",
-'puts "Hi! #{name}"',
-"line(8)",
-"line(5,'*')",
-"line(11,'+','=')",
-"def so_close",
-"print 'c:\\books\net\apps",
-"end",
-"(5..10).each {|x| print x}"
-]
-
-var levelTwoLines = [
-  'def to_roman(num,result="")',
-  'roman_numerals = {1000 => "M", 900 => "CM"}',
-  "roman_numerals.each do |arabic,roman|",
-  "if num / arabic > 0",
-  "result += roman * (num/arabic)",
-  "num -= arabic * (num/arabic)",
-  "end"
-// "(5..10).each { |x| print x }",
-// "r = 3%5"
+// var levelOneLines = [
+// "def mission",
+// 'print "save the world"',
+// "end",
+// "puts 'through your code'",
+// "def boom",
+// 'print "explode"',
+// "end"
+// "'1234567'.length"
+// "p 7+3",
+// "m = 8*2",
+// "def sqr(x)",
+// "return x*x",
+// "end",
+// "r = 3%5",
 // "rand(2).times {",
 // "a = rand(300)}",
 // "name = gets.chomp",
@@ -137,25 +114,113 @@ var levelTwoLines = [
 // "line(5,'*')",
 // "line(11,'+','=')",
 // "def so_close",
-// "print 'c:\\books\\net\\apps'",
+// "print 'c:\books\net\apps\tools'",
 // "end",
 // "(5..10).each { |x| print x }"
-]
+// ]
 
-var levelThreeLines = [
-"best",
-"game",
-"ever"
-]
+var levelOneLines = [
+"def mission",
+'print "save the world"',
+"end"
+  // "puts 'through your code'",
+  // "def boom",
+  // 'print "explode"',
+  // "end",
+  // "[1,3,4].length",
+  // "p 7+3",
+  // "m = 8*2",
+  // "def sqr(x)",
+  // "return x*x",
+  // "end",
+  // "r = 3%5",
+  // "rand(2).times {",
+  // "a = rand(300)}",
+  // "name = gets.chomp",
+  // 'puts "Hi! #{name}"',
+  // "line(8)",
+  // "line(5,'*')",
+  // "line(11,'+','=')",
+  // "def so_close",
+  // "print 'c:\\books\\net\\apps'",
+  // "end",
+  // "(5..10).each { |x| print x }"
+  ]
 
-var levelFourLines = [
+  var levelTwoLines = [
+  "this",
+  "is",
+  "awesome"
+  ]
+
+  var levelThreeLines = [
+  "best",
+  "game",
+  "ever"
+  ]
+
+  var levelFourLines = [
   "this",
   "is",
   "easy"
-]
+  ]
 
-var levelFiveLines = [
+  var levelFiveLines = [
   "megamoth",
   "time",
   "boss"
-]
+  ]
+  var dbcSnippets = [
+
+    //pig latin
+    'puts to_roman(55) == "LV"',
+    'puts to_roman(68) == "LXVIII"',
+    'puts to_roman(468) == "CCCCLXVIII"',
+    'puts to_roman(3468) == "MMMCCCCLXVIII"',
+
+    //dictonary
+    'def dictionary_sort',
+    'dictionary_list = []',
+    'puts "Type a word: "',
+    'word = gets.chomp',
+    'dictionary_list << word.split(" ").sort!',
+    'word_sort(dictionary_list)',
+    'end',
+
+    //nested array
+    'nested_array = [ [1, 2], [3, 4], [5, 6] ]',
+    'puts chessboard[7][0] == "W_Rook"',
+    'puts table[3][2] == "Shooting Guard"',
+    'puts table[1][3] == [14, 32, 7, 0, 23]',
+
+    // orange tree
+    'tree = OrangeTree.new',
+    'until tree.dead?',
+    'basket = []',
+    'while tree.any_oranges?',
+    'basket << tree.pick_an_orange!',
+    'end',
+    'puts "Year #{tree.age} Report"',
+    'puts "Tree height: #{tree.height} feet"',
+    'tree.age!',
+    'end',
+
+    //Ruby Racer
+    'Class RubyRacer',
+    'attr_reader :players, :length',
+    'def initialize(players, length = 30)',
+    '@players_position = Hash.new',
+    '@players = players',
+    '@length = length',
+    '@track = []',
+    'end',
+
+    // Sudoku
+    'class Sudoku',
+    'attr_reader :all_rows, :all_columns, :all_grids',
+    'def initialize(board_string)',
+    '@board_string = board_string',
+    '@all_rows, @all_columns = []',
+    '@all_grids = Array.new(9) { Array.new }',
+    'end'
+    ]

@@ -313,7 +313,7 @@ var Game = {
     });
     mainMenuText = this.game.add.text(600,315, "Main Menu", {
       font: "24px Cousine",
-   ƒ   fill: 'white',
+      fill: 'white',
       align: 'center'
     });
     if (outcome === "win") {

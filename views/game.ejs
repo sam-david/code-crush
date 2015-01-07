@@ -1,0 +1,61 @@
+<!-- views/index.ejs -->
+<!doctype html>
+<html ng-app="codeCrush">
+<head>
+  <title>Code Crush</title>
+  <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="stylesheets/main.css">
+
+  <script src="javascripts/vendor/modernizr-2.6.2.min.js"></script>
+  <script src="javascripts/vendor/jquery-1.11.1.min.js"></script>
+  <script src="javascripts/vendor/bootstrap.min.js"></script>
+  <script src="javascripts/vendor/angular.js"></script>
+  <script src="javascripts/vendor/angular-ui-router.min.js"></script>
+  <script src="javascripts/angularApp.js"></script>
+
+  <script type="text/javascript" src="gamefiles/phaser.js"></script>
+  <script type="text/javascript" src="gamefiles/Boot.js"></script>
+  <script type="text/javascript" src="gamefiles/MainMenu.js"></script>
+  <script type="text/javascript" src="gamefiles/data.js"></script>
+  <script type="text/javascript" src="gamefiles/Game.js"></script>
+
+  <script type="text/javascript" src="gamefiles/main.js"></script>
+
+</head>
+<body ng-controller="UserCtrl">
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <img class='navbar-brand nav-logo'src='images/codecrush-logo-png.png'></img><a class="navbar-brand" ui-sref="home">Code Crush</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+      <ul class="nav navbar-nav navbar-right">
+        <li> <a href="/logout" ng-show="user">Logout</a></li>
+        <li> <a href="/#/profile" ng-show="user">Profile</a></li>
+        <li><a href="/#/home" ng-show="!user">Login</a></li>
+
+      </ul>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+<div id="gameDiv" class="text-center"></div>
+  <div>
+    <a class="text-center" ui-sref="codeFallScores">Check out the high scores!</a>
+  </div>
+<img class="brick"src="images/brick-png.png">
+</body>
+</html>

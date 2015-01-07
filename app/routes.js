@@ -8,6 +8,10 @@ module.exports = function(app, passport) {
         res.render('index.ejs'); // load the index.ejs file
     });
 
+    app.get('/codefall', function(req, res){
+        res.render('game.ejs');
+    })
+
 
     app.get('/login', function(req, res) {
 

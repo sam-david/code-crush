@@ -9,6 +9,10 @@ body {
   font-family: 'Orbitron';
 }
 
+.big-logo {
+  padding-bottom: 5%;
+}
+
 .brick {
   position: fixed;
   bottom: 0;

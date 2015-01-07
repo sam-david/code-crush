@@ -1,13 +1,14 @@
-CodeFall.Game = function(){};
-
 var explosions;
 var bullets;
 var emitter;
 var fireTrailPool = [];
+var cometTimerInterval = 4000;
+var cometSpeed = 50;
 
-CodeFall.Game.prototype = {
+var Game = {
   create: function() {
     // start game physics
+    this.initializeLevelVars();
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
     //add background, city, and laser
@@ -18,40 +19,8 @@ CodeFall.Game.prototype = {
     this.laser = this.game.add.sprite(480,545, 'laser');
     this.terminal = this.game.add.sprite(175,10, 'terminal');
 
+    this.createHealthUnits();
 
-
-    this.healthUnits = this.game.add.group();
-
-
-    this.healthBar = this.game.add.sprite(725,500, 'healthBar');
-    this.healthEmptyUnit1 = this.healthUnits.create(738,505, 'healthUnitWire');
-    this.healthEmptyUnit2 = this.healthUnits.create(778,505, 'healthUnitWire');
-    this.healthEmptyUnit3 = this.healthUnits.create(818,505, 'healthUnitWire');
-    this.healthEmptyUnit4 = this.healthUnits.create(858,505, 'healthUnitWire');
-    this.healthEmptyUnit5 = this.healthUnits.create(898,505, 'healthUnitWire');
-    this.healthUnit1 = this.healthUnits.create(738,505, 'healthUnit');
-    this.healthUnit2 = this.healthUnits.create(778,505, 'healthUnit');
-    this.healthUnit3 = this.healthUnits.create(818,505, 'healthUnit');
-    this.healthUnit4 = this.healthUnits.create(858,505, 'healthUnit');
-    this.healthUnit5 = this.healthUnits.create(898,505, 'healthUnit');
-
-    // this.healthUnit2 = this.game.add.sprite(738,505, 'healthUnit');
-    // this.healthUnit3 = this.game.add.sprite(738,505, 'healthUnit');
-    // this.healthUnit4 = this.game.add.sprite(738,505, 'healthUnit');
-    // this.healthUnit5 = this.game.add.sprite(738,505, 'healthUnit');
-    // this.healthBar = this.game.add.sprite(600, 500, 'healthBar');
-    this.healthUnit1.scale.setTo(.4);
-    this.healthUnit2.scale.setTo(.4);
-    this.healthUnit3.scale.setTo(.4);
-    this.healthUnit4.scale.setTo(.4);
-    this.healthUnit5.scale.setTo(.4);
-    this.healthEmptyUnit1.scale.setTo(.4);
-    this.healthEmptyUnit2.scale.setTo(.4);
-    this.healthEmptyUnit3.scale.setTo(.4);
-    this.healthEmptyUnit4.scale.setTo(.4);
-    this.healthEmptyUnit5.scale.setTo(.4);
-
-    this.healthBar.scale.setTo(.4);
     this.terminal.scale.setTo(.8);
 
     //enable city physics for collision
@@ -76,7 +45,7 @@ CodeFall.Game.prototype = {
     this.multiSound = this.add.audio('multiUp');
 
     // create game text objects (health, code text, and multiplier)
-    codeText = this.game.add.text(250, 43, levelOneLines[codeLineIndex], { font: '30px Monospace', fill: '#fff' });
+    codeText = this.game.add.text(250, 43, levelLines[codeLineIndex], { font: '30px Monospace', fill: '#fff' });
     codeText.parent.bringToTop(codeText);
     // cityHealthText = this.game.add.text(810,520, "Health: 5", {
     //   font: "24px Cousine",
@@ -101,11 +70,11 @@ CodeFall.Game.prototype = {
       align: 'center'
     });
     //Level 1 text
-    levelText = this.game.add.text(430,300, "Level 1", {
+    levelText = this.game.add.text(430,300, "Level " + currentLevel, {
       font: "36px Cousine",
       fill: '#ff0044',
       align: 'center'
-    });5
+    });
 
     // this.levelTimer = new Phaser.Timer(this, true);
     this.levelTimer = this.game.time.events.loop(3000, this.killLevelText, this);
@@ -136,7 +105,7 @@ CodeFall.Game.prototype = {
         // codeText.setText(levelOneLines[codeLineIndex]);
         // codeText.fill = '#fff';
         that.world.remove(codeText);
-        codeText = this.game.add.text(250, 43, levelOneLines[codeLineIndex], { font: '30px Monospace', fill: '#fff' });
+        codeText = this.game.add.text(250, 43, levelLines[codeLineIndex], { font: '30px Monospace', fill: '#fff' });
         codeText.parent.bringToTop(codeText);
         stringIndex = 0;
         // codeText.addColor('#fff',stringIndex)
@@ -184,7 +153,7 @@ CodeFall.Game.prototype = {
     this.dropComet();
     // timer to drop comets
     // this.game.time.events.add(3800, this.dropComet, this);
-    this.cometTimer = this.game.time.events.loop(3800, this.dropComet, this);
+    this.cometTimer = this.game.time.events.loop(cometTimerInterval, this.dropComet, this);
     // this.postScore();
   },
   update: function() {
@@ -210,6 +179,34 @@ CodeFall.Game.prototype = {
     multiplierText.setText(this.game.multiplier + "x");
     streakText.setText("Streak: " + this.game.perfectCounter);
   },
+  initializeLevelVars: function() {
+    if (currentLevel === 1) {
+      console.log("level 1 bitch");
+      levelLines = levelOneLines;
+      cometSpeed = 500;
+      cometTimerInterval = 400;
+    } else if (currentLevel === 2) {
+      console.log("level 2 bitch");
+      levelLines = levelTwoLines;
+      cometSpeed = 55;
+      cometTimerInterval = 3800;
+    } else if (currentLevel === 3) {
+      console.log("level 3 bitch");
+      levelLines = levelTwoLines;
+      cometSpeed = 60;
+      cometTimerInterval = 3600;
+    } else if (currentLevel === 4) {
+      console.log("level 4 bitch");
+      levelLines = levelTwoLines;
+      cometSpeed = 65;
+      cometTimerInterval = 3400;
+    } else if (currentLevel === 5) {
+      console.log("level 5 bitch");
+      levelLines = levelTwoLines;
+      cometSpeed = 55;
+      cometTimerInterval = 3200;
+    }
+  },
   killLevelText: function() {
     console.log('kill level');
     levelText.destroy();
@@ -232,7 +229,7 @@ CodeFall.Game.prototype = {
     this.comet.scale.setTo(1);
 
     //set downward velocity
-    this.comet.body.velocity.y = 50;
+    this.comet.body.velocity.y = cometSpeed;
     // this.comet.body.velocity.x = this.game.rnd.integerInRange(-50, 50)
 
     // comet will not go outside world bounds
@@ -327,6 +324,40 @@ CodeFall.Game.prototype = {
     bullet.rotation = Phaser.Math.angleBetween(this.laser.x , this.laser.y, comet.x, comet.y) + (90)*(Math.PI/180);
 
   },
+  gameOver: function() {
+    this.cometTimer.timer.destroy();
+    if (user_id != undefined) {
+      this.postScore();
+    }
+    this.retryButton = this.game.add.sprite(220,290, 'blueButton');
+    this.mainMenuButton = this.game.add.sprite(545,290, 'blueButton');
+    retryText = this.game.add.text(300,315, "Retry", {
+      font: "24px Cousine",
+      fill: 'white',
+      align: 'center'
+    });
+    mainMenuText = this.game.add.text(600,315, "Main Menu", {
+      font: "24px Cousine",
+      fill: 'white',
+      align: 'center'
+    });
+    this.mainMenuButton.inputEnabled = true;
+    this.retryButton.inputEnabled = true;
+    this.mainMenuButton.events.onInputDown.add(this.mainMenuNav, this);
+    this.retryButton.events.onInputDown.add(this.restartGame, this);
+  },
+  mainMenuNav: function() {
+    console.log('main menu');
+    // this.levelTimer.removeAll();
+    // this.cometTimer.removeAll();
+    // this.game.state.shutdown();
+    this.game.state.start('MainMenu');
+    // this.game.switchState('MainMenu');
+  },
+  restartGame: function() {
+    // console.log(game.start);
+    this.game.state.restart();
+  },
   hitCity: function() {
     // grab first explosion sprite from group array, reset location to comet body, and play explosion animation
     var explosionAnimation = explosions.getFirstExists(false);
@@ -353,6 +384,9 @@ CodeFall.Game.prototype = {
         this.healthUnit3.kill();
       } else if (this.game.cityHealth === 1) {
         this.healthUnit2.kill();
+      } else if (this.game.cityHealth === 0) {
+        this.healthUnit1.kill();
+        this.gameOver();
       }
   },
   pushToFireTrailPool: function(quantity) {
@@ -368,5 +402,39 @@ CodeFall.Game.prototype = {
       // push to pool of fire trails
       fireTrailPool.push(emitter);
     }
+  },
+  createHealthUnits: function() {
+    this.healthUnits = this.game.add.group();
+
+
+    this.healthBar = this.game.add.sprite(725,500, 'healthBar');
+    this.healthEmptyUnit1 = this.healthUnits.create(738,505, 'healthUnitWire');
+    this.healthEmptyUnit2 = this.healthUnits.create(778,505, 'healthUnitWire');
+    this.healthEmptyUnit3 = this.healthUnits.create(818,505, 'healthUnitWire');
+    this.healthEmptyUnit4 = this.healthUnits.create(858,505, 'healthUnitWire');
+    this.healthEmptyUnit5 = this.healthUnits.create(898,505, 'healthUnitWire');
+    this.healthUnit1 = this.healthUnits.create(738,505, 'healthUnit');
+    this.healthUnit2 = this.healthUnits.create(778,505, 'healthUnit');
+    this.healthUnit3 = this.healthUnits.create(818,505, 'healthUnit');
+    this.healthUnit4 = this.healthUnits.create(858,505, 'healthUnit');
+    this.healthUnit5 = this.healthUnits.create(898,505, 'healthUnit');
+
+    // this.healthUnit2 = this.game.add.sprite(738,505, 'healthUnit');
+    // this.healthUnit3 = this.game.add.sprite(738,505, 'healthUnit');
+    // this.healthUnit4 = this.game.add.sprite(738,505, 'healthUnit');
+    // this.healthUnit5 = this.game.add.sprite(738,505, 'healthUnit');
+    // this.healthBar = this.game.add.sprite(600, 500, 'healthBar');
+    this.healthUnit1.scale.setTo(.4);
+    this.healthUnit2.scale.setTo(.4);
+    this.healthUnit3.scale.setTo(.4);
+    this.healthUnit4.scale.setTo(.4);
+    this.healthUnit5.scale.setTo(.4);
+    this.healthEmptyUnit1.scale.setTo(.4);
+    this.healthEmptyUnit2.scale.setTo(.4);
+    this.healthEmptyUnit3.scale.setTo(.4);
+    this.healthEmptyUnit4.scale.setTo(.4);
+    this.healthEmptyUnit5.scale.setTo(.4);
+
+    this.healthBar.scale.setTo(.4);
   },
 };

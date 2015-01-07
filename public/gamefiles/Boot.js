@@ -1,4 +1,4 @@
-CodeFall = new Phaser.Game(960, 640, Phaser.AUTO, 'gameDiv');
+var CodeFall = CodeFall || {};
 
 WebFontConfig = {
 
@@ -14,10 +14,8 @@ WebFontConfig = {
 
 };
 
-CodeFall.Boot = function(){};
-
 //setting game configuration and loading the assets for the loading screen
-CodeFall.Boot.prototype = {
+var Boot = {
   preload: function() {
     // google font script
     this.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
@@ -33,6 +31,10 @@ CodeFall.Boot.prototype = {
     this.load.image('smoke', 'gamefiles/assets/smoke-puff.png');
     this.load.image('bullet', 'gamefiles/assets/lazer.png');
     this.load.image('logo', 'gamefiles/assets/codecrush-logo.png');
+    this.load.image('codeFallLogo', 'gamefiles/assets/codefall-logo.png');
+    this.load.image('redButton', 'gamefiles/assets/button-red.png');
+    this.load.image('blueButton', 'gamefiles/assets/button-blue.png');
+    this.load.image('yellowButton', 'gamefiles/assets/button-yellow.png');
     this.load.image('clouds', 'gamefiles/assets/bg-tile-grey.png');
     this.load.image('terminal', 'gamefiles/assets/codecrush-terminal-png.png');
     this.load.image('playerParticle', 'gamefiles/assets/player-particle.png');

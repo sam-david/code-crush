@@ -91,34 +91,6 @@ var keyIndex = {
 };
 
 
-// var levelOneLines = [
-// "def mission",
-// 'print "save the world"',
-// "end",
-// "puts 'through your code'",
-// "def boom",
-// 'print "explode"',
-// "end"
-// "'1234567'.length"
-// "p 7+3",
-// "m = 8*2",
-// "def sqr(x)",
-// "return x*x",
-// "end",
-// "r = 3%5",
-// "rand(2).times {",
-// "a = rand(300)}",
-// "name = gets.chomp",
-// 'puts "Hi! #{name}"',
-// "line(8)",
-// "line(5,'*')",
-// "line(11,'+','=')",
-// "def so_close",
-// "print 'c:\books\net\apps\tools'",
-// "end",
-// "(5..10).each { |x| print x }"
-// ]
-
 var levelOneLines = [
 "def mission",
 'print "save the world"',
@@ -127,7 +99,7 @@ var levelOneLines = [
 "def boom",
 'print "explode"',
 "end",
-"[1,3,4].length",
+"'1234567'.length",
 "p 7+3",
 "m = 8*2",
 "def sqr(x)",
@@ -142,7 +114,48 @@ var levelOneLines = [
 "line(5,'*')",
 "line(11,'+','=')",
 "def so_close",
-"print 'c:\\books\\net\\apps'",
+"print 'c:\\books\net\apps",
 "end",
-"(5..10).each { |x| print x }"
+"(5..10).each {|x| print x}"
+]
+
+var levelTwoLines = [
+  'def to_roman(num,result="")',
+  'roman_numerals = {1000 => "M", 900 => "CM"}',
+  "roman_numerals.each do |arabic,roman|",
+  "if num / arabic > 0",
+  "result += roman * (num/arabic)",
+  "num -= arabic * (num/arabic)",
+  "end"
+// "(5..10).each { |x| print x }",
+// "r = 3%5"
+// "rand(2).times {",
+// "a = rand(300)}",
+// "name = gets.chomp",
+// 'puts "Hi! #{name}"',
+// "line(8)",
+// "line(5,'*')",
+// "line(11,'+','=')",
+// "def so_close",
+// "print 'c:\\books\\net\\apps'",
+// "end",
+// "(5..10).each { |x| print x }"
+]
+
+var levelThreeLines = [
+"best",
+"game",
+"ever"
+]
+
+var levelFourLines = [
+  "this",
+  "is",
+  "easy"
+]
+
+var levelFiveLines = [
+  "megamoth",
+  "time",
+  "boss"
 ]

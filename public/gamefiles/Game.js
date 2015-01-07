@@ -147,7 +147,10 @@ var Game = {
 
     // final boss?
     if (currentLevel === 5) {
-      this.brick = this.game.add.sprite(830,337, 'brick');
+      this.brick = this.game.add.sprite(120,520, 'brick');
+      this.brick.scale.setTo(1);
+      this.brick.scale.x *= -1;
+
       this.dropMoth();
     } else {
       // drop one comet to start
@@ -273,7 +276,7 @@ var Game = {
     console.log('megamoth!')
     this.megaMothra = this.game.add.sprite(0,0, 'megamothAni');
     this.megaMothra.animations.add('fly', null, 10, true);
-    this.megaMothra.scale.setTo(.2);
+    this.megaMothra.scale.setTo(.4);
     this.megaMothra.animations.play('fly');
     this.megaMothra.enableBody = true;
     this.game.physics.enable(this.megaMothra, Phaser.Physics.ARCADE);
@@ -288,13 +291,13 @@ var Game = {
   },
   flyMoth: function() {
     if (this.flyRight === true) {
-      this.megaMothraXindex += 830;
+      this.megaMothraXindex += 760;
       this.megaMothraYindex += 50;
       this.mothFlyTween = this.game.add.tween(this.megaMothra);
       this.mothFlyTween.to({x: this.megaMothraXindex, y: this.megaMothraYindex}, 10000).start();
       this.flyRight = false;
     } else {
-      this.megaMothraXindex -= 830;
+      this.megaMothraXindex -= 760;
       this.megaMothraYindex += 50;
       this.mothFlyTween = this.game.add.tween(this.megaMothra);
       this.mothFlyTween.to({x: this.megaMothraXindex, y: this.megaMothraYindex}, 10000).start();

@@ -6,7 +6,6 @@ body {
   background-color: #044568;
   background-repeat: no-repeat;
   background-position: fixed top left;
-  /*background-size: cover;*/
   font-family: 'Orbitron';
 }
 
@@ -35,6 +34,20 @@ canvas {
   background: grey;
 }
 
+.blue-card {
+  border: 2px solid #3482AC;
+  padding: 3%;
+  border-radius: 5px;
+  background: #3482AC;
+}
+
+.yellow-card {
+  border: 2px solid #FFCC43;
+  padding: 3%;
+  border-radius: 5px;
+  background: #FFCC43;
+}
+
 .clear-card {
   padding: 3%;
   border-radius: 5px;
@@ -49,6 +62,7 @@ canvas {
   #044568 10px,
   #044568 20px
 );
+  color: white;
 }
 
 .yellow-diag-stripes {
@@ -101,6 +115,11 @@ canvas {
 
 .profile-info h1 {
   font-family: 'Orbitron';
+  font-size: 2em;
+}
+
+.profile-info h2 {
+
   font-size: 2em;
 }
 

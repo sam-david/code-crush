@@ -163,7 +163,7 @@ var Game = {
   update: function() {
     // if collision between comets and city, execute hitCity function, damaging the city
     this.game.physics.arcade.collide(this.city, this.comets, this.hitCity, null, this);
-    this.game.physics.arcade.collide(this.city, this.megaMothra, this.mothHitCity, null, this);
+    this.game.physics.arcade.overlap(this.city, this.megaMothra, this.mothHitCity, null, this);
 
     //increase multiplier every 5 perfect entries
       if (this.game.perfectCounter === 5) {
@@ -232,7 +232,6 @@ var Game = {
 
     // comet will not go outside world bounds
     this.comet.body.collideWorldBounds = true;
-    console.log(this.comet);
     // grab fireTrail emitter from pool based on counter
     var fireTrail = fireTrailPool[this.currentFireTrail];
 
@@ -275,13 +274,14 @@ var Game = {
   dropMoth: function() {
     console.log('megamoth!')
     this.megaMothra = this.game.add.sprite(0,0, 'megamothAni');
-    this.megaMothra.animations.add('fly', null, 10, true);
-    this.megaMothra.scale.setTo(.4);
-    this.megaMothra.animations.play('fly');
-    this.megaMothra.enableBody = true;
     this.game.physics.enable(this.megaMothra, Phaser.Physics.ARCADE);
+    this.megaMothra.scale.setTo(.4);
+    this.megaMothra.enableBody = true;
+    this.megaMothra.animations.add('fly', null, 10, true);
+    this.megaMothra.animations.play('fly');
     // this.megaMothra.physicsBodyType = Phaser.Physics.ARCADE;
     console.log(this.megaMothra);
+    console.log(this.city);
     // this.megaMothra.body.velocity.y = cometSpeed;
     this.megaMothraXindex = this.megaMothra.x
     this.megaMothraYindex = this.megaMothra.y

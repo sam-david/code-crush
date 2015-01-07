@@ -1,13 +1,20 @@
 @import url(http://fonts.googleapis.com/css?family=Audiowide|Orbitron:400,700|Ruda:400,700);
 
 body {
-  background-image: url('../images/megamoth-big.png');
+  background: url('../images/megamoth-big.png');
   background-size: 30%;
   background-color: #044568;
   background-repeat: no-repeat;
   background-position: fixed top left;
   /*background-size: cover;*/
   font-family: 'Orbitron';
+}
+
+.brick {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
 }
 
 canvas {
@@ -97,4 +104,17 @@ canvas {
   font-size: 2em;
 }
 
+.profile-info h2 {
+  font-family: 'Orbitron';
+  font-size: 1em;
+}
 
+.codefall-button {
+  width: 60%;
+  margin: 2%;
+}
+
+.game-selector {
+  color: white;
+  font-size: .5em;
+}

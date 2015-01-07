@@ -108,7 +108,6 @@ module.exports = function(app, passport) {
             })
         };
     });
-
     app.get('/games/:game_name/scores', function(req, res){
         var game_name = req.params.game_name;
         Score
@@ -120,6 +119,10 @@ module.exports = function(app, passport) {
         })
 
     });
+    app.get('*', function(req, res){
+        res.redirect('/#/<error></error>')
+    })
+
 };
 
 // route middleware to make sure a user is logged in

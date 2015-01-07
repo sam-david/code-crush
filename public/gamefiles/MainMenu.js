@@ -12,11 +12,39 @@ var MainMenu = {
     //highest score
     this.codeCrushlogo = this.game.add.sprite(1000,530, 'logo');
     this.codeFalllogo = this.game.add.sprite(180,-150, 'codeFallLogo');
-    this.levelOneButton = this.game.add.sprite(230,230, 'redButton');
-    this.levelTwoButton = this.game.add.sprite(500,230, 'redButton');
-    this.levelThreeButton = this.game.add.sprite(230,330, 'yellowButton');
-    this.levelFourButton = this.game.add.sprite(500,330, 'yellowButton');
-    this.levelFiveButton = this.game.add.sprite(365,430, 'redButton');
+    this.levelOneButton = this.game.add.sprite(230,530, 'redButton');
+    this.levelTwoButton = this.game.add.sprite(500,530, 'redButton');
+    this.levelThreeButton = this.game.add.sprite(230,630, 'yellowButton');
+    this.levelFourButton = this.game.add.sprite(500,630, 'yellowButton');
+    this.levelFiveButton = this.game.add.sprite(365,730, 'redButton');
+    this.levelOneText = this.game.add.text(275, 550, "Level 1", {
+      font: "34px Cousine",
+      fill: 'white',
+      align: 'center'
+    });
+    this.levelTwoText = this.game.add.text(545, 550, "Level 2", {
+      font: "34px Cousine",
+      fill: 'white',
+      align: 'center'
+    });
+
+    this.levelThreeText = this.game.add.text(275, 650, "Level 3", {
+      font: "34px Cousine",
+      fill: 'white',
+      align: 'center'
+    });
+
+    this.levelFourText = this.game.add.text(545, 650, "Level 4", {
+      font: "34px Cousine",
+      fill: 'white',
+      align: 'center'
+    });
+
+    this.levelFiveText = this.game.add.text(410, 750, "Level 5", {
+      font: "34px Cousine",
+      fill: 'white',
+      align: 'center'
+    });
 
     // tweens
     this.codeFalllogo.angle = -6
@@ -32,36 +60,31 @@ var MainMenu = {
     this.codeCrushTween.to({ x: 840, y: 530}, 500);
     this.codeCrushTween.start();
 
+    this.buttonOneTween = this.game.add.tween(this.levelOneButton);
+    this.textOneTween = this.game.add.tween(this.levelOneText);
+    this.buttonTwoTween = this.game.add.tween(this.levelTwoButton);
+    this.textTwoTween = this.game.add.tween(this.levelTwoText);
+    this.buttonThreeTween = this.game.add.tween(this.levelThreeButton);
+    this.textThreeTween = this.game.add.tween(this.levelThreeText);
+    this.buttonFourTween = this.game.add.tween(this.levelFourButton);
+    this.textFourTween = this.game.add.tween(this.levelFourText);
+    this.buttonFiveTween = this.game.add.tween(this.levelFiveButton);
+    this.textFiveTween = this.game.add.tween(this.levelFiveText);
+    this.buttonOneTween.to({x: 230, y: 230}, 500).start();
+    this.buttonTwoTween.to({x: 500, y: 230}, 500).start();
+    this.buttonThreeTween.to({x: 230, y: 330}, 500).start();
+    this.buttonFourTween.to({x: 500, y: 330}, 500).start();
+    this.buttonFiveTween.to({x: 365, y: 430}, 500).start();
+    this.textOneTween.to({x: 275, y: 250}, 500).start();
+    this.textTwoTween.to({x: 545, y: 250}, 500).start();
+    this.textThreeTween.to({x: 275, y: 350}, 500).start();
+    this.textFourTween.to({x: 545, y: 350}, 500).start();
+    this.textFiveTween.to({x: 410, y: 450}, 500).start();
+
     // this.codeFalllogo.scale.setTo(.7);
-    this.levelOneText = this.game.add.text(275, 250, "Level 1", {
-      font: "34px Cousine",
-      fill: 'white',
-      align: 'center'
-    });
 
-    this.levelTwoText = this.game.add.text(545, 250, "Level 2", {
-      font: "34px Cousine",
-      fill: 'white',
-      align: 'center'
-    });
 
-    this.levelThreeText = this.game.add.text(275, 350, "Level 3", {
-      font: "34px Cousine",
-      fill: 'white',
-      align: 'center'
-    });
 
-    this.levelFourText = this.game.add.text(545, 350, "Level 4", {
-      font: "34px Cousine",
-      fill: 'white',
-      align: 'center'
-    });
-
-    this.levelFiveText = this.game.add.text(410, 450, "Level 5", {
-      font: "34px Cousine",
-      fill: 'white',
-      align: 'center'
-    });
     that = this;
     this.levelOneButton.inputEnabled = true;
     this.levelTwoButton.inputEnabled = true;

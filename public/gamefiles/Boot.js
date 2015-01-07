@@ -41,6 +41,8 @@ var Boot = {
     this.load.image('healthUnitWire', 'gamefiles/assets/codecrush-health-unit-wireframe.png')
     this.load.image('megamoth', 'gamefiles/assets/megamoth.png');
     this.load.image('brick', 'gamefiles/assets/brick-png-small.png');
+    this.load.image('scoreCard', 'gamefiles/assets/scorecard.png');
+    this.load.image('streakCard', 'gamefiles/assets/streak-multiplier.png');
     this.load.spritesheet('explosion', 'gamefiles/assets/explosion-png.png', 128, 128);
     this.load.spritesheet('megamothAni', 'gamefiles/assets/megamoth-spritesheet.png', 560,420);
     // this.load.spritesheet('explosion2', 'gamefiles/assets/explosion.png',128,128);

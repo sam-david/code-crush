@@ -49,20 +49,20 @@ var Game = {
     // create game text objects (health, code text, and multiplier)
     codeText = this.game.add.text(250, 43, levelLines[codeLineIndex], { font: '26px Monospace', fill: '#fff' });
     codeText.parent.bringToTop(codeText);
-    gameScoreText = this.game.add.text(10,20, "0", {
+    gameScoreText = this.game.add.text(30,45, "0", {
       font: "24px Cousine",
       fill: '#ff0044',
       align: 'center',
       fontWeight: 'bold'
     });
-    multiplierText = this.game.add.text(810,20, "1x", {
-      font: "24px Cousine",
+    multiplierText = this.game.add.text(845,30, "1x", {
+      font: "36px Cousine",
       fill: '#ff0044',
       align: 'center',
       fontWeight: 'bold'
     });
-    streakText = this.game.add.text(810,50, "Streak: ", {
-      font: "24px Cousine",
+    streakText = this.game.add.text(890,90, "1", {
+      font: "36px Cousine",
       fill: '#ff0044',
       align: 'center'
     });
@@ -182,7 +182,7 @@ var Game = {
     gameScoreText.setText(this.game.score);
     // cityHealthText.setText("Health: " + this.game.cityHealth);
     multiplierText.setText(this.game.multiplier + "x");
-    streakText.setText("Streak: " + this.game.perfectCounter);
+    streakText.setText(this.game.perfectCounter);
     this.terminal.bringToTop();
     if ((codeLineIndex + 1) != levelLines.length) {
       codeText.parent.bringToTop(codeText);
@@ -485,6 +485,8 @@ var Game = {
     }
   },
   createHealthUnits: function() {
+    this.steakCard = this.game.add.sprite(790,10, 'streakCard');
+    this.scoreCard = this.game.add.sprite(15,10, 'scoreCard');
     this.healthUnits = this.game.add.group();
     this.healthBar = this.game.add.sprite(725,500, 'healthBar');
     this.healthBar.scale.setTo(.4);

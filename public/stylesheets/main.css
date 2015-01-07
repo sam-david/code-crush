@@ -110,7 +110,10 @@ canvas {
   float: right;
   background: white;
   font-family: 'Ruda';
+}
 
+.error {
+  font-family: 'Ruda';
 }
 
 .profile-info h1 {
@@ -119,7 +122,7 @@ canvas {
 }
 
 .profile-info h2 {
-
+  font-family: 'Orbitron';
   font-size: 2em;
 }
 

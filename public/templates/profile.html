@@ -6,9 +6,48 @@
       <p>Favorite Game: Code Fall</p>
       <h1 class ='clear-card yellow-diag-stripes'>Scores</h1>
       <div class='grey-card' ng-controller="ScoreCtrl">
+
+        <h4 class="clear-card blue-diag-stripes">Level 1:</h4>
         <ol>
-          <li ng-repeat="score in user.scores | limitTo:10 | orderBy : 'score' : 'reverse'">
+          <li ng-repeat="score in user.scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 1">
             {{ score.score }}
+            {{ score.user.name}}
+            {{ score.createdAt | date:'MMMM d yyyy'}}
+          </li>
+        </ol>
+        <h4 class="clear-card blue-diag-stripes">Level 2:</h4>
+        <ol>
+          <li ng-repeat="score in user.scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 2">
+
+            {{ score.score }}
+            {{ score.user.name}}
+            {{ score.createdAt | date:'MMMM d yyyy'}}
+          </li>
+        </ol>
+        <h4 class="clear-card blue-diag-stripes">Level 3:</h4>
+        <ol>
+          <li ng-repeat="score in user.scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 3">
+
+            {{ score.score }}
+            {{ score.user.name}}
+            {{ score.createdAt | date:'MMMM d yyyy'}}
+          </li>
+        </ol>
+        <h4 class="clear-card blue-diag-stripes">Level 4:</h4>
+        <ol>
+          <li ng-repeat="score in user.scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 4">
+
+            {{ score.score }}
+            {{ score.user.name}}
+            {{ score.createdAt | date:'MMMM d yyyy'}}
+          </li>
+        </ol>
+        <h4 class="clear-card blue-diag-stripes">Level 5:</h4>
+        <ol>
+          <li ng-repeat="score in user.scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 5">
+
+            {{ score.score }}
+            {{ score.user.name}}
             {{ score.createdAt | date:'MMMM d yyyy'}}
           </li>
         </ol>

@@ -17,8 +17,14 @@ var Game = {
     this.background.autoScroll(-20, 0);
     this.city = this.game.add.sprite(0,552, 'city');
     this.laser = this.game.add.sprite(480,545, 'laser');
-    this.terminal = this.game.add.sprite(175,10, 'terminal');
+    this.terminal = this.game.add.sprite(175,-50, 'terminal');
     this.terminal.scale.setTo(.8);
+
+    // tweens
+    this.terminalTween = this.game.add.tween(this.terminal);
+    this.terminalTween.to({x: 175, y: 10}, 800);
+    this.terminalTween.start();
+
     // health unit gui
     this.createHealthUnits();
 
@@ -41,7 +47,7 @@ var Game = {
     this.multiSound = this.add.audio('multiUp');
 
     // create game text objects (health, code text, and multiplier)
-    codeText = this.game.add.text(250, 43, levelLines[codeLineIndex], { font: '30px Monospace', fill: '#fff' });
+    codeText = this.game.add.text(250, 43, levelLines[codeLineIndex], { font: '26px Monospace', fill: '#fff' });
     codeText.parent.bringToTop(codeText);
     gameScoreText = this.game.add.text(10,20, "0", {
       font: "24px Cousine",
@@ -81,14 +87,16 @@ var Game = {
         stringIndex++
         codeText.addColor('#fff',stringIndex)
       } else if (input.keyCode === 13 && (codeLineIndex + 1) === levelLines.length) {
+        this.game.score += (100 * this.game.multiplier);
         that.destroyComet();
         that.world.remove(codeText);
         that.gameOver("win");
       } else if (input.keyCode === 13 && stringIndex === codeText.text.length) {
         codeLineIndex++;
+        this.game.score += (100 * this.game.multiplier);
         that.destroyComet();
         that.world.remove(codeText);
-        codeText = this.game.add.text(250, 43, levelLines[codeLineIndex], { font: '30px Monospace', fill: '#fff' });
+        codeText = this.game.add.text(250, 43, levelLines[codeLineIndex], { font: '26px Monospace', fill: '#fff' });
         codeText.parent.bringToTop(codeText);
         stringIndex = 0;
       } else if (input.keyCode != 16) {
@@ -232,7 +240,6 @@ var Game = {
       explosionAnimation.play('explosion', 30, false, true);
       this.fireBullet(this.comets.getAt(0));
       this.comets.getAt(0).destroy();
-      this.game.score += (100 * this.game.multiplier);
 
       // Play multiplier sound if our perfect entry counter is divisible by 5 (multiplier ups every 5 perfect entries)
       this.game.perfectCounter += 1;
@@ -309,13 +316,13 @@ var Game = {
       align: 'center'
     });
     if (outcome === "win") {
-      winText = this.game.add.text(600,315, "YOU WIN!", {
+      winText = this.game.add.text(440,200, "YOU WIN!", {
         font: "24px Cousine",
         fill: 'white',
         align: 'center'
       });
     } else {
-      gameOverText = this.game.add.text(420,200, "Game Over", {
+      gameOverText = this.game.add.text(440,200, "Game Over", {
         font: "24px Cousine",
         fill: 'white',
         align: 'center'

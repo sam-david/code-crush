@@ -10,13 +10,27 @@ var MainMenu = {
     this.background.autoScroll(-20, 0);
 
     //highest score
-    this.codeCrushlogo = this.game.add.sprite(840,530, 'logo');
-    this.codeFalllogo = this.game.add.sprite(220,30, 'codeFallLogo');
+    this.codeCrushlogo = this.game.add.sprite(1000,530, 'logo');
+    this.codeFalllogo = this.game.add.sprite(180,-150, 'codeFallLogo');
     this.levelOneButton = this.game.add.sprite(230,230, 'redButton');
     this.levelTwoButton = this.game.add.sprite(500,230, 'redButton');
     this.levelThreeButton = this.game.add.sprite(230,330, 'yellowButton');
     this.levelFourButton = this.game.add.sprite(500,330, 'yellowButton');
     this.levelFiveButton = this.game.add.sprite(365,430, 'redButton');
+
+    // tweens
+    this.codeFalllogo.angle = -6
+    this.codeFallTween = this.game.add.tween(this.codeFalllogo);
+    this.codeFallTween.to({x: 220, y: 40}, 500);
+    this.codeFallTween.start();
+
+    this.rotateTween = this.game.add.tween(this.codeFalllogo);
+    this.rotateTween.to({angle: 0}, 500);
+    this.rotateTween.start();
+
+    this.codeCrushTween = this.game.add.tween(this.codeCrushlogo);
+    this.codeCrushTween.to({ x: 840, y: 530}, 500);
+    this.codeCrushTween.start();
 
     // this.codeFalllogo.scale.setTo(.7);
     this.levelOneText = this.game.add.text(275, 250, "Level 1", {

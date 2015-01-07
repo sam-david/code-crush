@@ -114,15 +114,19 @@ var levelOneLines = [
 "line(5,'*')",
 "line(11,'+','=')",
 "def so_close",
-"print 'c:\\books\net\apps\\tools'",
+"print 'c:\\books\net\apps",
 "end",
-"(5..10).each { |x| print x }"
+"(5..10).each {|x| print x}"
 ]
 
 var levelTwoLines = [
-"def mission",
-'print "save the world"',
-"end"
+  'def to_roman(num,result="")',
+  'roman_numerals = {1000 => "M", 900 => "CM"}',
+  "roman_numerals.each do |arabic,roman|",
+  "if num / arabic > 0",
+  "result += roman * (num/arabic)",
+  "num -= arabic * (num/arabic)",
+  "end"
 // "(5..10).each { |x| print x }",
 // "r = 3%5"
 // "rand(2).times {",

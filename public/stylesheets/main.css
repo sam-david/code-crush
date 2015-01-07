@@ -6,7 +6,6 @@ body {
   background-color: #044568;
   background-repeat: no-repeat;
   background-position: fixed top left;
-  /*background-size: cover;*/
   font-family: 'Orbitron';
 }
 
@@ -38,6 +37,20 @@ rgb(248, 121, 28) 3px;
   background: grey;
 }
 
+.blue-card {
+  border: 2px solid #3482AC;
+  padding: 3%;
+  border-radius: 5px;
+  background: #3482AC;
+}
+
+.yellow-card {
+  border: 2px solid #FFCC43;
+  padding: 3%;
+  border-radius: 5px;
+  background: #FFCC43;
+}
+
 .clear-card {
   padding: 3%;
   border-radius: 5px;
@@ -52,6 +65,7 @@ rgb(248, 121, 28) 3px;
   #044568 10px,
   #044568 20px
 );
+  color: white;
 }
 
 .yellow-diag-stripes {
@@ -99,10 +113,18 @@ rgb(248, 121, 28) 3px;
   float: right;
   background: white;
   font-family: 'Ruda';
+}
 
+.error {
+  font-family: 'Ruda';
 }
 
 .profile-info h1 {
+  font-family: 'Orbitron';
+  font-size: 2em;
+}
+
+.profile-info h2 {
   font-family: 'Orbitron';
   font-size: 2em;
 }

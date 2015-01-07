@@ -88,13 +88,22 @@ var Game = {
         codeText.addColor('#fff',stringIndex)
       } else if (input.keyCode === 13 && (codeLineIndex + 1) === levelLines.length) {
         this.game.score += (100 * this.game.multiplier);
-        that.destroyComet();
+        if (currentLevel != 5) {
+          that.destroyComet();
+        } else {
+          that.shootMoth();
+          that.destroyMoth();
+        }
         that.world.remove(codeText);
         that.gameOver("win");
       } else if (input.keyCode === 13 && stringIndex === codeText.text.length) {
         codeLineIndex++;
         this.game.score += (100 * this.game.multiplier);
-        that.destroyComet();
+        if (currentLevel != 5) {
+          that.destroyComet();
+        } else {
+          that.shootMoth();
+        }
         that.world.remove(codeText);
         codeText = this.game.add.text(250, 43, levelLines[codeLineIndex], { font: '26px Monospace', fill: '#fff' });
         codeText.parent.bringToTop(codeText);
@@ -136,16 +145,22 @@ var Game = {
     bullets.setAll('outOfBoundsKill', true);
     bullets.setAll('checkWorldBounds', true);
 
-    // drop one comet to start
-    this.dropComet();
-    // timer to drop comets
-    cometTimer = this.game.time.events.loop(cometTimerInterval, this.dropComet, this);
-    cometTimer.timer.resume();
-
+    // final boss?
+    if (currentLevel === 5) {
+      this.brick = this.game.add.sprite(830,337, 'brick');
+      this.dropMoth();
+    } else {
+      // drop one comet to start
+      this.dropComet();
+      // timer to drop comets
+      cometTimer = this.game.time.events.loop(cometTimerInterval, this.dropComet, this);
+      cometTimer.timer.resume();
+    }
   },
   update: function() {
     // if collision between comets and city, execute hitCity function, damaging the city
     this.game.physics.arcade.collide(this.city, this.comets, this.hitCity, null, this);
+    this.game.physics.arcade.collide(this.city, this.megaMothra, this.mothHitCity, null, this);
 
     //increase multiplier every 5 perfect entries
       if (this.game.perfectCounter === 5) {
@@ -165,6 +180,11 @@ var Game = {
     // cityHealthText.setText("Health: " + this.game.cityHealth);
     multiplierText.setText(this.game.multiplier + "x");
     streakText.setText("Streak: " + this.game.perfectCounter);
+    this.terminal.bringToTop();
+    if ((codeLineIndex + 1) != levelLines.length) {
+      codeText.parent.bringToTop(codeText);
+    }
+
   },
   initializeLevelVars: function() {
     if (currentLevel === 1) {
@@ -209,7 +229,7 @@ var Game = {
 
     // comet will not go outside world bounds
     this.comet.body.collideWorldBounds = true;
-
+    console.log(this.comet);
     // grab fireTrail emitter from pool based on counter
     var fireTrail = fireTrailPool[this.currentFireTrail];
 
@@ -239,7 +259,7 @@ var Game = {
       var explosionAnimation = explosions.getFirstExists(false);
       explosionAnimation.reset(this.comets.getAt(0).body.x + 18, this.comets.getAt(0).body.y + 15);
       explosionAnimation.play('explosion', 30, false, true);
-      this.fireBullet(this.comets.getAt(0));
+      this.fireBullet(this.comets.getAt(0), 6);
       this.comets.getAt(0).destroy();
 
       // Play multiplier sound if our perfect entry counter is divisible by 5 (multiplier ups every 5 perfect entries)
@@ -248,6 +268,59 @@ var Game = {
         this.multiSound.play();
       }
     }
+  },
+  dropMoth: function() {
+    console.log('megamoth!')
+    this.megaMothra = this.game.add.sprite(0,0, 'megamothAni');
+    this.megaMothra.animations.add('fly', null, 10, true);
+    this.megaMothra.scale.setTo(.2);
+    this.megaMothra.animations.play('fly');
+    this.megaMothra.enableBody = true;
+    this.game.physics.enable(this.megaMothra, Phaser.Physics.ARCADE);
+    // this.megaMothra.physicsBodyType = Phaser.Physics.ARCADE;
+    console.log(this.megaMothra);
+    // this.megaMothra.body.velocity.y = cometSpeed;
+    this.megaMothraXindex = this.megaMothra.x
+    this.megaMothraYindex = this.megaMothra.y
+    this.flyRight = true;
+    this.flyMoth();
+    mothTimer = this.game.time.events.loop(10500, this.flyMoth, this);
+  },
+  flyMoth: function() {
+    if (this.flyRight === true) {
+      this.megaMothraXindex += 830;
+      this.megaMothraYindex += 50;
+      this.mothFlyTween = this.game.add.tween(this.megaMothra);
+      this.mothFlyTween.to({x: this.megaMothraXindex, y: this.megaMothraYindex}, 10000).start();
+      this.flyRight = false;
+    } else {
+      this.megaMothraXindex -= 830;
+      this.megaMothraYindex += 50;
+      this.mothFlyTween = this.game.add.tween(this.megaMothra);
+      this.mothFlyTween.to({x: this.megaMothraXindex, y: this.megaMothraYindex}, 10000).start();
+      this.flyRight = true;
+    }
+  },
+  shootMoth: function() {
+
+      this.fireBullet(this.megaMothra, 15);
+
+      if (codeLineIndex === levelLines.length) {
+        this.megaMothra.destroy();
+      }
+
+      // Play multiplier sound if our perfect entry counter is divisible by 5 (multiplier ups every 5 perfect entries)
+      this.game.perfectCounter += 1;
+      if (this.game.perfectCounter % 5 === 0) {
+        this.multiSound.play();
+      }
+  },
+  destroyMoth: function() {
+    this.explosionSound.play();
+    var explosionAnimation = explosions.getFirstExists(false);
+    explosionAnimation.reset(this.megaMothra.body.x + 80, this.megaMothra.body.y + 50);
+    explosionAnimation.play('explosion', 30, false, true);
+    this.megaMothra.destroy();
   },
   cityFire: function() {
     console.log("fire in the city!");
@@ -276,14 +349,14 @@ var Game = {
     $.ajax({
       type: "POST",
       url: "users/" + user_id + "/scores",
-      data: {score: this.game.score, name: 'Codefall'}
+      data: {score: this.game.score, name: 'Codefall', level: currentLevel}
     }).success( function(data) {
       console.log('worked' + data);
     }).fail(function() {
       console.log('failed');
     });
   },
-  fireBullet: function(comet) {
+  fireBullet: function(sprite, speed) {
     //play laser audio
     this.laserSound.play();
 
@@ -291,16 +364,18 @@ var Game = {
     var bullet = bullets.getFirstExists(false);
     bullet.reset(this.laser.x + 26, this.laser.y + 20);
     // bullet velocity x and y are set based of angle between laser and comet, increase speed with multiplier to make bullet faster
-    bullet.body.velocity.y = (comet.y - this.laser.y) * 6;
-    bullet.body.velocity.x = (comet.x - this.laser.x) * 6;
+    bullet.body.velocity.y = (sprite.y - this.laser.y) * speed;
+    bullet.body.velocity.x = (sprite.x - this.laser.x) * speed;
 
     // Set bullet rotation based off angle between sprites, add 90 degrees
     // This took forever to figure out...using a phaser method that allows you to find angle between two sprites, then adding an additional 90 degrees
-    bullet.rotation = Phaser.Math.angleBetween(this.laser.x , this.laser.y, comet.x, comet.y) + (90)*(Math.PI/180);
+    bullet.rotation = Phaser.Math.angleBetween(this.laser.x , this.laser.y, sprite.x, sprite.y) + (90)*(Math.PI/180);
 
   },
   gameOver: function(outcome) {
-    cometTimer.timer.pause();
+    if (currentLevel != 5) {
+      cometTimer.timer.pause();
+    }
     if (user_id != undefined) {
       this.postScore();
     }
@@ -380,6 +455,19 @@ var Game = {
         this.gameOver();
       }
   },
+  mothHitCity: function() {
+    console.log('moth hit city');
+    this.explosionSound.play();
+    var explosionAnimation = explosions.getFirstExists(false);
+    explosionAnimation.reset(this.megaMothra.body.x + 80, this.megaMothra.body.y + 50);
+    explosionAnimation.play('explosion', 30, false, true);
+    // destroy the oldest comet
+    this.megaMothra.destroy();
+    // decrease city health by 1 because of hit
+    this.game.cityHealth -= 1;
+    this.healthUnit1.kill();
+    this.gameOver();
+  },
   pushToFireTrailPool: function(quantity) {
     // add emitter group to
     for (var e = 0; e < quantity; e++) {
@@ -395,36 +483,30 @@ var Game = {
   },
   createHealthUnits: function() {
     this.healthUnits = this.game.add.group();
-
-
     this.healthBar = this.game.add.sprite(725,500, 'healthBar');
+    this.healthBar.scale.setTo(.4);
     this.healthEmptyUnit1 = this.healthUnits.create(738,505, 'healthUnitWire');
     this.healthEmptyUnit2 = this.healthUnits.create(778,505, 'healthUnitWire');
     this.healthEmptyUnit3 = this.healthUnits.create(818,505, 'healthUnitWire');
     this.healthEmptyUnit4 = this.healthUnits.create(858,505, 'healthUnitWire');
     this.healthEmptyUnit5 = this.healthUnits.create(898,505, 'healthUnitWire');
     this.healthUnit1 = this.healthUnits.create(738,505, 'healthUnit');
-    this.healthUnit2 = this.healthUnits.create(778,505, 'healthUnit');
-    this.healthUnit3 = this.healthUnits.create(818,505, 'healthUnit');
-    this.healthUnit4 = this.healthUnits.create(858,505, 'healthUnit');
-    this.healthUnit5 = this.healthUnits.create(898,505, 'healthUnit');
-
-    // this.healthUnit2 = this.game.add.sprite(738,505, 'healthUnit');
-    // this.healthUnit3 = this.game.add.sprite(738,505, 'healthUnit');
-    // this.healthUnit4 = this.game.add.sprite(738,505, 'healthUnit');
-    // this.healthUnit5 = this.game.add.sprite(738,505, 'healthUnit');
-    // this.healthBar = this.game.add.sprite(600, 500, 'healthBar');
     this.healthUnit1.scale.setTo(.4);
-    this.healthUnit2.scale.setTo(.4);
-    this.healthUnit3.scale.setTo(.4);
-    this.healthUnit4.scale.setTo(.4);
-    this.healthUnit5.scale.setTo(.4);
     this.healthEmptyUnit1.scale.setTo(.4);
     this.healthEmptyUnit2.scale.setTo(.4);
     this.healthEmptyUnit3.scale.setTo(.4);
     this.healthEmptyUnit4.scale.setTo(.4);
     this.healthEmptyUnit5.scale.setTo(.4);
 
-    this.healthBar.scale.setTo(.4);
+    if (currentLevel != 5) {
+      this.healthUnit2 = this.healthUnits.create(778,505, 'healthUnit');
+      this.healthUnit3 = this.healthUnits.create(818,505, 'healthUnit');
+      this.healthUnit4 = this.healthUnits.create(858,505, 'healthUnit');
+      this.healthUnit5 = this.healthUnits.create(898,505, 'healthUnit');
+      this.healthUnit2.scale.setTo(.4);
+      this.healthUnit3.scale.setTo(.4);
+      this.healthUnit4.scale.setTo(.4);
+      this.healthUnit5.scale.setTo(.4);
+    }
   },
 };

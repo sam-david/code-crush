@@ -104,6 +104,9 @@ module.exports = function(app, passport) {
             })
         };
     });
+    app.get('*', function(req, res){
+        res.redirect('/#/<error></error>')
+    })
 };
 
 // route middleware to make sure a user is logged in

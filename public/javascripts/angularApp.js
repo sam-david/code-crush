@@ -2,11 +2,14 @@ var app = angular.module('codeCrush', ['ui.router']);
 var user_id;
 
 app.config(function($stateProvider, $urlRouterProvider){
-  $urlRouterProvider.otherwise('/error');
+  $urlRouterProvider.otherwise('error');
+  $urlRouterProvider.when('','home');
+
   $stateProvider.state('home', {
     url: '/home',
     templateUrl: 'templates/partial-buttons.html'
   });
+
 
   $stateProvider.state('error', {
     url: '/error',

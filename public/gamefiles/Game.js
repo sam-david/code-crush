@@ -1,9 +1,10 @@
 var explosions;
 var bullets;
-var emitter;
+// var emitter;
 var fireTrailPool = [];
 var cometTimerInterval = 4000;
 var cometSpeed = 50;
+var cometTimer;
 
 var Game = {
   create: function() {
@@ -14,21 +15,16 @@ var Game = {
     //add background, city, and laser
     this.background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'space');
     this.background.autoScroll(-20, 0);
-    // this.background = game.add.tileSprite(0, 0, this.game.width, this.game.height, 'skyline');
     this.city = this.game.add.sprite(0,552, 'city');
     this.laser = this.game.add.sprite(480,545, 'laser');
     this.terminal = this.game.add.sprite(175,10, 'terminal');
-
-    this.createHealthUnits();
-
     this.terminal.scale.setTo(.8);
+    // health unit gui
+    this.createHealthUnits();
 
     //enable city physics for collision
     this.game.physics.enable(this.city, Phaser.Physics.ARCADE);
     this.city.body.immovable = true;
-
-    // test rectangle (kinda sucks)
-    // game.debug.geom( rect, 'rgba(255,255,255,1)' ) ;
 
     // set game variables
     this.game.score = 0;
@@ -47,11 +43,6 @@ var Game = {
     // create game text objects (health, code text, and multiplier)
     codeText = this.game.add.text(250, 43, levelLines[codeLineIndex], { font: '30px Monospace', fill: '#fff' });
     codeText.parent.bringToTop(codeText);
-    // cityHealthText = this.game.add.text(810,520, "Health: 5", {
-    //   font: "24px Cousine",
-    //   fill: '#ff0044',
-    //   align: 'center'
-    // });
     gameScoreText = this.game.add.text(10,20, "0", {
       font: "24px Cousine",
       fill: '#ff0044',
@@ -76,42 +67,31 @@ var Game = {
       align: 'center'
     });
 
-    // this.levelTimer = new Phaser.Timer(this, true);
-    this.levelTimer = this.game.time.events.loop(3000, this.killLevelText, this);
-    // this.levelTimer.start(3000);
-    // this.levelTimer = this.game.time.events.loop(2000, levelText.kill, this);
+    this.levelTimer = this.game.time.events.loop(2000, this.killLevelText, this);
 
     //Keyboard input for code
     var that = this;
     this.game.input.keyboard.onDownCallback = function(input) {
-      console.log("Perfect Counter" + that.game.perfectCounter);
-      console.log("Key  code:" + input.keyCode);
       if (stringIndex > codeText.text.length) {
         //move to next string
       }
       var currentLetter = codeText.text.charAt(stringIndex);
       if (keyIndex[currentLetter] === input.keyCode && input.keyCode != 13) {
-        // codeText.text.charAt(stringIndex).fill()
-        console.log('Correct!')
         codeText.addColor('#00ff00',stringIndex)
-        console.log(stringIndex);
         stringIndex++
         codeText.addColor('#fff',stringIndex)
-
+      } else if (input.keyCode === 13 && (codeLineIndex + 1) === levelLines.length) {
+        that.destroyComet();
+        that.world.remove(codeText);
+        that.gameOver("win");
       } else if (input.keyCode === 13 && stringIndex === codeText.text.length) {
-        console.log('line done');
         codeLineIndex++;
         that.destroyComet();
-        // codeText.setText(levelOneLines[codeLineIndex]);
-        // codeText.fill = '#fff';
         that.world.remove(codeText);
         codeText = this.game.add.text(250, 43, levelLines[codeLineIndex], { font: '30px Monospace', fill: '#fff' });
         codeText.parent.bringToTop(codeText);
         stringIndex = 0;
-        // codeText.addColor('#fff',stringIndex)
-
       } else if (input.keyCode != 16) {
-        console.log('wrong!');
         that.game.perfectCounter = 0;
       }
     }
@@ -119,7 +99,6 @@ var Game = {
     // set spacebar to execute function destroyComet
     this.laserKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     this.laserKey = this.input.keyboard.addKey(Phaser.Keyboard.BACKSPACE);
-    // this.laserKey.onDown.add(this.changeBack, this);
 
     // add comets group and enable physics
     this.comets = this.game.add.group();
@@ -152,9 +131,9 @@ var Game = {
     // drop one comet to start
     this.dropComet();
     // timer to drop comets
-    // this.game.time.events.add(3800, this.dropComet, this);
-    this.cometTimer = this.game.time.events.loop(cometTimerInterval, this.dropComet, this);
-    // this.postScore();
+    cometTimer = this.game.time.events.loop(cometTimerInterval, this.dropComet, this);
+    cometTimer.timer.resume();
+
   },
   update: function() {
     // if collision between comets and city, execute hitCity function, damaging the city
@@ -181,43 +160,31 @@ var Game = {
   },
   initializeLevelVars: function() {
     if (currentLevel === 1) {
-      console.log("level 1 bitch");
       levelLines = levelOneLines;
-      cometSpeed = 500;
-      cometTimerInterval = 400;
+      cometSpeed = 50;
+      cometTimerInterval = 4000;
     } else if (currentLevel === 2) {
-      console.log("level 2 bitch");
       levelLines = levelTwoLines;
       cometSpeed = 55;
       cometTimerInterval = 3800;
     } else if (currentLevel === 3) {
-      console.log("level 3 bitch");
-      levelLines = levelTwoLines;
+      levelLines = levelThreeLines;
       cometSpeed = 60;
       cometTimerInterval = 3600;
     } else if (currentLevel === 4) {
-      console.log("level 4 bitch");
-      levelLines = levelTwoLines;
+      levelLines = levelFourLines;
       cometSpeed = 65;
       cometTimerInterval = 3400;
     } else if (currentLevel === 5) {
-      console.log("level 5 bitch");
-      levelLines = levelTwoLines;
+      levelLines = levelFiveLines;
       cometSpeed = 55;
       cometTimerInterval = 3200;
     }
   },
   killLevelText: function() {
-    console.log('kill level');
     levelText.destroy();
   },
   dropComet: function() {
-    console.log('dropping comet');
-    // makes an emitter for the comets
-    // this.emitter = game.add.emitter(0, -50, 10);
-    // this.emitter.makeParticles('fire1');
-    // this.emitter.gravity = -100;
-
     //create a comet
     var comet;
     this.comet = this.comets.create(this.game.world.randomX, 0, 'comet');
@@ -324,8 +291,8 @@ var Game = {
     bullet.rotation = Phaser.Math.angleBetween(this.laser.x , this.laser.y, comet.x, comet.y) + (90)*(Math.PI/180);
 
   },
-  gameOver: function() {
-    this.cometTimer.timer.destroy();
+  gameOver: function(outcome) {
+    cometTimer.timer.pause();
     if (user_id != undefined) {
       this.postScore();
     }
@@ -341,25 +308,41 @@ var Game = {
       fill: 'white',
       align: 'center'
     });
+    if (outcome === "win") {
+      winText = this.game.add.text(600,315, "YOU WIN!", {
+        font: "24px Cousine",
+        fill: 'white',
+        align: 'center'
+      });
+    } else {
+      gameOverText = this.game.add.text(420,200, "Game Over", {
+        font: "24px Cousine",
+        fill: 'white',
+        align: 'center'
+      });
+    }
     this.mainMenuButton.inputEnabled = true;
     this.retryButton.inputEnabled = true;
     this.mainMenuButton.events.onInputDown.add(this.mainMenuNav, this);
     this.retryButton.events.onInputDown.add(this.restartGame, this);
   },
   mainMenuNav: function() {
-    console.log('main menu');
     // this.levelTimer.removeAll();
     // this.cometTimer.removeAll();
     // this.game.state.shutdown();
+    // currentLevel++;
+    fireTrailPool = [];
     this.game.state.start('MainMenu');
     // this.game.switchState('MainMenu');
   },
   restartGame: function() {
     // console.log(game.start);
-    this.game.state.restart();
+    fireTrailPool = [];
+    this.game.state.start('Game');
   },
   hitCity: function() {
     // grab first explosion sprite from group array, reset location to comet body, and play explosion animation
+    this.explosionSound.play();
     var explosionAnimation = explosions.getFirstExists(false);
     explosionAnimation.reset(this.comets.getAt(0).body.x + 11, this.comets.getAt(0).body.y + 4);
     explosionAnimation.play('explosion', 30, false, true);
@@ -391,10 +374,9 @@ var Game = {
   },
   pushToFireTrailPool: function(quantity) {
     // add emitter group to
-    console.log(quantity +" emitters created");
     for (var e = 0; e < quantity; e++) {
       //emitter setup
-      emitter = this.game.add.emitter(0, 0, 400);
+      var emitter = this.game.add.emitter(0, 0, 400);
       emitter.makeParticles( [ 'fire1', 'fire2', 'fire3', 'smoke' ] );
       emitter.gravity = 8;
       emitter.setAlpha(1, 0, 3000);

@@ -1,5 +1,3 @@
-var CodeFall = CodeFall || {};
-
 WebFontConfig = {
 
     //  'active' means all requested fonts have finished loading

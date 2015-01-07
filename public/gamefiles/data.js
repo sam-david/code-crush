@@ -91,49 +91,40 @@ var keyIndex = {
 };
 
 
-// var levelOneLines = [
-// "def mission",
-// 'print "save the world"',
-// "end",
-// "puts 'through your code'",
-// "def boom",
-// 'print "explode"',
-// "end"
-// "'1234567'.length"
-// "p 7+3",
-// "m = 8*2",
-// "def sqr(x)",
-// "return x*x",
-// "end",
-// "r = 3%5",
-// "rand(2).times {",
-// "a = rand(300)}",
-// "name = gets.chomp",
-// 'puts "Hi! #{name}"',
-// "line(8)",
-// "line(5,'*')",
-// "line(11,'+','=')",
-// "def so_close",
-// "print 'c:\books\net\apps\tools'",
-// "end",
-// "(5..10).each { |x| print x }"
-// ]
-
 var levelOneLines = [
 "def mission",
 'print "save the world"',
+"end",
+"puts 'through your code'",
+"def boom",
+'print "explode"',
+"end",
+"'1234567'.length",
+"p 7+3",
+"m = 8*2",
+"def sqr(x)",
+"return x*x",
+"end",
+"r = 3%5",
+"rand(2).times {",
+"a = rand(300)}",
+"name = gets.chomp",
+'puts "Hi! #{name}"',
+"line(8)",
+"line(5,'*')",
+"line(11,'+','=')",
+"def so_close",
+"print 'c:\\books\net\apps\\tools'",
+"end",
+"(5..10).each { |x| print x }"
+]
+
+var levelTwoLines = [
+"def mission",
+'print "save the world"',
 "end"
-// "puts 'through your code'",
-// "def boom",
-// 'print "explode"',
-// "end",
-// "[1,3,4].length",
-// "p 7+3",
-// "m = 8*2",
-// "def sqr(x)",
-// "return x*x",
-// "end",
-// "r = 3%5",
+// "(5..10).each { |x| print x }",
+// "r = 3%5"
 // "rand(2).times {",
 // "a = rand(300)}",
 // "name = gets.chomp",
@@ -145,12 +136,6 @@ var levelOneLines = [
 // "print 'c:\\books\\net\\apps'",
 // "end",
 // "(5..10).each { |x| print x }"
-]
-
-var levelTwoLines = [
-"this",
-"is",
-"awesome"
 ]
 
 var levelThreeLines = [

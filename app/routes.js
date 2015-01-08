@@ -8,6 +8,10 @@ module.exports = function(app, passport) {
         res.render('index.ejs'); // load the index.ejs file
     });
 
+    app.get('/codefall', function(req, res){
+        res.render('game.ejs');
+    })
+
 
     app.get('/login', function(req, res) {
 
@@ -104,9 +108,21 @@ module.exports = function(app, passport) {
             })
         };
     });
+    app.get('/games/:game_name/scores', function(req, res){
+        var game_name = req.params.game_name;
+        Score
+        .find({game: game_name})
+        .populate('user')
+        .exec(function(err, scores){
+            if (err) {return next(err);}
+            res.json(scores);
+        })
+
+    });
     app.get('*', function(req, res){
         res.redirect('/#/<error></error>')
     })
+
 };
 
 // route middleware to make sure a user is logged in

@@ -4,7 +4,7 @@
         <!-- level 1 -->
         <h3 class="clear-card blue-diag-stripes">Level 1:</h3>
         <ol>
-          <li ng-repeat="score in scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 1">
+          <li ng-repeat="score in scores[0] | limitTo: 10 | orderBy : 'score' : 'reverse'">
             {{ score.score }}
             |
             {{ score.user.name || "DBC"}}
@@ -14,7 +14,7 @@
         </ol>
         <h3 class="clear-card blue-diag-stripes">Level 2:</h3>
         <ol>
-          <li ng-repeat="score in scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 2">
+          <li ng-repeat="score in scores[1] | limitTo: 10 | orderBy : 'score' : 'reverse'">
             {{ score.score }}
             |
             {{ score.user.name || "DBC"}}
@@ -24,7 +24,7 @@
         </ol>
         <h3 class="clear-card blue-diag-stripes">Level 3:</h3>
         <ol>
-          <li ng-repeat="score in scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 3">
+          <li ng-repeat="score in scores[2] | limitTo: 10 | orderBy : 'score' : 'reverse'">
             {{ score.score }}
             |
             {{ score.user.name || "DBC"}}
@@ -34,7 +34,7 @@
         </ol>
         <h3 class="clear-card blue-diag-stripes">Level 4:</h3>
         <ol>
-          <li ng-repeat="score in scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 4">
+          <li ng-repeat="score in scores[3] | limitTo: 10 | orderBy : 'score' : 'reverse'">
             {{ score.score }}
             |
             {{ score.user.name || "DBC"}}
@@ -44,7 +44,7 @@
         </ol>
         <h3 class="clear-card blue-diag-stripes">Level 5:</h3>
         <ol>
-          <li ng-repeat="score in scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 5">
+          <li ng-repeat="score in scores[4] | limitTo: 10 | orderBy : 'score' : 'reverse'">
             {{ score.score }}
             |
             {{ score.user.name || "DBC"}}

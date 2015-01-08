@@ -48,6 +48,14 @@ var Game = {
     this.laserSound = this.add.audio('laserAudio');
     this.multiSound = this.add.audio('multiUp');
 
+    if (currentLevel === 5) {
+      this.bossSound = this.add.audio('bossMusic');
+      this.bossSound.play();
+    } else {
+      this.levelMusic = this.add.audio('levelMusic');
+      this.levelMusic.play();
+    }
+
     // create game text objects (health, code text, and multiplier)
     codeText = this.game.add.text(250, 43 + codeFontAdjust, levelLines[codeLineIndex], { font: codeFontSize + 'px Monospace', fill: '#fff' });
     codeText.parent.bringToTop(codeText);
@@ -469,6 +477,19 @@ var Game = {
   createHealthUnits: function() {
     this.steakCard = this.game.add.sprite(790,10, 'streakCard');
     this.scoreCard = this.game.add.sprite(15,10, 'scoreCard');
+    this.menuButton = this.game.add.sprite(15,88, 'menuButton');
+    mainMenuText = this.game.add.text(27,107, "Main Menu", {
+      font: "24px Cousine",
+      fill: 'black',
+      align: 'center',
+      fontWeight: 'bold'
+    });
+    muteText = this.game.add.text(27,152, "Mute", {
+      font: "16px Cousine",
+      fill: '#ff0044',
+      align: 'center',
+      fontWeight: 'bold'
+    });
     this.healthUnits = this.game.add.group();
     this.healthBar = this.game.add.sprite(725,500, 'healthBar');
     this.healthBar.scale.setTo(.4);

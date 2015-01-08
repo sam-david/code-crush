@@ -9,6 +9,14 @@ body {
   font-family: 'Orbitron';
 }
 
+.big-logo {
+  padding-bottom: 5%;
+}
+
+.big-logo.hidden {
+  display: none;
+}
+
 .brick {
   position: fixed;
   bottom: 0;

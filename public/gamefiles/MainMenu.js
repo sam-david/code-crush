@@ -2,7 +2,6 @@ var currentLevel = 1;
 
 var MainMenu = {
   create: function() {
-    console.log('main menu made');
     //show the space tile, repeated
     this.background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'space');
 
@@ -80,10 +79,6 @@ var MainMenu = {
     this.textThreeTween.to({x: 275, y: 350}, 500).start();
     this.textFourTween.to({x: 545, y: 350}, 500).start();
     this.textFiveTween.to({x: 410, y: 450}, 500).start();
-
-    // this.codeFalllogo.scale.setTo(.7);
-
-
 
     that = this;
     this.levelOneButton.inputEnabled = true;

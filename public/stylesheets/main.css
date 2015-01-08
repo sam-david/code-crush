@@ -20,6 +20,7 @@ body {
   z-index: -1;
 }
 
+/*game canvas*/
 canvas {
   margin: auto;
   border: solid
@@ -101,14 +102,24 @@ rgb(248, 121, 28) 3px;
   color: white;
 }
 
+.crush-title {
+  margin-top: 2%;
+  font-size: 1.4em;
+}
+
+.crush-title-game {
+  margin-top: 4%;
+  font-size: 1.4em;
+}
+
 .nav-logo {
-  width: 15%;
-  height: 25%;
+  width: 83px;
+  height: 81px;
 }
 
 .nav-logo-game {
-  width: 33%;
-  height: 25%;
+  width: 83px;
+  height: 81px;
 }
 
 .profile-pic {
@@ -156,4 +167,21 @@ rgb(248, 121, 28) 3px;
 .game-selector {
   color: white;
   font-size: .5em;
+}
+
+.high-score-link {
+  font-size: 1.2em;
+  padding-top: 2%;
+  text-align: center;
+  text-decoration: underline;
+  color: rgb(248, 121, 28);
+}
+
+.need-account-text {
+  padding-top: 2%;
+}
+
+.login-text {
+  font-size: 1.4em;
+  margin-top: 3%;
 }

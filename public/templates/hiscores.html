@@ -7,7 +7,7 @@
           <li ng-repeat="score in scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 1">
             {{ score.score }}
             |
-            {{ score.user.name}}
+            {{ score.user.name || "DBC"}}
             |
             {{ score.createdAt | date:'M/d/yyyy'}}
           </li>
@@ -17,7 +17,7 @@
           <li ng-repeat="score in scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 2">
             {{ score.score }}
             |
-            {{ score.user.name}}
+            {{ score.user.name || "DBC"}}
             |
             {{ score.createdAt | date:'MMMM d yyyy'}}
           </li>
@@ -27,7 +27,7 @@
           <li ng-repeat="score in scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 3">
             {{ score.score }}
             |
-            {{ score.user.name}}
+            {{ score.user.name || "DBC"}}
             |
             {{ score.createdAt | date:'MMMM d yyyy'}}
           </li>
@@ -37,7 +37,7 @@
           <li ng-repeat="score in scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 4">
             {{ score.score }}
             |
-            {{ score.user.name}}
+            {{ score.user.name || "DBC"}}
             |
             {{ score.createdAt | date:'MMMM d yyyy'}}
           </li>
@@ -47,7 +47,7 @@
           <li ng-repeat="score in scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 5">
             {{ score.score }}
             |
-            {{ score.user.name}}
+            {{ score.user.name || "DBC"}}
             |
             {{ score.createdAt | date:'MMMM d yyyy'}}
           </li>

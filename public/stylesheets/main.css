@@ -102,14 +102,25 @@ rgb(248, 121, 28) 3px;
   color: white;
 }
 
-.navbar-brand {
-  padding-top: 8%;
+
+.crush-title {
+  margin-top: 2%;
+  font-size: 1.4em;
+}
+
+.crush-title-game {
+  margin-top: 4%;
   font-size: 1.4em;
 }
 
 .nav-logo {
-  width: 15%;
-  height: 25%;
+  width: 83px;
+  height: 81px;
+}
+
+.nav-logo-game {
+  width: 83px;
+  height: 81px;
 }
 
 .profile-pic {
@@ -173,5 +184,5 @@ rgb(248, 121, 28) 3px;
 
 .login-text {
   font-size: 1.4em;
-  padding-top: 2%;
+  margin-top: 3%;
 }

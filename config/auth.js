@@ -1,15 +1,15 @@
 module.exports = {
 
     'facebookAuth' : {
-        'clientID'      : '915822205137081', // your App ID
-        'clientSecret'  : 'c9e9b22bb04799e48c48493244487854', // your App Secret
-        'callbackURL'   : 'http://localhost:8080/auth/facebook/callback'
+        'clientID'      : '372655392905633', // your App ID
+        'clientSecret'  : '75196035024bd39b55f63f107807986f', // your App Secret
+        'callbackURL'   : 'http://codecrush.herokuapp.com/auth/facebook/callback'
     },
 
     'googleAuth' : {
-        'clientID'      : '508195381536-4kqb44givvrs4dm0rpcifehh74hl7qf7.apps.googleusercontent.com',
-        'clientSecret'  : 'pyCpVaPd1WvBRMP07Cuk7Zrr',
-        'callbackURL'   : 'http://localhost:8080/auth/google/callback'
+        'clientID'      : '557376559568-tfhl4g77sqi4237p4qedlk5tbtmqsmck.apps.googleusercontent.com',
+        'clientSecret'  : 'VpLoZs4AnmFs3gVHAsStSsaq',
+        'callbackURL'   : 'http://codecrush.herokuapp.com/auth/google/callback'
     }
 
 };

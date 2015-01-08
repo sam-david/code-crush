@@ -20,7 +20,6 @@ body {
   z-index: -1;
 }
 
-/*game canvas*/
 canvas {
   margin: auto;
   border: solid
@@ -102,13 +101,13 @@ rgb(248, 121, 28) 3px;
   color: white;
 }
 
-.navbar-brand {
-  padding-top: 8%;
-  font-size: 1.4em;
-}
-
 .nav-logo {
   width: 15%;
+  height: 25%;
+}
+
+.nav-logo-game {
+  width: 33%;
   height: 25%;
 }
 
@@ -157,21 +156,4 @@ rgb(248, 121, 28) 3px;
 .game-selector {
   color: white;
   font-size: .5em;
-}
-
-.high-score-link {
-  font-size: 1.2em;
-  padding-top: 2%;
-  text-align: center;
-  text-decoration: underline;
-  color: rgb(248, 121, 28);
-}
-
-.need-account-text {
-  padding-top: 2%;
-}
-
-.login-text {
-  font-size: 1.4em;
-  padding-top: 2%;
 }

@@ -70,5 +70,14 @@ app.controller('HiScoreCtrl', ['$scope', '$http', function($scope, $http){
         $scope.scores[(data[i].level - 1)].push(data[i]);
       };
     });
+    $scope.scores[0] = $scope.scores[0].sort(compare);
   })();
 }]);
+
+function compare(a,b) {
+  if (a.score < b.score)
+     return -1;
+  if (a.score > b.score)
+    return 1;
+  return 0;
+}

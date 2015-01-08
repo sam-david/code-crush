@@ -4,6 +4,7 @@
         <!-- level 1 -->
         <h3 class="clear-card blue-diag-stripes">Level 1:</h3>
         <ol>
+
           <li ng-repeat="score in scores[0] | limitTo: 10 | orderBy : 'score' : 'reverse'">
             {{ score.score }}
             |

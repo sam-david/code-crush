@@ -40,6 +40,7 @@ var Game = {
     this.game.multiplier = 1;
     this.game.cityHealth = 5;
     this.currentFireTrail = 0;
+    this.musicPlaying = true;
     stringIndex = 0;
     codeLineIndex = 0;
 
@@ -478,15 +479,21 @@ var Game = {
     this.steakCard = this.game.add.sprite(790,10, 'streakCard');
     this.scoreCard = this.game.add.sprite(15,10, 'scoreCard');
     this.menuButton = this.game.add.sprite(15,88, 'menuButton');
+    this.menuButton.inputEnabled = true;
+    this.menuButton.events.onInputDown.add(this.mainMenuNav, this);
     mainMenuText = this.game.add.text(27,107, "Main Menu", {
       font: "24px Cousine",
       fill: 'black',
       align: 'center',
       fontWeight: 'bold'
     });
-    muteText = this.game.add.text(27,152, "Mute", {
+    this.muteButton = this.game.add.sprite(15,154, 'menuButton');
+    this.muteButton.scale.setTo(.4);
+    this.muteButton.inputEnabled = true;
+    this.muteButton.events.onInputDown.add(this.toggleMusic, this);
+    muteText = this.game.add.text(26,158, "Mute", {
       font: "16px Cousine",
-      fill: '#ff0044',
+      fill: 'black',
       align: 'center',
       fontWeight: 'bold'
     });
@@ -517,7 +524,27 @@ var Game = {
       this.healthUnit5.scale.setTo(.4);
     }
   },
+  toggleMusic: function() {
+    if (this.musicPlaying === true && currentLevel === 5) {
+      console.log('music paused');
+      this.bossSound.pause();
+      this.musicPlaying = false;
+    } else if (this.musicPlaying === false && currentLevel === 5) {
+      console.log('music resume');
+      this.bossSound.resume();
+      this.musicPlaying = true;
+    } else if (this.musicPlaying === true && currentLevel != 5) {
+      console.log('music paused');
+      this.levelMusic.pause();
+      this.musicPlaying = false;
+    } else if (this.musicPlaying === false && currentLevel != 5) {
+      console.log('music resume');
+      this.levelMusic.resume();
+      this.musicPlaying = true;
+    }
+  },
   cityFire: function() {
+    // feature put on hold
     console.log("fire in the city!");
     // grab fireTrail emitter from pool based on counter
     var fireTrail = fireTrailPool[this.currentFireTrail];

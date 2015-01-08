@@ -89,20 +89,23 @@ var keyIndex = {
   "^": 54,
   "!": 49,
   "#": 51,
- '\\': 220
+ '\\': 220,
+  "&": 55,
+  "@" : 50,
+  "~" : 192,
 };
 
 var levelOneLines = [
 'git init',
 "p 7+3",
 "def mission",
-'gem install brcypt',
+'gem install bcrypt',
 "def boom",
 'require sqlite3',
 'print "explode"',
 "m = 8*2",
 "def sqr(x)",
-'require faker'
+'require faker',
 "[1,3,4].length",
 "return x*x",
 'class Sudoku',
@@ -232,7 +235,7 @@ var levelFiveLines = [
 'RSpec::Core::RakeTask.new(:specs)',
 '/[[:digit:]]/.match("\\u06F2")',
 '/(?<foo>.)(?<bar>.)/.named_captures',
-'[timestamp, args[:m_name]].join('_') + ".rb"',
+'[timestamp, args[:m_name]].join(\'_\') + ".rb"',
 'ENV["SCOPE"].blank? || ENV["SCOPE"]',
 "{'val': 'New', 'onclick': 'createDoc()'}",
 'puts table[1][3] == [14, 32, 7, 0, 23]',

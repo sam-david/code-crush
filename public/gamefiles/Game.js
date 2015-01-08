@@ -272,7 +272,6 @@ var Game = {
     }
   },
   dropMoth: function() {
-    console.log('megamoth!')
     this.megaMothra = this.game.add.sprite(0,0, 'megamothAni');
     this.game.physics.enable(this.megaMothra, Phaser.Physics.ARCADE);
     this.megaMothra.scale.setTo(.4);
@@ -280,27 +279,25 @@ var Game = {
     this.megaMothra.animations.add('fly', null, 10, true);
     this.megaMothra.animations.play('fly');
     // this.megaMothra.physicsBodyType = Phaser.Physics.ARCADE;
-    console.log(this.megaMothra);
-    console.log(this.city);
     // this.megaMothra.body.velocity.y = cometSpeed;
     this.megaMothraXindex = this.megaMothra.x
     this.megaMothraYindex = this.megaMothra.y
     this.flyRight = true;
     this.flyMoth();
-    mothTimer = this.game.time.events.loop(10500, this.flyMoth, this);
+    mothTimer = this.game.time.events.loop(25500, this.flyMoth, this);
   },
   flyMoth: function() {
     if (this.flyRight === true) {
-      this.megaMothraXindex += 760;
+      this.megaMothraXindex += 730;
       this.megaMothraYindex += 50;
       this.mothFlyTween = this.game.add.tween(this.megaMothra);
-      this.mothFlyTween.to({x: this.megaMothraXindex, y: this.megaMothraYindex}, 10000).start();
+      this.mothFlyTween.to({x: this.megaMothraXindex, y: this.megaMothraYindex}, 25000).start();
       this.flyRight = false;
     } else {
-      this.megaMothraXindex -= 760;
+      this.megaMothraXindex -= 730;
       this.megaMothraYindex += 50;
       this.mothFlyTween = this.game.add.tween(this.megaMothra);
-      this.mothFlyTween.to({x: this.megaMothraXindex, y: this.megaMothraYindex}, 10000).start();
+      this.mothFlyTween.to({x: this.megaMothraXindex, y: this.megaMothraYindex}, 25000).start();
       this.flyRight = true;
     }
   },

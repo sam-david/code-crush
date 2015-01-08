@@ -404,10 +404,13 @@ var Game = {
     this.retryButton.events.onInputDown.add(this.restartGame, this);
   },
   mainMenuNav: function() {
-    // this.levelTimer.removeAll();
-    // this.cometTimer.removeAll();
-    // this.game.state.shutdown();
-    // currentLevel++;
+    if (currentLevel != 5) {
+      console.log('music paused')
+      this.levelMusic.pause();
+    } else if (currentLevel === 5) {
+      console.log('music paused')
+      this.bossSound.pause();
+    }
     fireTrailPool = [];
     this.game.state.start('MainMenu');
     // this.game.switchState('MainMenu');

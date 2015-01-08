@@ -4,6 +4,8 @@ var bullets;
 var fireTrailPool = [];
 var cometTimerInterval = 4000;
 var cometSpeed = 50;
+var codeFontSize;
+var codeFontAdjust = 0;
 var cometTimer;
 
 var Game = {
@@ -38,6 +40,7 @@ var Game = {
     this.game.multiplier = 1;
     this.game.cityHealth = 5;
     this.currentFireTrail = 0;
+    this.musicPlaying = true;
     stringIndex = 0;
     codeLineIndex = 0;
 
@@ -46,8 +49,16 @@ var Game = {
     this.laserSound = this.add.audio('laserAudio');
     this.multiSound = this.add.audio('multiUp');
 
+    if (currentLevel === 5) {
+      this.bossSound = this.add.audio('bossMusic');
+      this.bossSound.play();
+    } else {
+      this.levelMusic = this.add.audio('levelMusic');
+      this.levelMusic.play();
+    }
+
     // create game text objects (health, code text, and multiplier)
-    codeText = this.game.add.text(250, 43, levelLines[codeLineIndex], { font: '26px Monospace', fill: '#fff' });
+    codeText = this.game.add.text(250, 43 + codeFontAdjust, levelLines[codeLineIndex], { font: codeFontSize + 'px Monospace', fill: '#fff' });
     codeText.parent.bringToTop(codeText);
     gameScoreText = this.game.add.text(30,45, "0", {
       font: "24px Cousine",
@@ -105,7 +116,7 @@ var Game = {
           that.shootMoth();
         }
         that.world.remove(codeText);
-        codeText = this.game.add.text(250, 43, levelLines[codeLineIndex], { font: '26px Monospace', fill: '#fff' });
+        codeText = this.game.add.text(250, 43 + codeFontAdjust, levelLines[codeLineIndex], { font: codeFontSize + 'px Monospace', fill: '#fff' });
         codeText.parent.bringToTop(codeText);
         stringIndex = 0;
       } else if (input.keyCode != 16) {
@@ -194,22 +205,32 @@ var Game = {
       levelLines = levelOneLines;
       cometSpeed = 50;
       cometTimerInterval = 4000;
+      codeFontSize = 26;
+      codeFontAdjust = 0;
     } else if (currentLevel === 2) {
       levelLines = levelTwoLines;
-      cometSpeed = 55;
-      cometTimerInterval = 3800;
+      cometSpeed = 50;
+      cometTimerInterval = 4000;
+      codeFontSize = 24;
+      codeFontAdjust = 1;
     } else if (currentLevel === 3) {
       levelLines = levelThreeLines;
-      cometSpeed = 60;
-      cometTimerInterval = 3600;
+      cometSpeed = 50;
+      cometTimerInterval = 3900;
+      codeFontSize = 24;
+      codeFontAdjust = 1;
     } else if (currentLevel === 4) {
       levelLines = levelFourLines;
-      cometSpeed = 65;
-      cometTimerInterval = 3400;
+      cometSpeed = 50;
+      cometTimerInterval = 3800;
+      codeFontSize = 22;
+      codeFontAdjust = 2;
     } else if (currentLevel === 5) {
       levelLines = levelFiveLines;
-      cometSpeed = 55;
+      cometSpeed = 50;
       cometTimerInterval = 3200;
+      codeFontSize = 20;
+      codeFontAdjust = 3;
     }
   },
   killLevelText: function() {
@@ -278,8 +299,6 @@ var Game = {
     this.megaMothra.enableBody = true;
     this.megaMothra.animations.add('fly', null, 10, true);
     this.megaMothra.animations.play('fly');
-    // this.megaMothra.physicsBodyType = Phaser.Physics.ARCADE;
-    // this.megaMothra.body.velocity.y = cometSpeed;
     this.megaMothraXindex = this.megaMothra.x
     this.megaMothraYindex = this.megaMothra.y
     this.flyRight = true;
@@ -302,13 +321,10 @@ var Game = {
     }
   },
   shootMoth: function() {
-
       this.fireBullet(this.megaMothra, 15);
-
       if (codeLineIndex === levelLines.length) {
         this.megaMothra.destroy();
       }
-
       // Play multiplier sound if our perfect entry counter is divisible by 5 (multiplier ups every 5 perfect entries)
       this.game.perfectCounter += 1;
       if (this.game.perfectCounter % 5 === 0) {
@@ -321,28 +337,6 @@ var Game = {
     explosionAnimation.reset(this.megaMothra.body.x + 80, this.megaMothra.body.y + 50);
     explosionAnimation.play('explosion', 30, false, true);
     this.megaMothra.destroy();
-  },
-  cityFire: function() {
-    console.log("fire in the city!");
-    // grab fireTrail emitter from pool based on counter
-    var fireTrail = fireTrailPool[this.currentFireTrail];
-
-    //set velocity for emitter
-    var px = (this.comet.body.velocity.x * -1);
-    var py = (this.comet.body.velocity.y * -1);
-    fireTrail.minParticleSpeed.set(px,py);
-    fireTrail.maxParticleSpeed.set(px,py);
-    fireTrail.x = 400
-    fireTrail.y = 400
-    fireTrail.setScale(0.20, 0.45, 0.20, 0.45, 3000);
-    //start emitter
-    fireTrail.start(false, 3000, 5);
-    //append emitter to comet
-    this.comet.addChild(fireTrail);
-    //create one new emitter for the pool
-    this.pushToFireTrailPool(1);
-    this.currentFireTrail = Phaser.Math.wrap(this.currentFireTrail + 1, 0, fireTrailPool.length)
-
   },
   postScore: function() {
     console.log('posting score');
@@ -484,6 +478,25 @@ var Game = {
   createHealthUnits: function() {
     this.steakCard = this.game.add.sprite(790,10, 'streakCard');
     this.scoreCard = this.game.add.sprite(15,10, 'scoreCard');
+    this.menuButton = this.game.add.sprite(15,88, 'menuButton');
+    this.menuButton.inputEnabled = true;
+    this.menuButton.events.onInputDown.add(this.mainMenuNav, this);
+    mainMenuText = this.game.add.text(27,107, "Main Menu", {
+      font: "24px Cousine",
+      fill: 'black',
+      align: 'center',
+      fontWeight: 'bold'
+    });
+    this.muteButton = this.game.add.sprite(15,154, 'menuButton');
+    this.muteButton.scale.setTo(.4);
+    this.muteButton.inputEnabled = true;
+    this.muteButton.events.onInputDown.add(this.toggleMusic, this);
+    muteText = this.game.add.text(26,158, "Mute", {
+      font: "16px Cousine",
+      fill: 'black',
+      align: 'center',
+      fontWeight: 'bold'
+    });
     this.healthUnits = this.game.add.group();
     this.healthBar = this.game.add.sprite(725,500, 'healthBar');
     this.healthBar.scale.setTo(.4);
@@ -510,5 +523,47 @@ var Game = {
       this.healthUnit4.scale.setTo(.4);
       this.healthUnit5.scale.setTo(.4);
     }
+  },
+  toggleMusic: function() {
+    if (this.musicPlaying === true && currentLevel === 5) {
+      console.log('music paused');
+      this.bossSound.pause();
+      this.musicPlaying = false;
+    } else if (this.musicPlaying === false && currentLevel === 5) {
+      console.log('music resume');
+      this.bossSound.resume();
+      this.musicPlaying = true;
+    } else if (this.musicPlaying === true && currentLevel != 5) {
+      console.log('music paused');
+      this.levelMusic.pause();
+      this.musicPlaying = false;
+    } else if (this.musicPlaying === false && currentLevel != 5) {
+      console.log('music resume');
+      this.levelMusic.resume();
+      this.musicPlaying = true;
+    }
+  },
+  cityFire: function() {
+    // feature put on hold
+    console.log("fire in the city!");
+    // grab fireTrail emitter from pool based on counter
+    var fireTrail = fireTrailPool[this.currentFireTrail];
+
+    //set velocity for emitter
+    var px = (this.comet.body.velocity.x * -1);
+    var py = (this.comet.body.velocity.y * -1);
+    fireTrail.minParticleSpeed.set(px,py);
+    fireTrail.maxParticleSpeed.set(px,py);
+    fireTrail.x = 400
+    fireTrail.y = 400
+    fireTrail.setScale(0.20, 0.45, 0.20, 0.45, 3000);
+    //start emitter
+    fireTrail.start(false, 3000, 5);
+    //append emitter to comet
+    this.comet.addChild(fireTrail);
+    //create one new emitter for the pool
+    this.pushToFireTrailPool(1);
+    this.currentFireTrail = Phaser.Math.wrap(this.currentFireTrail + 1, 0, fireTrailPool.length)
+
   },
 };

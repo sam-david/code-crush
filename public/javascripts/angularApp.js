@@ -1,4 +1,4 @@
-var app = angular.module('codeCrush', ['ui.router']);
+var app = angular.module('codeCrush', ['ui.router', 'ui.gravatar']);
 var user_id;
 
 app.config(function($stateProvider, $urlRouterProvider){

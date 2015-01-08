@@ -1,5 +1,4 @@
-<!-- views/index.ejs -->
-<!doctype html>
+<!DOCTYPE html>
 <html ng-app="codeCrush">
 <head>
   <title>Code Crush</title>
@@ -13,6 +12,9 @@
   <script src="javascripts/vendor/angular.js"></script>
   <script src="javascripts/vendor/angular-ui-router.min.js"></script>
   <script src="javascripts/angularApp.js"></script>
+  <script src="javascripts/animations.js"></script>
+  <script src="javascripts/vendor/md5.min.js"></script>
+  <script src="javascripts/vendor/angular-gravatar.js"></script>
 
 
 </head>
@@ -35,9 +37,9 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
       <ul class="nav navbar-nav navbar-right">
-        <li> <a href="/logout" ng-show="user">Logout</a></li>
-        <li> <a ui-sref="profile" ng-show="user">Profile</a></li>
-        <li><a ui-sref="login" ng-show="!user">Login</a></li>
+        <li> <a ui-sref="profile" ng-show="user" class="login-text">Profile</a></li>
+        <li> <a href="/logout" ng-show="user" class="login-text">Logout</a></li>
+        <li><a ui-sref="login" ng-show="!user" class="login-text">Login</a></li>
 
       </ul>
 

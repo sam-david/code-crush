@@ -14,13 +14,15 @@
   <script src="javascripts/vendor/angular-ui-router.min.js"></script>
   <script src="javascripts/angularApp.js"></script>
 
-  <script type="text/javascript" src="gamefiles/phaser.js"></script>
+  <script type="text/javascript" src="gamefiles/phaser.min.js"></script>
   <script type="text/javascript" src="gamefiles/Boot.js"></script>
   <script type="text/javascript" src="gamefiles/MainMenu.js"></script>
   <script type="text/javascript" src="gamefiles/data.js"></script>
-  <script type="text/javascript" src="gamefiles/Game.js"></script>
+  <script type="text/javascript" src="gamefiles/Game.min.js"></script>
 
   <script type="text/javascript" src="gamefiles/main.js"></script>
+    <script src="javascripts/vendor/md5.min.js"></script>
+  <script src="javascripts/vendor/angular-gravatar.js"></script>
 
 </head>
 <body ng-controller="UserCtrl">
@@ -34,7 +36,9 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
+      <a href="/#/home">
       <img class='navbar-brand nav-logo'src='images/codecrush-logo-png.png'></img><a class="navbar-brand" href="/#/home">Code Crush</a>
+    </a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -43,7 +47,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li> <a href="/logout" ng-show="user">Logout</a></li>
         <li> <a href="/#/profile" ng-show="user">Profile</a></li>
-        <li><a href="/#/home" ng-show="!user">Login</a></li>
+        <li><a href="/#/login" ng-show="!user">Login</a></li>
 
       </ul>
 
@@ -53,8 +57,10 @@
 
 
 <div id="gameDiv" class="text-center"></div>
-  <div>
-    <a class="text-center" href="/#/games/Codefall/scores">Check out the high scores!</a>
+  <div class="row">
+    <div class="col-sm-12">
+      <a class="text-center high-score-link" href="/#/games/Codefall/scores"><p class="text-center high-score-link">Check out the high scores!</p></a>
+    </div>
   </div>
 <img class="brick"src="images/brick-png.png">
 </body>

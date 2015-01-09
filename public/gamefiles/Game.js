@@ -40,6 +40,7 @@ var Game = {
     this.game.multiplier = 1;
     this.game.cityHealth = 5;
     this.currentFireTrail = 0;
+    this.musicPlaying = true;
     stringIndex = 0;
     codeLineIndex = 0;
 
@@ -47,6 +48,14 @@ var Game = {
     this.explosionSound = this.add.audio('explosion2');
     this.laserSound = this.add.audio('laserAudio');
     this.multiSound = this.add.audio('multiUp');
+
+    if (currentLevel === 5) {
+      this.bossSound = this.add.audio('bossMusic');
+      this.bossSound.play();
+    } else {
+      this.levelMusic = this.add.audio('levelMusic');
+      this.levelMusic.play();
+    }
 
     // create game text objects (health, code text, and multiplier)
     codeText = this.game.add.text(250, 43 + codeFontAdjust, levelLines[codeLineIndex], { font: codeFontSize + 'px Monospace', fill: '#fff' });
@@ -290,24 +299,24 @@ var Game = {
     this.megaMothra.enableBody = true;
     this.megaMothra.animations.add('fly', null, 10, true);
     this.megaMothra.animations.play('fly');
-    this.megaMothraXindex = this.megaMothra.x;
-    this.megaMothraYindex = this.megaMothra.y;
+    this.megaMothraXindex = this.megaMothra.x
+    this.megaMothraYindex = this.megaMothra.y
     this.flyRight = true;
     this.flyMoth();
-    mothTimer = this.game.time.events.loop(20500, this.flyMoth, this);
+    mothTimer = this.game.time.events.loop(25500, this.flyMoth, this);
   },
   flyMoth: function() {
     if (this.flyRight === true) {
       this.megaMothraXindex += 730;
       this.megaMothraYindex += 50;
       this.mothFlyTween = this.game.add.tween(this.megaMothra);
-      this.mothFlyTween.to({x: this.megaMothraXindex, y: this.megaMothraYindex}, 20000).start();
+      this.mothFlyTween.to({x: this.megaMothraXindex, y: this.megaMothraYindex}, 25000).start();
       this.flyRight = false;
     } else {
       this.megaMothraXindex -= 730;
       this.megaMothraYindex += 50;
       this.mothFlyTween = this.game.add.tween(this.megaMothra);
-      this.mothFlyTween.to({x: this.megaMothraXindex, y: this.megaMothraYindex}, 20000).start();
+      this.mothFlyTween.to({x: this.megaMothraXindex, y: this.megaMothraYindex}, 25000).start();
       this.flyRight = true;
     }
   },
@@ -469,6 +478,25 @@ var Game = {
   createHealthUnits: function() {
     this.steakCard = this.game.add.sprite(790,10, 'streakCard');
     this.scoreCard = this.game.add.sprite(15,10, 'scoreCard');
+    this.menuButton = this.game.add.sprite(15,88, 'menuButton');
+    this.menuButton.inputEnabled = true;
+    this.menuButton.events.onInputDown.add(this.mainMenuNav, this);
+    mainMenuText = this.game.add.text(27,107, "Main Menu", {
+      font: "24px Cousine",
+      fill: 'black',
+      align: 'center',
+      fontWeight: 'bold'
+    });
+    this.muteButton = this.game.add.sprite(15,154, 'menuButton');
+    this.muteButton.scale.setTo(.4);
+    this.muteButton.inputEnabled = true;
+    this.muteButton.events.onInputDown.add(this.toggleMusic, this);
+    muteText = this.game.add.text(26,158, "Mute", {
+      font: "16px Cousine",
+      fill: 'black',
+      align: 'center',
+      fontWeight: 'bold'
+    });
     this.healthUnits = this.game.add.group();
     this.healthBar = this.game.add.sprite(725,500, 'healthBar');
     this.healthBar.scale.setTo(.4);
@@ -496,7 +524,27 @@ var Game = {
       this.healthUnit5.scale.setTo(.4);
     }
   },
+  toggleMusic: function() {
+    if (this.musicPlaying === true && currentLevel === 5) {
+      console.log('music paused');
+      this.bossSound.pause();
+      this.musicPlaying = false;
+    } else if (this.musicPlaying === false && currentLevel === 5) {
+      console.log('music resume');
+      this.bossSound.resume();
+      this.musicPlaying = true;
+    } else if (this.musicPlaying === true && currentLevel != 5) {
+      console.log('music paused');
+      this.levelMusic.pause();
+      this.musicPlaying = false;
+    } else if (this.musicPlaying === false && currentLevel != 5) {
+      console.log('music resume');
+      this.levelMusic.resume();
+      this.musicPlaying = true;
+    }
+  },
   cityFire: function() {
+    // feature put on hold
     console.log("fire in the city!");
     // grab fireTrail emitter from pool based on counter
     var fireTrail = fireTrailPool[this.currentFireTrail];

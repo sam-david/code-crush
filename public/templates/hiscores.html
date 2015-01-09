@@ -3,53 +3,48 @@
     <div class='white-card'>
         <!-- level 1 -->
         <h3 class="clear-card blue-diag-stripes">Level 1:</h3>
-        <ol class='scores'>
+        <ol class='scorecard'>
           <li ng-repeat="score in scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 1">
-            {{ score.score }}
-              |
-            {{ score.user.name || "DBC"}}
-              |
-            {{ score.createdAt | date:'MMMM d yyyy'}}
+                {{ score.score }}
+                |
+                {{ score.user.name || "DBC"}},
+                <span class='scoredate'>{{ score.createdAt | date:'M/d/yy'}}</span>
           </li>
         </ol>
         <h3 class="clear-card blue-diag-stripes">Level 2:</h3>
-        <ol>
+        <ol class='scorecard'>
           <li ng-repeat="score in scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 2">
             {{ score.score }}
             |
-            {{ score.user.name || "DBC"}}
-            |
-            {{ score.createdAt | date:'MMMM d yyyy'}}
+            {{ score.user.name || "DBC"}},
+            <span class='scoredate'>{{ score.createdAt | date:'M/d/yy'}}</span>
           </li>
         </ol>
         <h3 class="clear-card blue-diag-stripes">Level 3:</h3>
-        <ol>
+        <ol class='scorecard'>
           <li ng-repeat="score in scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 3">
             {{ score.score }}
             |
-            {{ score.user.name || "DBC"}}
-            |
-            {{ score.createdAt | date:'MMMM d yyyy'}}
+            {{ score.user.name || "DBC"}},
+            <span class='scoredate'>{{ score.createdAt | date:'M/d/yy'}}</span>
           </li>
         </ol>
         <h3 class="clear-card blue-diag-stripes">Level 4:</h3>
-        <ol>
+        <ol class='scorecard'>
           <li ng-repeat="score in scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 4">
-            {{ score.score }}
+           {{ score.score }}
             |
-            {{ score.user.name || "DBC"}}
-            |
-            {{ score.createdAt | date:'MMMM d yyyy'}}
+            {{ score.user.name || "DBC"}},
+            <span class='scoredate'>{{ score.createdAt | date:'M/d/yy'}}</span>
           </li>
         </ol>
         <h3 class="clear-card blue-diag-stripes">Level 5:</h3>
-        <ol>
+        <ol class='scorecard'>
           <li ng-repeat="score in scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 5">
             {{ score.score }}
             |
-            {{ score.user.name || "DBC"}}
-            |
-            {{ score.createdAt | date:'MMMM d yyyy'}}
+            {{ score.user.name || "DBC"}},
+            <span class='scoredate'>{{ score.createdAt | date:'M/d/yy'}}</span>
           </li>
         </ol>
 

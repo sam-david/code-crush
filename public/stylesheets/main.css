@@ -128,8 +128,14 @@ rgb(248, 121, 28) 3px;
   font-family: 'Ruda';
 }
 
-.scores {
+.scorecard {
   font-family: 'Ruda';
+  font-size: 1.7em
+}
+
+.scorecard .scoredate {
+  color: grey;
+  font-size: 1em;
 }
 
 .profile-info h1 {

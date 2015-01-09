@@ -64,8 +64,20 @@ app.controller('ScoreCtrl', ['$scope', '$http', '$window', function($scope, $htt
 
 app.controller('HiScoreCtrl', ['$scope', '$http', function($scope, $http){
   (function(){
-    return $http.get('/games/Codefall/scores').success(function(data){
-      $scope.scores = data;
+    $http.get('/games/Codefall/scores/1').success(function(data){
+      $scope.scores1 = data;
+    });
+    $http.get('/games/Codefall/scores/2').success(function(data){
+      $scope.scores2 = data;
+    });
+    $http.get('/games/Codefall/scores/3').success(function(data){
+      $scope.scores3 = data;
+    });
+    $http.get('/games/Codefall/scores/4').success(function(data){
+      $scope.scores4 = data;
+    });
+    $http.get('/games/Codefall/scores/5').success(function(data){
+      $scope.scores5 = data;
     });
   })();
 }]);

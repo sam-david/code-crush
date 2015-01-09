@@ -51,10 +51,11 @@ var Game = {
 
     if (currentLevel === 5) {
       this.bossSound = this.add.audio('bossMusic');
-      this.bossSound.play();
+      this.bossSound.play(null,null,.4,true);
     } else {
       this.levelMusic = this.add.audio('levelMusic');
-      this.levelMusic.play();
+      this.levelMusic.play(null,null,.4,true);
+
     }
 
     // create game text objects (health, code text, and multiplier)
@@ -277,7 +278,7 @@ var Game = {
 
     // check if a comet exists, if so, execute comet destruction
     if (this.comets.getAt(0) != -1) {
-      this.explosionSound.play();
+      this.explosionSound.play(null,null,.7);
       // take first explosion animation from group, reset the location,
       var explosionAnimation = explosions.getFirstExists(false);
       explosionAnimation.reset(this.comets.getAt(0).body.x + 18, this.comets.getAt(0).body.y + 15);
@@ -288,7 +289,7 @@ var Game = {
       // Play multiplier sound if our perfect entry counter is divisible by 5 (multiplier ups every 5 perfect entries)
       this.game.perfectCounter += 1;
       if (this.game.perfectCounter % 5 === 0) {
-        this.multiSound.play();
+        this.multiSound.play(null,null,.8);
       }
     }
   },
@@ -328,11 +329,11 @@ var Game = {
       // Play multiplier sound if our perfect entry counter is divisible by 5 (multiplier ups every 5 perfect entries)
       this.game.perfectCounter += 1;
       if (this.game.perfectCounter % 5 === 0) {
-        this.multiSound.play();
+        this.multiSound.play(null,null,.9);
       }
   },
   destroyMoth: function() {
-    this.explosionSound.play();
+    this.explosionSound.play(null,null,.8);
     var explosionAnimation = explosions.getFirstExists(false);
     explosionAnimation.reset(this.megaMothra.body.x + 80, this.megaMothra.body.y + 50);
     explosionAnimation.play('explosion', 30, false, true);
@@ -352,7 +353,7 @@ var Game = {
   },
   fireBullet: function(sprite, speed) {
     //play laser audio
-    this.laserSound.play();
+    this.laserSound.play(null,null,.7);
 
     // grab first bullet from group array, reset location to laser tip
     var bullet = bullets.getFirstExists(false);
@@ -422,7 +423,7 @@ var Game = {
   },
   hitCity: function() {
     // grab first explosion sprite from group array, reset location to comet body, and play explosion animation
-    this.explosionSound.play();
+    this.explosionSound.play(null,null,.8);
     var explosionAnimation = explosions.getFirstExists(false);
     explosionAnimation.reset(this.comets.getAt(0).body.x + 11, this.comets.getAt(0).body.y + 4);
     explosionAnimation.play('explosion', 30, false, true);
@@ -454,7 +455,7 @@ var Game = {
   },
   mothHitCity: function() {
     console.log('moth hit city');
-    this.explosionSound.play();
+    this.explosionSound.play(null,null,.9);
     var explosionAnimation = explosions.getFirstExists(false);
     explosionAnimation.reset(this.megaMothra.body.x + 80, this.megaMothra.body.y + 50);
     explosionAnimation.play('explosion', 30, false, true);

@@ -37,8 +37,8 @@ var Preload = {
     this.load.audio('explosion2', 'gamefiles/assets/audio/explosion2.wav');
     this.load.audio('laserAudio', 'gamefiles/assets/audio/laser3.wav');
     this.load.audio('multiUp', 'gamefiles/assets/audio/powerup2.wav');
-    this.load.audio('bossMusic', 'gamefiles/assets/audio/handygirl.mp3');
-    this.load.audio('levelMusic', 'gamefiles/assets/audio/gold-coast.mp3');
+    this.load.audio('bossMusic', 'gamefiles/assets/audio/handygirl-cut.ogg');
+    this.load.audio('levelMusic', 'gamefiles/assets/audio/gold-coast-cut.ogg');
   },
   create: function() {
     this.state.start('MainMenu');

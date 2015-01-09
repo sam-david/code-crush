@@ -79,7 +79,6 @@ app.controller('HiScoreCtrl', ['$scope', '$http', function($scope, $http){
     $http.get('/games/Codefall/scores/5').success(function(data){
       $scope.scores5 = data;
     });
-    $scope.scores[0] = $scope.scores[0].sort(compare);
   })();
 }]);
 

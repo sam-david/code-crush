@@ -13,11 +13,11 @@ module.exports = function(app, passport) {
     })
 
 
-    // app.get('/login', function(req, res) {
+    app.get('/login', function(req, res) {
 
-    //     // render the page and pass in any flash data if it exists
-    //     res.render('login.ejs', { message: req.flash('loginMessage') });
-    // });
+        // render the page and pass in any flash data if it exists
+        res.render('login.ejs', { message: req.flash('loginMessage') });
+    });
 
     // process the login form
     app.post('/login', passport.authenticate('local-login', {
@@ -26,11 +26,11 @@ module.exports = function(app, passport) {
         failureFlash : true // allow flash messages
     }));
 
-    // app.get('/signup', function(req, res) {
+    app.get('/signup', function(req, res) {
 
-    //     // render the page and pass in any flash data if it exists
-    //     res.render('signup.ejs', { message: req.flash('signupMessage') });
-    // });
+        // render the page and pass in any flash data if it exists
+        res.render('signup.ejs', { message: req.flash('signupMessage') });
+    });
 
     // process the signup form
     app.post('/signup', passport.authenticate('local-signup', {
@@ -108,17 +108,72 @@ module.exports = function(app, passport) {
             })
         };
     });
-    app.get('/games/:game_name/scores', function(req, res){
+    app.get('/games/:game_name/scores/1', function(req, res){
         var game_name = req.params.game_name;
         Score
-        .find({game: game_name})
+        .find({game: game_name, level: 1})
+        .sort({score: 'desc'})
+        .limit(10)
         .populate('user')
-        .exec(function(err, scores){
+        .exec(function(err, levelScores){
             if (err) {return next(err);}
-            res.json(scores);
-        })
-
+            res.json(levelScores);
+        });
     });
+    app.get('/games/:game_name/scores/2', function(req, res){
+        var game_name = req.params.game_name;
+        Score
+        .find({game: game_name, level: 2})
+        .sort({score: 'desc'})
+        .limit(10)
+        .populate('user')
+        .exec(function(err, levelScores){
+            if (err) {return next(err);}
+            res.json(levelScores);
+        });
+    });
+    app.get('/games/:game_name/scores/3', function(req, res){
+        var game_name = req.params.game_name;
+        Score
+        .find({game: game_name, level: 3})
+        .sort({score: 'desc'})
+        .limit(10)
+        .populate('user')
+        .exec(function(err, levelScores){
+            if (err) {return next(err);}
+            res.json(levelScores);
+        });
+    });
+    app.get('/games/:game_name/scores/4', function(req, res){
+        var game_name = req.params.game_name;
+        Score
+        .find({game: game_name, level: 4})
+        .sort({score: 'desc'})
+        .limit(10)
+        .populate('user')
+        .exec(function(err, levelScores){
+            if (err) {return next(err);}
+            res.json(levelScores);
+        });
+    });
+    app.get('/games/:game_name/scores/5', function(req, res){
+        var game_name = req.params.game_name;
+        Score
+        .find({game: game_name, level: 5})
+        .sort({score: 'desc'})
+        .limit(10)
+        .populate('user')
+        .exec(function(err, levelScores){
+            if (err) {return next(err);}
+            res.json(levelScores);
+        });
+    });
+
+
+
+
+
+
     app.get('*', function(req, res){
         res.redirect('/#/<error></error>')
     })

@@ -1,12 +1,48 @@
-<div ng-controller='ProfileCtrl as profile' class="col-sm-8 col-sm-offset-2">
-    <h1 class='clear-card yellow-diag-stripes'>Mad Stats Yo</h1>
-    <img src='../images/casey-iguess.png' class='profile-pic white-card'></img>
+<div class="col-sm-8 col-sm-offset-2">
+    <h1 class='clear-card yellow-diag-stripes'>{{user.name}}</h1>
+    <img gravatar-src='user.email' gravatar-size="100" class='profile-pic white-card'></img>
     <div class='profile-info white-card'>
-      <h1>Email: casey@dbc.com</h1>
-      <p>Play Time: 5hrs 30m</p>
-      <p>Favorite Game: Code Fall</p>
-      <h1 class ='clear-card yellow-diag-stripes'>Scores</h1>
-      <div class='grey-card'><p>NUMBERS MOFO</p></div>
-    </div>
+      <h1>Email:</h1>
+      <h2> {{ user.email }}</h2>
+      <h1 class ='clear-card blue-diag-stripes'>Scores</h1>
+      <div ng-controller="ScoreCtrl">
 
+        <h4 class="clear-card blue-diag-stripes">Level 1:</h4>
+        <ol>
+          <li ng-repeat="score in user.scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 1">
+            {{ score.score }} |
+            <span class='scoredate'>{{ score.createdAt | date:'M/d/yy'}}</span>
+          </li>
+        </ol>
+        <h4 class="clear-card blue-diag-stripes">Level 2:</h4>
+        <ol>
+          <li ng-repeat="score in user.scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 2">
+            {{ score.score }},
+            {{ score.createdAt | date:'M/d/yy'}}
+          </li>
+        </ol>
+        <h4 class="clear-card blue-diag-stripes">Level 3:</h4>
+        <ol>
+          <li ng-repeat="score in user.scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 3">
+            {{ score.score }},
+            {{ score.createdAt | date:'M/d/yy'}}
+          </li>
+        </ol>
+        <h4 class="clear-card blue-diag-stripes">Level 4:</h4>
+        <ol>
+          <li ng-repeat="score in user.scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 4">
+            {{ score.score }},
+            {{ score.createdAt | date:'M/d/yy'}}
+          </li>
+        </ol>
+        <h4 class="clear-card blue-diag-stripes">Level 5:</h4>
+        <ol>
+          <li ng-repeat="score in user.scores | limitTo:10 | orderBy : 'score' : 'reverse'" ng-show="score.level === 5">
+            {{ score.score }},
+            {{ score.createdAt | date:'M/d/yy'}}
+          </li>
+        </ol>
+
+      </div>
+    </div>
 </div>

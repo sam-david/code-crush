@@ -1,0 +1,69 @@
+<!-- views/index.ejs -->
+<!doctype html>
+<html ng-app="codeCrush">
+<head>
+  <title>Code Crush</title>
+  <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="stylesheets/main.css">
+
+  <script src="javascripts/vendor/modernizr-2.6.2.min.js"></script>
+  <script src="javascripts/vendor/jquery-1.11.1.min.js"></script>
+  <script src="javascripts/vendor/bootstrap.min.js"></script>
+  <script src="javascripts/vendor/angular.js"></script>
+  <script src="javascripts/vendor/angular-ui-router.min.js"></script>
+  <script src="javascripts/angularApp.js"></script>
+
+  <script type="text/javascript" src="gamefiles/phaser.min.js"></script>
+  <script type="text/javascript" src="gamefiles/Boot.js"></script>
+  <script type="text/javascript" src="gamefiles/Preload.js"></script>
+  <script type="text/javascript" src="gamefiles/MainMenu.js"></script>
+  <script type="text/javascript" src="gamefiles/data.js"></script>
+  <script type="text/javascript" src="gamefiles/Game.js"></script>
+
+  <script type="text/javascript" src="gamefiles/main.js"></script>
+    <script src="javascripts/vendor/md5.min.js"></script>
+  <script src="javascripts/vendor/angular-gravatar.js"></script>
+
+</head>
+<body ng-controller="UserCtrl">
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a href="/#/home">
+      <img class='navbar-brand nav-logo'src='images/codecrush-logo-png.png'></img><a class="navbar-brand crush-title-game" href="/#/home">Code Crush</a>
+
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+      <ul class="nav navbar-nav navbar-right">
+        <li> <a href="/#/profile" ng-show="user" class="login-text">Profile</a></li>
+        <li> <a href="/logout" ng-show="user" class="login-text">Logout</a></li>
+        <li><a href="/#/login" ng-show="!user" class="login-text">Login</a></li>
+
+      </ul>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+<div id="gameDiv" class="text-center"></div>
+  <div class="row">
+    <div class="col-sm-12">
+      <a class="text-center high-score-link" href="/#/games/Codefall/scores"><p class="text-center high-score-link">Check out the high scores!</p></a>
+    </div>
+  </div>
+<img class="brick"src="images/brick-png.png">
+</body>
+</html>

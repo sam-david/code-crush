@@ -1,10 +1,9 @@
-<!-- views/index.ejs -->
-<!doctype html>
+<!DOCTYPE html>
 <html ng-app="codeCrush">
 <head>
   <title>Code Crush</title>
   <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
-  <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">  load fontawesome -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
   <link rel="stylesheet" href="stylesheets/main.css">
 
   <script src="javascripts/vendor/modernizr-2.6.2.min.js"></script>
@@ -13,6 +12,9 @@
   <script src="javascripts/vendor/angular.js"></script>
   <script src="javascripts/vendor/angular-ui-router.min.js"></script>
   <script src="javascripts/angularApp.js"></script>
+  <script src="javascripts/animations.js"></script>
+  <script src="javascripts/vendor/md5.min.js"></script>
+  <script src="javascripts/vendor/angular-gravatar.js"></script>
 
 
 </head>
@@ -28,17 +30,17 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <img class='navbar-brand nav-logo'src='images/codecrush-logo-png.png'></img><a class="navbar-brand" ui-sref="home">Code Crush</a>
+      <img class='navbar-brand nav-logo'src='images/codecrush-logo-png.png'></img><a class="navbar-brand crush-title" ui-sref="home">Code Crush</a>
+      <a href='/codefall'><img class="codefall-button-nav" src="images/codefall-play-logo.png"></img></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a ui-sref="codefall">Play Codefall!</a></li>
-      </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <li> <a href="/logout" class="btn btn-default btn-sm">Logout</a></li>
+        <li> <a ui-sref="profile" ng-show="user" class="login-text">Profile</a></li>
+        <li> <a href="/logout" ng-show="user" class="login-text">Logout</a></li>
+        <li><a ui-sref="login" ng-show="!user" class="login-text">Login</a></li>
 
       </ul>
 
@@ -46,8 +48,8 @@
   </div><!-- /.container-fluid -->
 </nav>
   <div class="container">
-      {{ user }}
     <div ui-view></div>
   </div>
+<img class="brick"src="images/brick-png.png">
 </body>
 </html>

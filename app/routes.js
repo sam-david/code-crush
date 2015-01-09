@@ -8,6 +8,10 @@ module.exports = function(app, passport) {
         res.render('index.ejs'); // load the index.ejs file
     });
 
+    app.get('/codefall', function(req, res){
+        res.render('game.ejs');
+    })
+
 
     app.get('/login', function(req, res) {
 
@@ -65,12 +69,15 @@ module.exports = function(app, passport) {
         var query = User.findById(user_id)
         query.exec(function(err, user){
             if(err){return next(err);}
-            res.json(user);
+            user.populate('scores', function(err, user){
+                if(err){return next(err);}
+                res.json(user.scores);
+            })
         })
     });
 
     app.post('/users/:user_id/scores', function(req, res, next) {
-        var score = new Score({game: 'Codefall', score: 500});
+        var score = new Score({game: req.body.name, score: req.body.score, level: req.body.level});
         var user_id = req.params.user_id;
         var query = User.findById(user_id);
         query.exec(function(err, user){
@@ -87,9 +94,92 @@ module.exports = function(app, passport) {
     });
 
     app.get('/currentuser', function(req, res) {
-        res.json(req.user)
+        if (!req.user) {
+            res.json(req.user)
+        } else {
+            var user_id = req.user._id;
+            var query = User.findById(user_id)
+            query.exec(function(err, user){
+                if(err){return next(err);}
+                user.populate('scores', function(err, user){
+                    if(err){return next(err);}
+                    res.json(user);
+                })
+            })
+        };
     });
+    app.get('/games/:game_name/scores/1', function(req, res){
+        var game_name = req.params.game_name;
+        Score
+        .find({game: game_name, level: 1})
+        .sort({score: 'desc'})
+        .limit(10)
+        .populate('user')
+        .exec(function(err, levelScores){
+            if (err) {return next(err);}
+            res.json(levelScores);
+        });
+    });
+    app.get('/games/:game_name/scores/2', function(req, res){
+        var game_name = req.params.game_name;
+        Score
+        .find({game: game_name, level: 2})
+        .sort({score: 'desc'})
+        .limit(10)
+        .populate('user')
+        .exec(function(err, levelScores){
+            if (err) {return next(err);}
+            res.json(levelScores);
+        });
+    });
+    app.get('/games/:game_name/scores/3', function(req, res){
+        var game_name = req.params.game_name;
+        Score
+        .find({game: game_name, level: 3})
+        .sort({score: 'desc'})
+        .limit(10)
+        .populate('user')
+        .exec(function(err, levelScores){
+            if (err) {return next(err);}
+            res.json(levelScores);
+        });
+    });
+    app.get('/games/:game_name/scores/4', function(req, res){
+        var game_name = req.params.game_name;
+        Score
+        .find({game: game_name, level: 4})
+        .sort({score: 'desc'})
+        .limit(10)
+        .populate('user')
+        .exec(function(err, levelScores){
+            if (err) {return next(err);}
+            res.json(levelScores);
+        });
+    });
+    app.get('/games/:game_name/scores/5', function(req, res){
+        var game_name = req.params.game_name;
+        Score
+        .find({game: game_name, level: 5})
+        .sort({score: 'desc'})
+        .limit(10)
+        .populate('user')
+        .exec(function(err, levelScores){
+            if (err) {return next(err);}
+            res.json(levelScores);
+        });
+    });
+
+
+
+
+
+
+    app.get('*', function(req, res){
+        res.redirect('/#/<error></error>')
+    })
+
 };
+
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {

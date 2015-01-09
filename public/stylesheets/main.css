@@ -139,6 +139,16 @@ rgb(248, 121, 28) 3px;
   font-family: 'Ruda';
 }
 
+.scorecard {
+  font-family: 'Ruda';
+  font-size: 1.7em
+}
+
+.scorecard .scoredate {
+  color: grey;
+  font-size: 1em;
+}
+
 .profile-info h1 {
   font-family: 'Orbitron';
   font-size: 2em;

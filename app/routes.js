@@ -108,17 +108,72 @@ module.exports = function(app, passport) {
             })
         };
     });
-    app.get('/games/:game_name/scores', function(req, res){
+    app.get('/games/:game_name/scores/1', function(req, res){
         var game_name = req.params.game_name;
         Score
-        .find({game: game_name})
+        .find({game: game_name, level: 1})
+        .sort({score: 'desc'})
+        .limit(10)
         .populate('user')
-        .exec(function(err, scores){
+        .exec(function(err, levelScores){
             if (err) {return next(err);}
-            res.json(scores);
-        })
-
+            res.json(levelScores);
+        });
     });
+    app.get('/games/:game_name/scores/2', function(req, res){
+        var game_name = req.params.game_name;
+        Score
+        .find({game: game_name, level: 2})
+        .sort({score: 'desc'})
+        .limit(10)
+        .populate('user')
+        .exec(function(err, levelScores){
+            if (err) {return next(err);}
+            res.json(levelScores);
+        });
+    });
+    app.get('/games/:game_name/scores/3', function(req, res){
+        var game_name = req.params.game_name;
+        Score
+        .find({game: game_name, level: 3})
+        .sort({score: 'desc'})
+        .limit(10)
+        .populate('user')
+        .exec(function(err, levelScores){
+            if (err) {return next(err);}
+            res.json(levelScores);
+        });
+    });
+    app.get('/games/:game_name/scores/4', function(req, res){
+        var game_name = req.params.game_name;
+        Score
+        .find({game: game_name, level: 4})
+        .sort({score: 'desc'})
+        .limit(10)
+        .populate('user')
+        .exec(function(err, levelScores){
+            if (err) {return next(err);}
+            res.json(levelScores);
+        });
+    });
+    app.get('/games/:game_name/scores/5', function(req, res){
+        var game_name = req.params.game_name;
+        Score
+        .find({game: game_name, level: 5})
+        .sort({score: 'desc'})
+        .limit(10)
+        .populate('user')
+        .exec(function(err, levelScores){
+            if (err) {return next(err);}
+            res.json(levelScores);
+        });
+    });
+
+
+
+
+
+
     app.get('*', function(req, res){
         res.redirect('/#/<error></error>')
     })

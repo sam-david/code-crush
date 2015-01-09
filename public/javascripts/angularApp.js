@@ -64,20 +64,23 @@ app.controller('ScoreCtrl', ['$scope', '$http', '$window', function($scope, $htt
 
 app.controller('HiScoreCtrl', ['$scope', '$http', function($scope, $http){
   (function(){
-    $scope.scores = [[],[],[],[],[]];
-    return $http.get('/games/Codefall/scores').success(function(data){
-      for (var i = 0; i < data.length; i++) {
-        $scope.scores[(data[i].level - 1)].push(data[i]);
-      };
+    $http.get('/games/Codefall/scores/1').success(function(data){
+      $scope.scores1 = data;
+    });
+    $http.get('/games/Codefall/scores/2').success(function(data){
+      $scope.scores2 = data;
+    });
+    $http.get('/games/Codefall/scores/3').success(function(data){
+      $scope.scores3 = data;
+    });
+    $http.get('/games/Codefall/scores/4').success(function(data){
+      $scope.scores4 = data;
+    });
+    $http.get('/games/Codefall/scores/5').success(function(data){
+      $scope.scores5 = data;
     });
     $scope.scores[0] = $scope.scores[0].sort(compare);
   })();
 }]);
 
-function compare(a,b) {
-  if (a.score < b.score)
-     return -1;
-  if (a.score > b.score)
-    return 1;
-  return 0;
-}
+

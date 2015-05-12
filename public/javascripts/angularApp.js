@@ -7,7 +7,7 @@ app.config(function($stateProvider, $urlRouterProvider){
 
   $stateProvider.state('home', {
     url: '/home',
-    templateUrl: 'templates/partial-buttons.html'
+    templateUrl: 'templates/home.html'
   });
 
 

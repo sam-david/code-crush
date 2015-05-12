@@ -1,16 +1,15 @@
 @import url(http://fonts.googleapis.com/css?family=Audiowide|Orbitron:400,700|Ruda:400,700);
+@import url(http://fonts.googleapis.com/css?family=Questrial|Cabin:400,700|Montserrat:400,700|Varela+Round);
 
 body {
-  background: url('../images/megamoth-big.png');
-  background-size: 30%;
-  background-color: #044568;
+  background-color: rgb(35, 35, 35);
   background-repeat: no-repeat;
   background-position: fixed top left;
-  font-family: 'Orbitron';
+  font-family: 'Montserrat';
 }
 
 .big-logo {
-  padding-bottom: 5%;
+  
 }
 
 .brick {
@@ -18,6 +17,49 @@ body {
   bottom: 0;
   right: 0;
   z-index: -1;
+}
+
+
+/*--------New Classes---------*/
+
+.nav-link {
+  margin-top: 1.5%;
+  font-size: 1.2em;
+  color: #468966 !important;
+}
+
+.nav-link:hover {
+  color: #B64926 !important;
+}
+
+.home-heading {
+  color: #468966;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.home-play-link {
+  margin-top: 4%;
+  color: #FFB03B !important;
+  font-size: 1.5em;
+}
+
+.home-play-link:hover {
+  color: #B64926 !important;
+}
+
+.yellow-back {
+ background-color: #FFB03B;
+}
+
+.login-button {
+  background-color: #FFB03B;
+  color: black;
+  border: solid #FFF0A5 1px;
+}
+
+.login-button:hover {
+  color: #8E2800;
 }
 
 /*game canvas*/
@@ -113,8 +155,9 @@ rgb(248, 121, 28) 3px;
 }
 
 .nav-logo {
-  width: 83px;
-  height: 81px;
+  width: 41px;
+  height: 40px;
+  margin-top: 12%;
 }
 
 .nav-logo-game {
@@ -192,7 +235,12 @@ rgb(248, 121, 28) 3px;
 }
 
 .login-text {
+  color: #FFB03B !important;
   font-size: 1.4em;
   margin-top: 3%;
+}
+
+.login-text:hover {
+  color: #FFF0A5 !important;
 }
 

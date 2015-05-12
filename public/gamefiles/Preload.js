@@ -20,6 +20,18 @@ var Preload = {
     this.load.image('redButton', 'gamefiles/assets/button-red.png');
     this.load.image('blueButton', 'gamefiles/assets/button-blue.png');
     this.load.image('yellowButton', 'gamefiles/assets/button-yellow.png');
+    this.load.image('rubyLevelOne', 'gamefiles/assets/ruby-level-one.png');
+    this.load.image('rubyLevelTwo', 'gamefiles/assets/ruby-level-two.png');
+    this.load.image('rubyLevelThree', 'gamefiles/assets/ruby-level-three.png');
+    this.load.image('rubyLevelFour', 'gamefiles/assets/ruby-level-four.png');
+    this.load.image('rubyLevelFive', 'gamefiles/assets/ruby-level-five.png');
+    this.load.image('jsLevelOne', 'gamefiles/assets/js-level-one.png');
+    this.load.image('jsLevelTwo', 'gamefiles/assets/js-level-two.png');
+    this.load.image('jsLevelThree', 'gamefiles/assets/js-level-three.png');
+    this.load.image('jsLevelFour', 'gamefiles/assets/js-level-four.png');
+    this.load.image('jsLevelFive', 'gamefiles/assets/js-level-five.png');
+    this.load.image('jsButton', 'gamefiles/assets/js-button.png');
+    this.load.image('rubyButton', 'gamefiles/assets/ruby-button.png');
     this.load.image('clouds', 'gamefiles/assets/bg-tile-grey.png');
     this.load.image('terminal', 'gamefiles/assets/codecrush-terminal-png.png');
     this.load.image('playerParticle', 'gamefiles/assets/player-particle.png');

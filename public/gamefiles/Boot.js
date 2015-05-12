@@ -7,7 +7,7 @@ WebFontConfig = {
 
     //  The Google Fonts we want to load (specify as many as you like in the array)
     google: {
-      families: ['Cousine']
+      families: ['Montserrat']
     }
 
 };
@@ -19,7 +19,7 @@ var Boot = {
     this.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
     this.load.image('preloadbar', 'gamefiles/assets/preloader-bar.png');
     this.load.image('logo', 'gamefiles/assets/codecrush-logo.png');
-    this.load.image('codeFallLogo', 'gamefiles/assets/codefall-logo.png');
+    this.load.image('codeFallLogo', 'gamefiles/assets/codefall-logo-new.png');
     this.load.image('space', 'gamefiles/assets/space.png');
     //assets we'll use in the loading screen
   },

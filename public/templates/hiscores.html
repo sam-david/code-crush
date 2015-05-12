@@ -1,8 +1,8 @@
 <div class="col-sm-8 col-sm-offset-2" ng-controller="HiScoreCtrl">
-    <h1 class='clear-card yellow-diag-stripes'>Hi Scores!</h1>
+    <h1 class='clear-card highscore-heading'>Hi Scores!</h1>
     <div class='white-card'>
         <!-- level 1 -->
-        <h3 class="clear-card blue-diag-stripes">Level 1:</h3>
+        <h3 class="clear-card level-heading">Level 1:</h3>
         <ol class='scorecard'>
           <li ng-repeat="score in scores1">
                 {{ score.score }}
@@ -11,7 +11,7 @@
                 <span class='scoredate'>{{ score.createdAt | date:'M/d/yy'}}</span>
           </li>
         </ol>
-        <h3 class="clear-card blue-diag-stripes">Level 2:</h3>
+        <h3 class="clear-card level-heading">Level 2:</h3>
         <ol class='scorecard'>
           <li ng-repeat="score in scores2">
             {{ score.score }}
@@ -20,7 +20,7 @@
             <span class='scoredate'>{{ score.createdAt | date:'M/d/yy'}}</span>
           </li>
         </ol>
-        <h3 class="clear-card blue-diag-stripes">Level 3:</h3>
+        <h3 class="clear-card level-heading">Level 3:</h3>
         <ol class='scorecard'>
           <li ng-repeat="score in scores3">
 
@@ -30,7 +30,7 @@
             <span class='scoredate'>{{ score.createdAt | date:'M/d/yy'}}</span>
           </li>
         </ol>
-        <h3 class="clear-card blue-diag-stripes">Level 4:</h3>
+        <h3 class="clear-card level-heading">Level 4:</h3>
         <ol class='scorecard'>
           <li ng-repeat="score in scores4">
            {{ score.score }}
@@ -39,7 +39,7 @@
             <span class='scoredate'>{{ score.createdAt | date:'M/d/yy'}}</span>
           </li>
         </ol>
-        <h3 class="clear-card blue-diag-stripes">Level 5:</h3>
+        <h3 class="clear-card level-heading">Level 5:</h3>
         <ol class='scorecard'>
           <li ng-repeat="score in scores5">
 

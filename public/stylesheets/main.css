@@ -17,6 +17,7 @@ body {
   bottom: 0;
   right: 0;
   z-index: -1;
+  width: 10%;
 }
 
 
@@ -35,13 +36,13 @@ body {
 .home-heading {
   color: #468966;
   margin-top: 0px;
-  margin-bottom: 0px;
+  margin-bottom: 10%;
+  font-size: 2em;
 }
 
 .home-play-link {
-  margin-top: 4%;
   color: #FFB03B !important;
-  font-size: 1.5em;
+  font-size: 4.5em;
 }
 
 .home-play-link:hover {
@@ -60,6 +61,14 @@ body {
 
 .login-button:hover {
   color: #8E2800;
+}
+
+.highscore-heading {
+  background-color: #FFB03B;
+}
+
+.level-heading {
+  background-color: #468966;
 }
 
 /*game canvas*/
@@ -222,12 +231,19 @@ rgb(248, 121, 28) 3px;
   font-size: .5em;
 }
 
-.high-score-link {
-  font-size: 1.2em;
-  padding-top: 2%;
+.high-score-box {
   text-align: center;
+}
+
+.high-score-link {
+  font-size: 3.5em;
+  margin-top: 20% !important;
   text-decoration: underline;
-  color: rgb(248, 121, 28);
+  color: #FFB03B;
+}
+
+.high-score-link:hover {
+  color: #FFF0A5;
 }
 
 .need-account-text {

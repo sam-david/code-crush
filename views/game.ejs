@@ -6,6 +6,8 @@
   <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
   <link rel="stylesheet" href="stylesheets/main.css">
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 
   <script src="javascripts/vendor/modernizr-2.6.2.min.js"></script>
   <script src="javascripts/vendor/jquery-1.11.1.min.js"></script>
@@ -28,42 +30,36 @@
 </head>
 <body ng-controller="UserCtrl">
   <nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <a ng-href="../#/home">
+        <img class='nav-logo'src='images/codecrush-logo-png.png'></img>
+        </a>
+      </div>
 
-      <a href="/#/home">
-      <img class='navbar-brand nav-logo'src='images/codecrush-logo-png.png'></img><a class="navbar-brand crush-title-game" href="/#/home">Code Crush</a>
-
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
-      <ul class="nav navbar-nav navbar-right">
-        <li> <a href="/#/profile" ng-show="user" class="login-text">Profile</a></li>
-        <li> <a href="/logout" ng-show="user" class="login-text">Logout</a></li>
-        <li><a href="/#/login" ng-show="!user" class="login-text">Login</a></li>
-
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+        <li><a href="/codefall" class="nav-link">Play Code Fall</a></li>
       </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li> <a href="/#/profile" ng-show="user" class="login-text">Profile</a></li>
+          <li> <a href="/logout" ng-show="user" class="login-text">Logout</a></li>
+          <li><a href="/#/login" ng-show="!user" class="login-text">Login</a></li>
 
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+        </ul>
 
-
-<div id="gameDiv" class="text-center"></div>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
   <div class="row">
-    <div class="col-sm-12">
-      <a class="text-center high-score-link" href="/#/games/Codefall/scores"><p class="text-center high-score-link">Check out the high scores!</p></a>
+    <div id="gameDiv" class="text-center"></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 high-score-box">
+      <a class="high-score-link" href="/#/games/Codefall/scores">High Scores</a>
     </div>
   </div>
-<img class="brick"src="images/brick-png.png">
 </body>
 </html>

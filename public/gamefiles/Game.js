@@ -62,25 +62,25 @@ var Game = {
     codeText = this.game.add.text(250, 43 + codeFontAdjust, levelLines[codeLineIndex], { font: codeFontSize + 'px Monospace', fill: '#fff' });
     codeText.parent.bringToTop(codeText);
     gameScoreText = this.game.add.text(30,45, "0", {
-      font: "24px Cousine",
+      font: "24px Montserrat",
       fill: '#ff0044',
       align: 'center',
       fontWeight: 'bold'
     });
     multiplierText = this.game.add.text(845,30, "1x", {
-      font: "36px Cousine",
+      font: "36px Montserrat",
       fill: '#ff0044',
       align: 'center',
       fontWeight: 'bold'
     });
     streakText = this.game.add.text(890,90, "1", {
-      font: "36px Cousine",
+      font: "36px Montserrat",
       fill: '#ff0044',
       align: 'center'
     });
     //Level 1 text
     levelText = this.game.add.text(430,300, "Level " + currentLevel, {
-      font: "36px Cousine",
+      font: "36px Montserrat",
       fill: '#ff0044',
       align: 'center'
     });
@@ -377,24 +377,24 @@ var Game = {
     this.retryButton = this.game.add.sprite(220,290, 'blueButton');
     this.mainMenuButton = this.game.add.sprite(545,290, 'blueButton');
     retryText = this.game.add.text(300,315, "Retry", {
-      font: "24px Cousine",
+      font: "24px Montserrat",
       fill: 'white',
       align: 'center'
     });
     mainMenuText = this.game.add.text(600,315, "Main Menu", {
-      font: "24px Cousine",
+      font: "24px Montserrat",
       fill: 'white',
       align: 'center'
     });
     if (outcome === "win") {
       winText = this.game.add.text(440,200, "YOU WIN!", {
-        font: "24px Cousine",
+        font: "24px Montserrat",
         fill: 'white',
         align: 'center'
       });
     } else {
       gameOverText = this.game.add.text(440,200, "Game Over", {
-        font: "24px Cousine",
+        font: "24px Montserrat",
         fill: 'white',
         align: 'center'
       });
@@ -486,7 +486,7 @@ var Game = {
     this.menuButton.inputEnabled = true;
     this.menuButton.events.onInputDown.add(this.mainMenuNav, this);
     mainMenuText = this.game.add.text(27,107, "Main Menu", {
-      font: "24px Cousine",
+      font: "24px Montserrat",
       fill: 'black',
       align: 'center',
       fontWeight: 'bold'
@@ -496,7 +496,7 @@ var Game = {
     this.muteButton.inputEnabled = true;
     this.muteButton.events.onInputDown.add(this.toggleMusic, this);
     muteText = this.game.add.text(26,158, "Mute", {
-      font: "16px Cousine",
+      font: "16px Montserrat",
       fill: 'black',
       align: 'center',
       fontWeight: 'bold'

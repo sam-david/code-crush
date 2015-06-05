@@ -11,42 +11,16 @@ var MainMenu = {
     //highest score
     this.codeCrushlogo = this.game.add.sprite(1000,530, 'logo');
     this.codeFalllogo = this.game.add.sprite(180,-150, 'codeFallLogo');
-    // this.rubyLevelOneButton = this.game.add.sprite(230,530, 'rubyLevelOne');
-    // this.rubyLevelTwoButton = this.game.add.sprite(500,530, 'rubyLevelTwo');
-    // this.rubyLevelThreeButton = this.game.add.sprite(230,630, 'rubyLevelThree');
-    // this.rubyLevelFourButton = this.game.add.sprite(500,630, 'rubyLevelFour');
-    // this.rubyLevelFiveButton = this.game.add.sprite(365,730, 'rubyLevelFive');
-    // this.jsLevelOneButton = this.game.add.sprite(465,730, 'jsLevelOne');
-    // this.jsLevelTwoButton = this.game.add.sprite(465,730, 'jsLevelTwo');
-    // this.jsLevelThreeButton = this.game.add.sprite(465,730, 'jsLevelThree');
-    // this.jsLevelFourButton = this.game.add.sprite(465,730, 'jsLevelFour');
-    // this.jsLevelFiveButton = this.game.add.sprite(465,730, 'jsLevelFive');
-    this.rubyButtonOne = this.game.add.sprite(230,260, 'rubyButton');
-    this.jsButtonOne = this.game.add.sprite(310,260, 'jsButton');
-    this.rubyButtonTwo = this.game.add.sprite(550,260, 'rubyButton');
-    this.jsButtonTwo = this.game.add.sprite(630,260, 'jsButton');
-    this.rubyButtonThree = this.game.add.sprite(230,400, 'rubyButton');
-    this.jsButtonThree = this.game.add.sprite(310,400, 'jsButton');
-    this.rubyButtonFour = this.game.add.sprite(550,400, 'rubyButton');
-    this.jsButtonFour = this.game.add.sprite(630,400, 'jsButton');
-    this.rubyButtonFive = this.game.add.sprite(400,540, 'rubyButton');
-    this.jsButtonFive = this.game.add.sprite(480,540, 'jsButton');
-    // this.levelOneText = this.game.add.text(275, 550, "Level 1", {
-    //   font: "34px Cousine",
-    //   fill: 'white',
-    //   align: 'center'
-    // });
-    // this.levelTwoText = this.game.add.text(545, 550, "Level 2", {
-    //   font: "34px Cousine",
-    //   fill: 'white',
-    //   align: 'center'
-    // });
-
-    // this.levelThreeText = this.game.add.text(275, 650, "Level 3", {
-    //   font: "34px Cousine",
-    //   fill: 'white',
-    //   align: 'center'
-    // });
+    this.rubyButtonOne = this.game.add.sprite(250,800, 'rubyButton');
+    this.rubyButtonTwo = this.game.add.sprite(570,800, 'rubyButton');
+    this.rubyButtonThree = this.game.add.sprite(250,800, 'rubyButton');
+    this.rubyButtonFour = this.game.add.sprite(570,800, 'rubyButton');
+    this.rubyButtonFive = this.game.add.sprite(420,800, 'rubyButton');
+    // this.jsButtonOne = this.game.add.sprite(310,260, 'jsButton');
+    // this.jsButtonTwo = this.game.add.sprite(630,260, 'jsButton');
+    // this.jsButtonThree = this.game.add.sprite(310,400, 'jsButton');
+    // this.jsButtonFour = this.game.add.sprite(630,400, 'jsButton');
+    // this.jsButtonFive = this.game.add.sprite(480,540, 'jsButton');
 
     this.levelOneText = this.game.add.text(250, 210, "Level 1", {
       font: "34px Montserrat",
@@ -89,38 +63,28 @@ var MainMenu = {
     this.codeCrushTween.to({ x: 840, y: 530}, 500);
     this.codeCrushTween.start();
 
-    this.rubyButtonOneTween = this.game.add.tween(this.rubyLevelOneButton);
-    this.jsButtonOneTween = this.game.add.tween(this.jsLevelOneButton);
-    // this.jsButtonTwoTween = this.game.add.tween(this.jsLevelTwoButton);
-    // this.jsButtonThreeTween = this.game.add.tween(this.jsLevelThreeButton);
-    // this.jsButtonFourTween = this.game.add.tween(this.jsLevelFourButton);
-    // this.jsButtonFiveTween = this.game.add.tween(this.jsLevelFiveButton);
-    // this.rubyButtonTwoTween = this.game.add.tween(this.rubyLevelTwoButton);
-    // this.rubyButtonThreeTween = this.game.add.tween(this.rubyLevelThreeButton);
-    // this.rubyButtonFourTween = this.game.add.tween(this.rubyLevelFourButton);
-    // this.rubyButtonFiveTween = this.game.add.tween(this.rubyLevelFiveButton);
-    // this.rubyButtonOneTween.to({x: 240, y: 230}, 500).start();
-    // this.rubyButtonTwoTween.to({x: 500, y: 230}, 500).start();
-    // this.rubyButtonThreeTween.to({x: 240, y: 340}, 500).start();
-    // this.rubyButtonFourTween.to({x: 500, y: 340}, 500).start();
-    // this.rubyButtonFiveTween.to({x: 365, y: 450}, 500).start();
-    // this.jsButtonOneTween.to({x: 350, y: 230}, 500).start();
-    // this.jsButtonTwoTween.to({x: 610, y: 230}, 500).start();
-    // this.jsButtonThreeTween.to({x: 350, y: 340}, 500).start();
-    // this.jsButtonFourTween.to({x: 610, y: 340}, 500).start();
-    // this.jsButtonFiveTween.to({x: 480, y: 450}, 500).start();
+    this.rubyButtonOneTween = this.game.add.tween(this.rubyButtonOne);
+    this.rubyButtonTwoTween = this.game.add.tween(this.rubyButtonTwo);
+    this.rubyButtonThreeTween = this.game.add.tween(this.rubyButtonThree);
+    this.rubyButtonFourTween = this.game.add.tween(this.rubyButtonFour);
+    this.rubyButtonFiveTween = this.game.add.tween(this.rubyButtonFive);
+    this.rubyButtonOneTween.to({x: 270, y: 260}, 500).start();
+    this.rubyButtonTwoTween.to({x: 590, y: 260}, 500).start();
+    this.rubyButtonThreeTween.to({x: 270, y: 400}, 500).start();
+    this.rubyButtonFourTween.to({x: 590, y: 400}, 500).start();
+    this.rubyButtonFiveTween.to({x: 440, y: 540}, 500).start();
 
-    // that = this;
-    // this.levelOneButton.inputEnabled = true;
-    // this.levelTwoButton.inputEnabled = true;
-    // this.levelThreeButton.inputEnabled = true;
-    // this.levelFourButton.inputEnabled = true;
-    // this.levelFiveButton.inputEnabled = true;
-    // this.levelOneButton.events.onInputDown.add(this.levelStart, {level: 1});
-    // this.levelTwoButton.events.onInputDown.add(this.levelStart, {level: 2});
-    // this.levelThreeButton.events.onInputDown.add(this.levelStart, {level: 3});
-    // this.levelFourButton.events.onInputDown.add(this.levelStart, {level: 4});
-    // this.levelFiveButton.events.onInputDown.add(this.levelStart, {level: 5});
+    that = this;
+    this.rubyButtonOne.inputEnabled = true;
+    this.rubyButtonTwo.inputEnabled = true;
+    this.rubyButtonThree.inputEnabled = true;
+    this.rubyButtonFour.inputEnabled = true;
+    this.rubyButtonFive.inputEnabled = true;
+    this.rubyButtonOne.events.onInputDown.add(this.levelStart, {level: 1});
+    this.rubyButtonTwo.events.onInputDown.add(this.levelStart, {level: 2});
+    this.rubyButtonThree.events.onInputDown.add(this.levelStart, {level: 3});
+    this.rubyButtonFour.events.onInputDown.add(this.levelStart, {level: 4});
+    this.rubyButtonFive.events.onInputDown.add(this.levelStart, {level: 5});
   },
   update: function() {
 

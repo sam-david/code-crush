@@ -20,7 +20,7 @@ var Game = {
     this.city = this.game.add.sprite(0,552, 'city');
     this.laser = this.game.add.sprite(480,545, 'laser');
     this.terminal = this.game.add.sprite(175,-50, 'terminal');
-    this.terminal.scale.setTo(.8);
+    this.terminal.scale.setTo(.875);
 
     // tweens
     this.terminalTween = this.game.add.tween(this.terminal);
@@ -59,7 +59,7 @@ var Game = {
     }
 
     // create game text objects (health, code text, and multiplier)
-    codeText = this.game.add.text(250, 43 + codeFontAdjust, levelLines[codeLineIndex], { font: codeFontSize + 'px Monospace', fill: '#fff' });
+    codeText = this.game.add.text(230, 27 + codeFontAdjust, levelLines[codeLineIndex], { font: codeFontSize + 'px Monospace', fill: '#fff' });
     codeText.parent.bringToTop(codeText);
     gameScoreText = this.game.add.text(30,45, "0", {
       font: "24px Montserrat",
@@ -67,13 +67,13 @@ var Game = {
       align: 'center',
       fontWeight: 'bold'
     });
-    multiplierText = this.game.add.text(845,30, "1x", {
+    multiplierText = this.game.add.text(870,90, "1x", {
       font: "36px Montserrat",
       fill: '#ff0044',
       align: 'center',
       fontWeight: 'bold'
     });
-    streakText = this.game.add.text(890,90, "1", {
+    streakText = this.game.add.text(870,35, "1", {
       font: "36px Montserrat",
       fill: '#ff0044',
       align: 'center'
@@ -117,7 +117,7 @@ var Game = {
           that.shootMoth();
         }
         that.world.remove(codeText);
-        codeText = this.game.add.text(250, 43 + codeFontAdjust, levelLines[codeLineIndex], { font: codeFontSize + 'px Monospace', fill: '#fff' });
+        codeText = this.game.add.text(230, 27 + codeFontAdjust, levelLines[codeLineIndex], { font: codeFontSize + 'px Monospace', fill: '#fff' });
         codeText.parent.bringToTop(codeText);
         stringIndex = 0;
       } else if (input.keyCode != 16) {
@@ -480,29 +480,34 @@ var Game = {
     }
   },
   createHealthUnits: function() {
-    this.steakCard = this.game.add.sprite(790,10, 'streakCard');
+    this.steakCard = this.game.add.sprite(840,10, 'streakCard');
     this.scoreCard = this.game.add.sprite(15,10, 'scoreCard');
     this.menuButton = this.game.add.sprite(15,88, 'menuButton');
     this.menuButton.inputEnabled = true;
     this.menuButton.events.onInputDown.add(this.mainMenuNav, this);
-    mainMenuText = this.game.add.text(27,107, "Main Menu", {
-      font: "24px Montserrat",
+    mainMenuText = this.game.add.text(28,94, "Main", {
+      font: "18px Montserrat",
       fill: 'black',
       align: 'center',
       fontWeight: 'bold'
     });
-    this.muteButton = this.game.add.sprite(15,154, 'menuButton');
-    this.muteButton.scale.setTo(.4);
+    mainMenuText2 = this.game.add.text(25,115, "Menu", {
+      font: "18px Montserrat",
+      fill: 'black',
+      align: 'center',
+      fontWeight: 'bold'
+    });
+    this.muteButton = this.game.add.sprite(90,88, 'menuButton');
     this.muteButton.inputEnabled = true;
     this.muteButton.events.onInputDown.add(this.toggleMusic, this);
-    muteText = this.game.add.text(26,158, "Mute", {
-      font: "16px Montserrat",
+    muteText = this.game.add.text(100,105, "Mute", {
+      font: "20px Montserrat",
       fill: 'black',
       align: 'center',
       fontWeight: 'bold'
     });
     this.healthUnits = this.game.add.group();
-    this.healthBar = this.game.add.sprite(725,500, 'healthBar');
+    this.healthBar = this.game.add.sprite(727,500, 'healthBar');
     this.healthBar.scale.setTo(.4);
     this.healthEmptyUnit1 = this.healthUnits.create(738,505, 'healthUnitWire');
     this.healthEmptyUnit2 = this.healthUnits.create(778,505, 'healthUnitWire');

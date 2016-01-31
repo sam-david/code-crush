@@ -1,4 +1,3 @@
-// load all the things we need
 var LocalStrategy   = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -7,12 +6,12 @@ var User = require('../app/models/user');
 var configAuth = require('./auth');
 
 module.exports = function(passport) {
-    // used to serialize the user for the session
+    // serialize user for the session
     passport.serializeUser(function(user, done) {
         done(null, user.id);
     });
 
-    // used to deserialize the user
+    // deserialize the user
     passport.deserializeUser(function(id, done) {
         User.findById(id, function(err, user) {
             done(err, user);
